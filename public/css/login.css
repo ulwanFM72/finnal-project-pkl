@@ -1,0 +1,155 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.login-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+}
+
+.login-text {
+    text-align: center;
+}
+
+.login-text h2 {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.login-text p {
+    font-size: 18px;
+    color: #666;
+    line-height: 1.5;
+}
+
+.login-container {
+    background: white;
+    width: 340px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.role-selector {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.role-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    background: #f5f5f5;
+    color: #888;
+    transition: all 0.2s;
+    border-radius: 0;
+}
+
+.role-btn.active {
+    background: white;
+    color: #4a90d9;
+    border-bottom: 2px solid #4a90d9;
+}
+
+.role-btn:hover:not(.active) {
+    background: #eeeeee;
+}
+
+.form-body {
+    padding: 24px;
+    background: white;
+}
+
+.form-body h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 18px;
+}
+
+.form-group {
+    margin-bottom: 14px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 13px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 13px;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.form-group input:focus {
+    border-color: #4a90d9;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 9px;
+    background: #4a90d9;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: background 0.2s;
+}
+
+.btn-login:hover {
+    background: #357abd;
+}
+
+.pesan {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 13px;
+    min-height: 18px;
+}
+
+.daftar-link {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 12px;
+    color: #888;
+}
+
+.daftar-link a {
+    color: #4a90d9;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.daftar-link a:hover {
+    text-decoration: underline;
+}

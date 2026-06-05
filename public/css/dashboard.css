@@ -1,0 +1,173 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f0f2f5;
+    padding: 30px;
+}
+
+.login-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+}
+
+.login-dashboard {
+    text-align: center;
+}
+
+h1 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.container {
+    width: 100%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th {
+    background-color: #4a90d9;
+    color: white;
+    padding: 10px 14px;
+    text-align: center;
+    font-size: 13px;
+}
+
+td {
+    padding: 8px 14px;
+    font-size: 13px;
+    color: #444;
+    border-bottom: 1px solid #f0f0f0;
+    border-right: 1px solid #f0f0f0;
+    text-align: center;
+    vertical-align: middle;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background-color: #f5f9ff;
+}
+
+.btn-daftar {
+    padding: 4px 12px;
+    background: #4a90d9;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-daftar:hover {
+    background: #357abd;
+}
+
+.btn-kembali {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 6px 14px;
+    background: #565e64;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-kembali:hover {
+    background: #c9302c;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 998;
+}
+
+#formDaftar {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    width: 280px;
+    z-index: 999;
+}
+
+#formDaftar h3 {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+#formDaftar p {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 16px;
+    background: #f5f9ff;
+    padding: 8px 10px;
+    border-radius: 4px;
+    border-left: 3px solid #4a90d9;
+}
+
+.btn-selesai {
+    padding: 5px 12px;
+    background: #4a90d9;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-right: 4px;
+}
+
+.btn-selesai:hover {
+    background: #357abd;
+}
+
+.btn-batal {
+    padding: 5px 12px;
+    background: #e0e0e0;
+    color: #555;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-batal:hover {
+    background: #cccccc;
+}
