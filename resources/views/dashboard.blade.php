@@ -36,13 +36,11 @@
     <div class="overlay" id="overlay" onclick="tutupForm()"></div>
 
     <div id="formDaftar">
-        <h3>Form Pendaftaran Ekstrakurikuler</h3>
+        <h3>Tentukan Eskulmu dan Jangan Salah Pilih</h3>
         <p>Ekstrakurikuler: <span id="namaEskulText"></span></p>
-
         <input type="hidden" id="idEskul">
         <input type="hidden" id="namaEskul">
-
-        <button class="btn-selesai" onclick="selesai()">Selesai</button>
+           <button class="btn-selesai" onclick="selesai()">Selesai</button>
         <button class="btn-batal" onclick="tutupForm()">Batal</button>
     </div>
 

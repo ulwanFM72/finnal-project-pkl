@@ -38,7 +38,7 @@ body {
     line-height: 1.5;
 }
 
-.login-container {
+..login-container {
     background: white;
     width: 340px;
     border-radius: 8px;
@@ -46,38 +46,12 @@ body {
     overflow: hidden;
 }
 
-.role-selector {
-    display: flex;
-    width: 100%;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.role-btn {
-    flex: 1;
-    padding: 12px;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-    background: #f5f5f5;
-    color: #888;
-    transition: all 0.2s;
-    border-radius: 0;
-}
-
-.role-btn.active {
-    background: white;
-    color: #4a90d9;
-    border-bottom: 2px solid #4a90d9;
-}
-
-.role-btn:hover:not(.active) {
-    background: #eeeeee;
-}
-
 .form-body {
     padding: 24px;
     background: white;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
 }
 
 .form-body h2 {
@@ -139,9 +113,10 @@ body {
 
 .daftar-link {
     text-align: center;
-    margin-top: 14px;
+    margin-top: auto;
     font-size: 12px;
     color: #888;
+    min-height: 30px;
 }
 
 .daftar-link a {
@@ -152,4 +127,37 @@ body {
 
 .daftar-link a:hover {
     text-decoration: underline;
+}
+
+.input-password {
+    position: relative;
+}
+
+.input-password input {
+    width: 100%;
+    padding: 8px 36px 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 13px;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.input-password input:focus {
+    border-color: #4a90d9;
+}
+
+.input-password i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #aaa;
+    font-size: 14px;
+    transition: color 0.2s;
+}
+
+.input-password i:hover {
+    color: #4a90d9;
 }

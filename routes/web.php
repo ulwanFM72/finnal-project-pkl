@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\EskulController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', [LoginController::class, 'index']);
 Route::get('/login', [LoginController::class, 'index']);
@@ -18,6 +19,14 @@ Route::get('/daftar-akun', function () {
   return view('daftarakun');
 });
 Route::post('/daftar-akun', [LoginController::class, 'daftarAkun']);
-
 Route::post('/edit-siswa/{id}', [LoginController::class, 'editSiswa']);
 Route::post('/hapus-siswa/{id}', [LoginController::class, 'hapusSiswa']);
+Route::get('/admin', [AdminController::class, 'index']);
+Route::get('/admin/pembina', [AdminController::class, 'pembina']);
+Route::post('/admin/tambah-pembina', [AdminController::class, 'tambahPembina']);
+Route::post('/admin/edit-pembina/{id}', [AdminController::class, 'editPembina']);
+Route::post('/admin/hapus-pembina/{id}', [AdminController::class, 'hapusPembina']);
+Route::get('/admin/siswa', [AdminController::class, 'siswa']);
+Route::post('/admin/tambah-siswa', [AdminController::class, 'tambahSiswa']);
+Route::post('/admin/edit-siswa-admin/{id}', [AdminController::class, 'editSiswa']);
+Route::post('/admin/hapus-siswa-admin/{id}', [AdminController::class, 'hapusSiswa']);

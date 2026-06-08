@@ -24,7 +24,7 @@
                 <th>Tanggal Daftar</th>
                 <th>Aksi</th>
             </tr>
-
+            
             @php $no = 1; @endphp
 
             @foreach($grouped as $id_siswa => $data)

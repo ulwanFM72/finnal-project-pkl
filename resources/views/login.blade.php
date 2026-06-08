@@ -1,30 +1,23 @@
 <html>
 <head>
     <title>Login</title>
-    <style>
-    </style>
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
     <div class="login-wrapper">
 
+        <!-- Teks kiri -->
         <div class="login-text">
-             <h2>Join Your Fashion!</h2>
-        <p>
-            Pilih Ekstrakurikuler Favoritmu<br>
-            & Kembangkan Bakatmu!
-        </p>
+            <h2>Join Your Fashion!</h2>
+            <p>Pilih Ekstrakurikuler Favoritmu<br>& Kembangkan Bakatmu!</p>
         </div>
 
+        <!-- Form login -->
         <div class="login-container">
-            <div class="role-selector">
-                <button class="role-btn active" id="btnSiswa" onclick="pilihRole('siswa')">Siswa</button>
-                <button class="role-btn" id="btnPembina" onclick="pilihRole('pembina')">Pembina</button>
-            </div>
-
             <div class="form-body">
-                <h2 id="judulLogin">Login Siswa</h2>
+                <h2>Login</h2>
 
                 <div class="form-group">
                     <label>Username</label>
@@ -33,14 +26,17 @@
 
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" id="password" placeholder="Masukkan password">
+                    <div class="input-password">
+                        <input type="password" id="password" placeholder="Masukkan password">
+                        <i class="fa-regular fa-eye" id="eyeIcon" onclick="togglePassword()"></i>
+                    </div>
                 </div>
 
                 <button class="btn-login" onclick="login()">Login</button>
 
                 <p class="pesan" id="pesan"></p>
 
-                <div class="daftar-link" id="linkDaftar">
+                <div class="daftar-link">
                     Belum punya akun? <a href="/daftar-akun">Daftar di sini</a>
                 </div>
             </div>
@@ -49,31 +45,13 @@
     </div>
 
     <script>
-        var roleAktif = 'siswa';
-
-        function pilihRole(role) {
-            roleAktif = role;
-
-            document.getElementById('btnSiswa').classList.remove('active');
-            document.getElementById('btnPembina').classList.remove('active');
-
-            document.getElementById('btn' + role.charAt(0).toUpperCase() + role.slice(1)).classList.add('active');
-
-            document.getElementById('judulLogin').innerText = role === 'siswa' ? 'Login Siswa' : 'Login Pembina';
-
-            document.getElementById('linkDaftar').style.display = role === 'siswa' ? 'block' : 'none';
-
-            document.getElementById('pesan').innerText = '';
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-        }
-
         function login() {
             var username = document.getElementById('username').value.trim();
             var password = document.getElementById('password').value.trim();
             var pesan    = document.getElementById('pesan');
 
             if (!username || !password) {
+                pesan.style.color = 'red';
                 pesan.innerText = 'Username dan password harus diisi!';
                 return;
             }
@@ -84,20 +62,36 @@
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
-                body: JSON.stringify({
-                    username: username,
-                    password: password,
-                    role: roleAktif
-                })
+                body: JSON.stringify({ username: username, password: password })
+                // tidak perlu kirim role karena sudah otomatis dari id_level
             })
             .then(res => res.json())
-           .then(data => {
-            pesan.innerText = data.message;
+            .then(data => {
+                pesan.style.color = data.success ? 'green' : 'red';
+                pesan.innerText = data.message;
+                if (data.success) {
+                    window.location.href = data.redirect;
+                    // redirect otomatis sesuai id_level
+                    // level 1 → /dashboard
+                    // level 2 → /pendaftar
+                    // level 3 → /admin
+                }
+            });
+        }
 
-            if (data.success) {
-            window.location.href = data.redirect;
+        function togglePassword() {
+            var input = document.getElementById('password');
+            var icon  = document.getElementById('eyeIcon');
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
             }
-          });
         }
     </script>
 

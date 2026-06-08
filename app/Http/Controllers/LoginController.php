@@ -16,7 +16,6 @@ class LoginController extends Controller
     {
         $username = trim($request->username);
         $password = md5(trim($request->password));
-        $role     = $request->role;
 
         if (empty(trim($request->username)) || empty(trim($request->password))) {
             return response()->json(['success' => false, 'message' => 'Username dan password harus diisi!']);
@@ -31,11 +30,22 @@ class LoginController extends Controller
             return response()->json(['success' => false, 'message' => 'Username atau password salah!']);
         }
 
-        if ($role === 'pembina') {
+        if ($user->id_level == 3) {
+            // ADMIN
+            session(['id_user' => $user->id_user]);
+            session(['role'    => 'admin']);
+
+            return response()->json([
+                'success'  => true,
+                'message'  => 'Login berhasil!',
+                'redirect' => '/admin'
+            ]);
+        } elseif ($user->id_level == 1) {
+            // PEMBINA (id_level 1 = pembina sesuai database)
             $pembina = DB::table('pembina')->where('id_user', $user->id_user)->first();
 
             if (!$pembina) {
-                return response()->json(['success' => false, 'message' => 'Akun ini bukan akun pembina!']);
+                return response()->json(['success' => false, 'message' => 'Data pembina tidak ditemukan!']);
             }
 
             session(['id_user'      => $user->id_user]);
@@ -48,11 +58,12 @@ class LoginController extends Controller
                 'message'  => 'Login berhasil!',
                 'redirect' => '/pendaftar'
             ]);
-        } else {
+        } elseif ($user->id_level == 2) {
+            // SISWA (id_level 2 = siswa sesuai database)
             $siswa = DB::table('siswa')->where('id_user', $user->id_user)->first();
 
             if (!$siswa) {
-                return response()->json(['success' => false, 'message' => 'Akun ini bukan akun siswa!']);
+                return response()->json(['success' => false, 'message' => 'Data siswa tidak ditemukan!']);
             }
 
             session(['id_user'  => $user->id_user]);
@@ -76,32 +87,9 @@ class LoginController extends Controller
         return redirect('/');
     }
 
-    public function editSiswa(Request $request, $id)
-    {
-        DB::table('siswa')->where('id_siswa', $id)->update([
-            'nama_lengkap'    => $request->nama_lengkap,
-            'kelas_jurusan'   => $request->kelas_jurusan,
-            'nomor_handphone' => $request->nomor_handphone,
-        ]);
-
-        return response()->json(['success' => true, 'message' => 'Data berhasil diperbarui']);
-    }
-
-    public function hapusSiswa($id)
-    {
-        DB::table('pendaftaran')->where('id_siswa', $id)->delete();
-        DB::table('siswa')->where('id_siswa', $id)->delete();
-
-        return response()->json(['success' => true, 'message' => 'Data berhasil dihapus']);
-    }
-
     public function pendaftar()
     {
-        if (!session('id_user')) {
-            return redirect('/');
-        }
-
-        if (!session('id_pembina')) {
+        if (!session('id_user') || !session('id_pembina')) {
             return redirect('/');
         }
 

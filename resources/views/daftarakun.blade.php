@@ -19,13 +19,13 @@
         <div class="form-group">
             <label>Kelas & Jurusan</label>
             <input type="text" id="kelas_jurusan" 
-             placeholder="Contoh: XII RPL 1">
+             placeholder="Masukkan kelas dan jurusan">
         </div>
 
         <div class="form-group">
             <label>Nomor Handphone</label>
             <input type="text" id="nomor_handphone" 
-             placeholder="08123456789"
+             placeholder="08xxxxxxxxxx"
                 oninput="this.value = this.value.replace(/[^0-9]/g, '')">
         </div>
 
@@ -42,11 +42,8 @@
         </div>
 
         <button class="btn-daftar" onclick="daftar()">Daftar</button>
-
         <p class="pesan" id="pesan"></p>
-
         <a href="/"><button type="button" class="btn-kembali">Kembali</button></a>
-
     </div>
 
     <script>
