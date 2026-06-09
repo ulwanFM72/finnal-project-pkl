@@ -31,7 +31,6 @@ class LoginController extends Controller
         }
 
         if ($user->id_level == 3) {
-            // ADMIN
             session(['id_user' => $user->id_user]);
             session(['role'    => 'admin']);
 
@@ -41,7 +40,6 @@ class LoginController extends Controller
                 'redirect' => '/admin'
             ]);
         } elseif ($user->id_level == 1) {
-            // PEMBINA (id_level 1 = pembina sesuai database)
             $pembina = DB::table('pembina')->where('id_user', $user->id_user)->first();
 
             if (!$pembina) {
@@ -59,7 +57,6 @@ class LoginController extends Controller
                 'redirect' => '/pendaftar'
             ]);
         } elseif ($user->id_level == 2) {
-            // SISWA (id_level 2 = siswa sesuai database)
             $siswa = DB::table('siswa')->where('id_user', $user->id_user)->first();
 
             if (!$siswa) {
@@ -169,5 +166,32 @@ class LoginController extends Controller
         ]);
 
         return response()->json(['success' => true, 'message' => 'Akun berhasil dibuat, silakan login!']);
+    }
+
+    public function editSiswa(Request $request, $id)
+    {
+        if (!session('id_user')) {
+            return redirect('/');
+        }
+
+        DB::table('siswa')->where('id_siswa', $id)->update([
+            'nama_lengkap'    => $request->nama_lengkap,
+            'kelas_jurusan'   => $request->kelas_jurusan,
+            'nomor_handphone' => $request->nomor_handphone,
+        ]);
+
+        return response()->json(['success' => true, 'message' => 'Data berhasil diperbarui']);
+    }
+
+    public function hapusSiswa($id)
+    {
+        if (!session('id_user')) {
+            return redirect('/');
+        }
+
+        DB::table('pendaftaran')->where('id_siswa', $id)->delete();
+        DB::table('siswa')->where('id_siswa', $id)->delete();
+
+        return response()->json(['success' => true, 'message' => 'Data berhasil dihapus']);
     }
 }

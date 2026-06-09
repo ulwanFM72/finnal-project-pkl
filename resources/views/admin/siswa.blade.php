@@ -55,6 +55,7 @@
         margin-right:6px;
         font-size:13px;
     ">Ya, Hapus</button>
+    
     <button onclick="tutupKonfirmasi()" style="
         padding:5px 14px;
         background:#e0e0e0;
@@ -128,7 +129,7 @@
     </div>
 
   <script>
-   var hapusIdSementara = null;
+ var hapusIdSementara = null;
 
 function tampilNotif(pesan, tipe) {
     var notif = document.getElementById('notif');
@@ -273,3 +274,5 @@ function simpanEdit() {
     });
 }
 </script>
+</body>
+</html>

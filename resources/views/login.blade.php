@@ -8,13 +8,11 @@
 
     <div class="login-wrapper">
 
-        <!-- Teks kiri -->
         <div class="login-text">
             <h2>Join Your Fashion!</h2>
             <p>Pilih Ekstrakurikuler Favoritmu<br>& Kembangkan Bakatmu!</p>
         </div>
 
-        <!-- Form login -->
         <div class="login-container">
             <div class="form-body">
                 <h2>Login</h2>
@@ -63,7 +61,6 @@
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
                 body: JSON.stringify({ username: username, password: password })
-                // tidak perlu kirim role karena sudah otomatis dari id_level
             })
             .then(res => res.json())
             .then(data => {
@@ -71,10 +68,6 @@
                 pesan.innerText = data.message;
                 if (data.success) {
                     window.location.href = data.redirect;
-                    // redirect otomatis sesuai id_level
-                    // level 1 → /dashboard
-                    // level 2 → /pendaftar
-                    // level 3 → /admin
                 }
             });
         }

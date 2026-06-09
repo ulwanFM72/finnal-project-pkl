@@ -13,6 +13,7 @@
     <br>
     <a href="/admin/siswa"><button>Kelola Siswa</button></a>
     <a href="/admin/pembina"><button>Kelola Pembina</button></a>
+    <a href="/admin/eskul"><button>Kelola Eskul</button></a>
     <a href="/logout"><button>Logout</button></a>
 </body>
 </html>

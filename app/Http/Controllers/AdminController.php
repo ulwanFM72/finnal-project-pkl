@@ -14,16 +14,17 @@ class AdminController extends Controller
     }
     return true;
   }
+
   public function index()
   {
     if (!$this->cekAdmin()) {
       return redirect('/');
     }
 
-    $totalSiswa    = DB::table('siswa')->count();
-    $totalPembina  = DB::table('pembina')->count();
-    $totalEskul    = DB::table('ekstrakurikuler')->count();
-    $totalDaftar   = DB::table('pendaftaran')->count();
+    $totalSiswa   = DB::table('siswa')->count();
+    $totalPembina = DB::table('pembina')->count();
+    $totalEskul   = DB::table('ekstrakurikuler')->count();
+    $totalDaftar  = DB::table('pendaftaran')->count();
 
     return view('admin.index', compact(
       'totalSiswa',
@@ -50,7 +51,7 @@ class AdminController extends Controller
   public function tambahPembina(Request $request)
   {
     if (!$this->cekAdmin()) {
-      return redirect('/');
+      return response()->json(['success' => false, 'message' => 'Session habis, silakan login ulang!']);
     }
 
     $nama     = trim($request->nama_pembina);
@@ -80,12 +81,7 @@ class AdminController extends Controller
       'username' => $username,
       'password' => md5($password),
       'id_level' => 1
-    ]);
-
-    $id_user = DB::table('user')->insertGetId([
-      'username' => $username,
-      'password' => md5($password),
-      'id_level' => 2
+      // level 1 = pembina
     ]);
 
     DB::table('pembina')->insert([
@@ -101,7 +97,7 @@ class AdminController extends Controller
   public function editPembina(Request $request, $id)
   {
     if (!$this->cekAdmin()) {
-      return redirect('/');
+      return response()->json(['success' => false, 'message' => 'Session habis, silakan login ulang!']);
     }
 
     DB::table('pembina')->where('id_pembina', $id)->update([
@@ -116,13 +112,11 @@ class AdminController extends Controller
   public function hapusPembina($id)
   {
     if (!$this->cekAdmin()) {
-      return redirect('/');
+      return response()->json(['success' => false, 'message' => 'Session habis, silakan login ulang!']);
     }
 
     $pembina = DB::table('pembina')->where('id_pembina', $id)->first();
-
     DB::table('pembina')->where('id_pembina', $id)->delete();
-
     DB::table('user')->where('id_user', $pembina->id_user)->delete();
 
     return response()->json(['success' => true, 'message' => 'Pembina berhasil dihapus!']);
@@ -145,7 +139,7 @@ class AdminController extends Controller
   public function tambahSiswa(Request $request)
   {
     if (!$this->cekAdmin()) {
-      return redirect('/');
+      return response()->json(['success' => false, 'message' => 'Session habis, silakan login ulang!']);
     }
 
     $nama     = trim($request->nama_lengkap);
@@ -174,7 +168,8 @@ class AdminController extends Controller
     $id_user = DB::table('user')->insertGetId([
       'username' => $username,
       'password' => md5($password),
-      'id_level' => 1
+      'id_level' => 2
+      // level 2 = siswa
     ]);
 
     DB::table('siswa')->insert([
@@ -190,7 +185,7 @@ class AdminController extends Controller
   public function editSiswa(Request $request, $id)
   {
     if (!$this->cekAdmin()) {
-      return redirect('/');
+      return response()->json(['success' => false, 'message' => 'Session habis, silakan login ulang!']);
     }
 
     DB::table('siswa')->where('id_siswa', $id)->update([
@@ -205,7 +200,7 @@ class AdminController extends Controller
   public function hapusSiswa($id)
   {
     if (!$this->cekAdmin()) {
-      return redirect('/');
+      return response()->json(['success' => false, 'message' => 'Session habis, silakan login ulang!']);
     }
 
     $siswa = DB::table('siswa')->where('id_siswa', $id)->first();
@@ -214,5 +209,73 @@ class AdminController extends Controller
     DB::table('user')->where('id_user', $siswa->id_user)->delete();
 
     return response()->json(['success' => true, 'message' => 'Siswa berhasil dihapus!']);
+  }
+
+  public function eskul()
+  {
+    if (!$this->cekAdmin()) {
+      return redirect('/');
+    }
+
+    $eskul = DB::table('ekstrakurikuler as e')
+      ->join('pembina as p', 'e.id_pembina', '=', 'p.id_pembina')
+      ->select('e.*', 'p.nama_pembina')
+      ->get();
+
+    $pembina = DB::table('pembina')->get();
+
+    return view('admin.eskul', compact('eskul', 'pembina'));
+  }
+
+  public function tambahEskul(Request $request)
+  {
+    if (!$this->cekAdmin()) {
+      return response()->json(['success' => false, 'message' => 'Session habis, silakan login ulang!']);
+    }
+
+    $nama       = trim($request->nama_ekskul);
+    $id_pembina = $request->id_pembina;
+
+    if (empty($nama) || empty($id_pembina)) {
+      return response()->json(['success' => false, 'message' => 'Semua field harus diisi!']);
+    }
+
+    $cek = DB::table('ekstrakurikuler')->where('nama_ekskul', $nama)->first();
+    if ($cek) {
+      return response()->json(['success' => false, 'message' => 'Nama eskul sudah ada!']);
+    }
+
+    DB::table('ekstrakurikuler')->insert([
+      'nama_ekskul' => $nama,
+      'id_pembina'  => $id_pembina
+    ]);
+
+    return response()->json(['success' => true, 'message' => 'Eskul berhasil ditambahkan!']);
+  }
+
+  public function editEskul(Request $request, $id)
+  {
+    if (!$this->cekAdmin()) {
+      return response()->json(['success' => false, 'message' => 'Session habis, silakan login ulang!']);
+    }
+
+    DB::table('ekstrakurikuler')->where('id_ekskul', $id)->update([
+      'nama_ekskul' => $request->nama_ekskul,
+      'id_pembina'  => $request->id_pembina
+    ]);
+
+    return response()->json(['success' => true, 'message' => 'Eskul berhasil diperbarui!']);
+  }
+
+  public function hapusEskul($id)
+  {
+    if (!$this->cekAdmin()) {
+      return response()->json(['success' => false, 'message' => 'Session habis, silakan login ulang!']);
+    }
+
+    DB::table('pendaftaran')->where('id_ekskul', $id)->delete();
+    DB::table('ekstrakurikuler')->where('id_ekskul', $id)->delete();
+
+    return response()->json(['success' => true, 'message' => 'Eskul berhasil dihapus!']);
   }
 }

@@ -55,6 +55,7 @@
         margin-right:6px;
         font-size:13px;
     ">Ya, Hapus</button>
+
     <button onclick="tutupKonfirmasi()" style="
         padding:5px 14px;
         background:#e0e0e0;
@@ -164,26 +165,25 @@ function tutupFormEdit() {
 
 document.addEventListener('DOMContentLoaded', function() {
 
-    document.querySelectorAll('.btn-edit').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            var id    = this.getAttribute('data-id');
-            var nama  = this.getAttribute('data-nama');
-            var hp    = this.getAttribute('data-hp');
-            var email = this.getAttribute('data-email');
+   document.querySelectorAll('.btn-edit').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        var id    = this.getAttribute('data-id');
+        var nama  = this.getAttribute('data-nama');
+        var hp    = this.getAttribute('data-hp');
+        var email = this.getAttribute('data-email');
 
-            document.getElementById('formEdit').style.display = 'block';
-            document.getElementById('editId').value    = id;
-            document.getElementById('editNama').value  = nama;
-            document.getElementById('editKelas').value = kelas;
-            document.getElementById('editHp').value    = hp;
-            document.getElementById('editEmail').value = email;
-        });
+        document.getElementById('formEdit').style.display = 'block';
+        document.getElementById('editId').value    = id;
+        document.getElementById('editNama').value  = nama;
+        document.getElementById('editHp').value    = hp;
+        document.getElementById('editEmail').value = email;
     });
+});
 
     document.querySelectorAll('.btn-hapus').forEach(function(btn) {
         btn.addEventListener('click', function() {
             var id = this.getAttribute('data-id');
-            tampilKonfirmasi('Yakin ingin menghapus pembina ini?', id);
+            tampilKonfirmasi('Yakin ingin menghapus siswa ini?', id);
         });
     });
 
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (!id) return;
 
-        fetch('/admin/hapus-pembina-admin/' + id, {
+        fetch('/admin/hapus-siswa-admin/' + id, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(res => res.json())
         .then(data => {
             if (data.success) {
-                tampilNotif('Pembina berhasil dihapus!', 'sukses');
+                tampilNotif('Siswa berhasil dihapus!', 'sukses');
                 setTimeout(function() { location.reload(); }, 1000);
             } else {
                 tampilNotif(data.message, 'gagal');
@@ -215,13 +215,17 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function simpanTambah() {
+    console.log('simpanTambah dipanggil');
+
     var data = {
-        nama_lengkap:    document.getElementById('tambahNama').value,
-        kelas_jurusan:   document.getElementById('tambahKelas').value,
+        nama_pembina:    document.getElementById('tambahNama').value,
         nomor_handphone: document.getElementById('tambahHp').value,
+        email:           document.getElementById('tambahEmail').value,
         username:        document.getElementById('tambahUsername').value,
         password:        document.getElementById('tambahPassword').value
     };
+
+    console.log('data:', data);
 
     fetch('/admin/tambah-pembina', {
         method: 'POST',
@@ -231,8 +235,12 @@ function simpanTambah() {
         },
         body: JSON.stringify(data)
     })
-    .then(res => res.json())
+    .then(res => {
+        console.log('status:', res.status);
+        return res.json();
+    })
     .then(data => {
+        console.log('response:', data);
         if (data.success) {
             tutupFormTambah();
             tampilNotif('Pembina berhasil ditambahkan!', 'sukses');
@@ -240,6 +248,9 @@ function simpanTambah() {
         } else {
             tampilNotif(data.message, 'gagal');
         }
+    })
+    .catch(err => {
+        console.log('error:', err);
     });
 }
 
@@ -249,7 +260,7 @@ function simpanEdit() {
     var kelas = document.getElementById('editKelas').value;
     var hp    = document.getElementById('editHp').value;
 
-    fetch('/admin/edit-pembina-admin/' + id, {
+    fetch('/admin/edit-siswa-admin/' + id, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
