@@ -26,11 +26,21 @@ class AdminController extends Controller
     $totalEskul   = DB::table('ekstrakurikuler')->count();
     $totalDaftar  = DB::table('pendaftaran')->count();
 
+    $pendaftaranTerbaru = DB::select("
+        SELECT s.nama_lengkap, s.kelas_jurusan, e.nama_ekskul, pd.tanggal_daftar
+        FROM pendaftaran pd
+        INNER JOIN siswa s ON pd.id_siswa = s.id_siswa
+        INNER JOIN ekstrakurikuler e ON pd.id_ekskul = e.id_ekskul
+        ORDER BY pd.tanggal_daftar DESC
+        LIMIT 10
+    ");
+
     return view('admin.index', compact(
       'totalSiswa',
       'totalPembina',
       'totalEskul',
-      'totalDaftar'
+      'totalDaftar',
+      'pendaftaranTerbaru'
     ));
   }
 
@@ -51,7 +61,7 @@ class AdminController extends Controller
   public function tambahPembina(Request $request)
   {
     if (!$this->cekAdmin()) {
-      return response()->json(['success' => false, 'message' => 'Session habis, silakan login ulang!']);
+      return response()->json(['success' => false, 'message' => 'Session habis!']);
     }
 
     $nama     = trim($request->nama_pembina);
@@ -72,6 +82,18 @@ class AdminController extends Controller
       return response()->json(['success' => false, 'message' => 'Nomor HP hanya boleh berisi angka!']);
     }
 
+    if (strlen($hp) < 10) {
+      return response()->json(['success' => false, 'message' => 'Nomor HP minimal 10 digit!']);
+    }
+
+    if (strlen($username) < 4) {
+      return response()->json(['success' => false, 'message' => 'Username minimal 4 karakter!']);
+    }
+
+    if (strlen($password) < 6) {
+      return response()->json(['success' => false, 'message' => 'Password minimal 6 karakter!']);
+    }
+
     $cek = DB::table('user')->where('username', $username)->first();
     if ($cek) {
       return response()->json(['success' => false, 'message' => 'Username sudah digunakan!']);
@@ -81,7 +103,6 @@ class AdminController extends Controller
       'username' => $username,
       'password' => md5($password),
       'id_level' => 1
-      // level 1 = pembina
     ]);
 
     DB::table('pembina')->insert([
@@ -92,21 +113,6 @@ class AdminController extends Controller
     ]);
 
     return response()->json(['success' => true, 'message' => 'Pembina berhasil ditambahkan!']);
-  }
-
-  public function editPembina(Request $request, $id)
-  {
-    if (!$this->cekAdmin()) {
-      return response()->json(['success' => false, 'message' => 'Session habis, silakan login ulang!']);
-    }
-
-    DB::table('pembina')->where('id_pembina', $id)->update([
-      'nama_pembina'    => $request->nama_pembina,
-      'nomor_handphone' => $request->nomor_handphone,
-      'email'           => $request->email,
-    ]);
-
-    return response()->json(['success' => true, 'message' => 'Data pembina berhasil diperbarui!']);
   }
 
   public function hapusPembina($id)
@@ -139,7 +145,7 @@ class AdminController extends Controller
   public function tambahSiswa(Request $request)
   {
     if (!$this->cekAdmin()) {
-      return response()->json(['success' => false, 'message' => 'Session habis, silakan login ulang!']);
+      return response()->json(['success' => false, 'message' => 'Session habis!']);
     }
 
     $nama     = trim($request->nama_lengkap);
@@ -160,6 +166,18 @@ class AdminController extends Controller
       return response()->json(['success' => false, 'message' => 'Nomor HP hanya boleh berisi angka!']);
     }
 
+    if (strlen($hp) < 10) {
+      return response()->json(['success' => false, 'message' => 'Nomor HP minimal 10 digit!']);
+    }
+
+    if (strlen($username) < 4) {
+      return response()->json(['success' => false, 'message' => 'Username minimal 4 karakter!']);
+    }
+
+    if (strlen($password) < 6) {
+      return response()->json(['success' => false, 'message' => 'Password minimal 6 karakter!']);
+    }
+
     $cek = DB::table('user')->where('username', $username)->first();
     if ($cek) {
       return response()->json(['success' => false, 'message' => 'Username sudah digunakan!']);
@@ -169,7 +187,6 @@ class AdminController extends Controller
       'username' => $username,
       'password' => md5($password),
       'id_level' => 2
-      // level 2 = siswa
     ]);
 
     DB::table('siswa')->insert([

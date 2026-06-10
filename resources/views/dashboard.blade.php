@@ -32,7 +32,7 @@
         @endforeach
     </table>
   </div>
-
+ 
     <div class="overlay" id="overlay" onclick="tutupForm()"></div>
 
     <div id="formDaftar">
