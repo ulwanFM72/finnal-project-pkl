@@ -36,7 +36,7 @@
     <div id="konfirmasi">
         <p id="pesanKonfirmasi"></p>
         <div class="konfirmasi-buttons">
-            <button id="btnKonfirmasiYa" class="btn btn-hapus">Ya, Hapus</button>
+           <button id="btnKonfirmasiYa" class="btn btn-konfirmasi-hapus">Ya, Hapus</button>
             <button onclick="tutupKonfirmasi()" class="btn-cancel">Batal</button>
         </div>
     </div>
@@ -105,10 +105,11 @@
     document.addEventListener('DOMContentLoaded', function() {
 
         document.querySelectorAll('.btn-hapus').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                tampilKonfirmasi('Yakin ingin menghapus semua pendaftaran siswa ini?', this.getAttribute('data-id'));
-            });
-        });
+    btn.addEventListener('click', function() {
+        console.log('ID yang didapat:', this.getAttribute('data-id')); // <-- tambah ini
+        tampilKonfirmasi('Yakin ingin menghapus semua pendaftaran siswa ini?', this.getAttribute('data-id'));
+    });
+});
 
         document.getElementById('btnKonfirmasiYa').addEventListener('click', function() {
             var id = hapusIdSementara;

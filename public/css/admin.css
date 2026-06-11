@@ -279,9 +279,27 @@ tr:hover td {
 .btn-hapus {
     background: #dc3545;
     color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
 }
 
 .btn-hapus:hover {
+    background: #c82333;
+}
+
+.btn-konfirmasi-hapus {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-konfirmasi-hapus:hover {
     background: #c82333;
 }
 

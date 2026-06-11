@@ -36,7 +36,7 @@
     <div id="konfirmasi">
         <p id="pesanKonfirmasi"></p>
         <div class="konfirmasi-buttons">
-            <button id="btnKonfirmasiYa" class="btn btn-hapus">Ya, Hapus</button>
+            <button id="btnKonfirmasiYa" class="btn-konfirmasi-hapus">Ya, Hapus</button>
             <button onclick="tutupKonfirmasi()" class="btn-cancel">Batal</button>
         </div>
     </div>
@@ -254,29 +254,59 @@
             });
         });
 
-        document.getElementById('btnKonfirmasiYa').addEventListener('click', function() {
-            var id = hapusIdSementara;
-            tutupKonfirmasi();
-            if (!id) return;
+      document.getElementById('btnKonfirmasiYa').addEventListener('click', function() {
 
-            fetch('/admin/hapus-siswa-admin/' + id, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                }
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    tampilNotif('Siswa berhasil dihapus!', 'sukses');
-                    setTimeout(function() { location.reload(); }, 1000);
-                } else {
-                    tampilNotif(data.message, 'gagal');
-                }
-            });
-        });
+    var id = hapusIdSementara;
 
+    console.log("ID yang akan dihapus :", id);
+
+    tutupKonfirmasi();
+
+    if (!id) {
+        console.log("ID kosong");
+        return;
+    }
+
+    fetch('/admin/hapus-siswa-admin/' + id, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            'Accept': 'application/json'
+        }
+    })
+    .then(function(response) {
+
+        console.log("Status HTTP:", response.status);
+
+        return response.json();
+
+    })
+    .then(function(data) {
+
+        console.log("Response Laravel:", data);
+
+        if (data.success) {
+
+            tampilNotif(data.message, 'sukses');
+
+            setTimeout(function() {
+                location.reload();
+            }, 1000);
+
+        } else {
+
+            tampilNotif(data.message, 'gagal');
+
+        }
+
+    })
+    .catch(function(error) {
+
+        console.error("ERROR FETCH:", error);
+
+    });
+
+}); 
     });
 </script>
 

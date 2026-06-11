@@ -102,7 +102,7 @@ class AdminController extends Controller
     $id_user = DB::table('user')->insertGetId([
       'username' => $username,
       'password' => md5($password),
-      'id_level' => 1
+      'id_level' => 2
     ]);
 
     DB::table('pembina')->insert([
@@ -210,7 +210,7 @@ class AdminController extends Controller
     $id_user = DB::table('user')->insertGetId([
       'username' => $username,
       'password' => md5($password),
-      'id_level' => 2
+      'id_level' => 1
     ]);
 
     DB::table('siswa')->insert([
@@ -244,14 +244,20 @@ class AdminController extends Controller
       return response()->json(['success' => false, 'message' => 'Session habis!']);
     }
 
+    // Ambil data siswa dulu
     $siswa = DB::table('siswa')->where('id_siswa', $id)->first();
 
     if (!$siswa) {
       return response()->json(['success' => false, 'message' => 'Data siswa tidak ditemukan!']);
     }
 
+    // Hapus pendaftaran dulu
     DB::table('pendaftaran')->where('id_siswa', $id)->delete();
+
+    // Hapus dari tabel siswa
     DB::table('siswa')->where('id_siswa', $id)->delete();
+
+    // Hapus dari tabel user
     DB::table('user')->where('id_user', $siswa->id_user)->delete();
 
     return response()->json(['success' => true, 'message' => 'Siswa berhasil dihapus!']);

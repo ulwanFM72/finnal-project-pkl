@@ -4,6 +4,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <style>
+        /* Tab eskul */
         .tab-eskul {
             display: flex;
             flex-wrap: wrap;
@@ -71,7 +72,7 @@
         <a href="/admin/eskul"><span class="icon">🎯</span> Eskul</a>
         <a href="/admin/pembina"><span class="icon">👨‍🏫</span> Pembina</a>
         <a href="/admin/pendaftaran"><span class="icon">📋</span> Pendaftaran</a>
-        <a href="/admin/anggota" class="active"><span class="icon">👥</span> Anggota</a>
+        <a href="/admin/anggota"><span class="icon">👥</span> Anggota</a>
     </div>
     <div class="sidebar-logout">
         <a href="/logout"><span>🚪</span> Logout</a>
@@ -89,7 +90,7 @@
     <div id="konfirmasi">
         <p id="pesanKonfirmasi"></p>
         <div class="konfirmasi-buttons">
-            <button id="btnKonfirmasiYa" class="btn btn-hapus">Ya, Hapus</button>
+           <button id="btnKonfirmasiYa" class="btn btn-konfirmasi-hapus">Ya, Hapus</button>
             <button onclick="tutupKonfirmasi()" class="btn-cancel">Batal</button>
         </div>
     </div>

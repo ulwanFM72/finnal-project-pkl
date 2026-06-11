@@ -36,26 +36,47 @@ class LoginController extends Controller
             session(['id_user' => $user->id_user]);
             session(['role'    => 'admin']);
             return response()->json(['success' => true, 'message' => 'Login berhasil!', 'redirect' => '/admin']);
-        } elseif ($user->id_level == 1) {
-            $pembina = DB::table('pembina')->where('id_user', $user->id_user)->first();
-            if (!$pembina) {
-                return response()->json(['success' => false, 'message' => 'Data pembina tidak ditemukan!']);
-            }
-            session(['id_user'      => $user->id_user]);
-            session(['id_pembina'   => $pembina->id_pembina]);
-            session(['nama_pembina' => $pembina->nama_pembina]);
-            session(['role'         => 'pembina']);
-            return response()->json(['success' => true, 'message' => 'Login berhasil!', 'redirect' => '/pendaftar']);
         } elseif ($user->id_level == 2) {
-            $siswa = DB::table('siswa')->where('id_user', $user->id_user)->first();
-            if (!$siswa) {
-                return response()->json(['success' => false, 'message' => 'Data siswa tidak ditemukan!']);
+            $pembina = DB::table('pembina')
+                ->where('id_user', $user->id_user)
+                ->first();
+
+            if (!$pembina) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data pembina tidak ditemukan!'
+                ]);
             }
-            session(['id_user'  => $user->id_user]);
+
+            session(['id_user' => $user->id_user]);
+            session(['id_pembina' => $pembina->id_pembina]);
+            session(['nama_pembina' => $pembina->nama_pembina]);
+            session(['role' => 'pembina']);
+
+            return response()->json([
+                'success' => true,
+                'redirect' => '/pendaftar'
+            ]);
+        } elseif ($user->id_level == 1) {
+            $siswa = DB::table('siswa')
+                ->where('id_user', $user->id_user)
+                ->first();
+
+            if (!$siswa) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data siswa tidak ditemukan!'
+                ]);
+            }
+
+            session(['id_user' => $user->id_user]);
             session(['id_siswa' => $siswa->id_siswa]);
-            session(['username' => $user->username]);
-            session(['role'     => 'siswa']);
-            return response()->json(['success' => true, 'message' => 'Login berhasil!', 'redirect' => '/dashboard']);
+            session(['role' => 'siswa']);
+
+            return response()->json([
+                'success' => true,
+                'redirect' => '/dashboard'
+            ]);
         }
 
         return response()->json(['success' => false, 'message' => 'Role tidak dikenali!']);
@@ -140,7 +161,7 @@ class LoginController extends Controller
         $id_user = DB::table('user')->insertGetId([
             'username' => $username,
             'password' => md5($password),
-            'id_level' => 2
+            'id_level' => 1
         ]);
 
         DB::table('siswa')->insert([
