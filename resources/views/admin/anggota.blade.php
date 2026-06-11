@@ -61,14 +61,14 @@
 
 <div class="sidebar">
     <div class="sidebar-brand">
-        <h2>⚙️ Dashboard Admin</h2>
-        <p>Sistem Ekstrakulikuler</p>
+        <h2>⚙️ Admin Panel</h2>
+        <p>Sistem Eskul</p>
     </div>
     <div class="sidebar-menu">
         <p class="menu-label">MENU</p>
         <a href="/admin"><span class="icon">🏠</span> Ringkasan</a>
         <a href="/admin/siswa"><span class="icon">👤</span> Pengguna</a>
-        <a href="/admin/eskul"><span class="icon">🎯</span> Ekstrakulikuler</a>
+        <a href="/admin/eskul"><span class="icon">🎯</span> Eskul</a>
         <a href="/admin/pembina"><span class="icon">👨‍🏫</span> Pembina</a>
         <a href="/admin/pendaftaran"><span class="icon">📋</span> Pendaftaran</a>
         <a href="/admin/anggota" class="active"><span class="icon">👥</span> Anggota</a>
@@ -81,7 +81,8 @@
 <div class="main-content">
 
     <div class="topbar">
-        <h1>Daftar Anggota Ekstrakulikuler</h1>
+        <h1>Daftar Anggota Ekskul</h1>
+        <div class="admin-badge">⚙️ Administrator</div>
     </div>
 
     <div id="notif"></div>
@@ -93,6 +94,7 @@
         </div>
     </div>
 
+    <!-- Tab Eskul -->
     <div class="tab-eskul">
         @foreach($eskul as $e)
         <a href="/admin/anggota?eskul={{ $e->id_ekskul }}"
@@ -102,22 +104,18 @@
         @endforeach
     </div>
 
-   <div class="card">
-    <div class="card-header">
-        <div>
-            <div class="eskul-info">
-                @if($eskul_aktif)
-                    <h2> Daftar Anggota – {{ $eskul_aktif->nama_ekskul }}</h2>
+    <!-- Tabel Anggota -->
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="eskul-info">
+                    <h2>👥 Daftar Anggota — {{ $eskul_aktif->nama_ekskul }}</h2>
                     <span class="jumlah-badge">{{ count($anggota) }} siswa</span>
                     <span class="pembina-badge">Pembina: {{ $eskul_aktif->nama_pembina }}</span>
-                @else
-                    <h2>Belum ada ekstrakurikuler</h2>
-                    <p>Silakan tambah eskul terlebih dahulu di menu Eskul.</p>
-                @endif
+                </div>
             </div>
         </div>
-    </div>
-    <div class="card-body">
+        <div class="card-body">
             <table>
                 <tr>
                     <th>No</th>
@@ -148,7 +146,7 @@
                 @empty
                 <tr>
                     <td colspan="6" style="text-align:center; color:#aaa; padding:30px;">
-                        Belum ada anggota di Ekstrakulikuler ini
+                        Belum ada anggota di eskul ini
                     </td>
                 </tr>
                 @endforelse
@@ -160,6 +158,7 @@
 
 <div class="overlay" id="overlay" onclick="tutupSemua()"></div>
 
+<!-- Modal Edit -->
 <div class="modal" id="modalEdit">
     <div class="modal-header">
         <h3>Edit Data Anggota</h3>
@@ -248,6 +247,7 @@
 
     document.addEventListener('DOMContentLoaded', function() {
 
+        // Tombol edit
         document.querySelectorAll('.btn-edit').forEach(function(btn) {
             btn.addEventListener('click', function() {
                 document.getElementById('overlay').style.display = 'block';
@@ -259,6 +259,7 @@
             });
         });
 
+        // Tombol hapus
         document.querySelectorAll('.btn-hapus').forEach(function(btn) {
             btn.addEventListener('click', function() {
                 var id_siswa  = this.getAttribute('data-id-siswa');
@@ -267,6 +268,7 @@
             });
         });
 
+        // Tombol konfirmasi hapus
         document.getElementById('btnKonfirmasiYa').addEventListener('click', function() {
             var id_siswa  = hapusIdSementara;
             var id_ekskul = hapusEskulSementara;

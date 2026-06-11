@@ -8,14 +8,14 @@
 
 <div class="sidebar">
     <div class="sidebar-brand">
-        <h2>⚙️ Dashboard Admin</h2>
-        <p>Sistem Ekstrakulikuler</p>
+        <h2>⚙️ Admin Panel</h2>
+        <p>Sistem Eskul</p>
     </div>
     <div class="sidebar-menu">
         <p class="menu-label">MENU</p>
         <a href="/admin"><span class="icon">🏠</span> Ringkasan</a>
         <a href="/admin/siswa"><span class="icon">👤</span> Pengguna</a>
-        <a href="/admin/eskul"><span class="icon">🎯</span> Ekstrakulikuler</a>
+        <a href="/admin/eskul"><span class="icon">🎯</span> Eskul</a>
         <a href="/admin/pembina"><span class="icon">👨‍🏫</span> Pembina</a>
         <a href="/admin/pendaftaran" class="active"><span class="icon">📋</span> Pendaftaran</a>
         <a href="/admin/anggota"><span class="icon">👥</span> Anggota</a>
@@ -29,16 +29,17 @@
 
     <div class="topbar">
         <h1>Semua Pendaftaran</h1>
+        <div class="admin-badge">⚙️ Administrator</div>
     </div>
 
     <div id="notif"></div>
     <div id="konfirmasi">
-    <p id="pesanKonfirmasi"></p>
-    <div class="konfirmasi-buttons">
-        <button id="btnKonfirmasiYa" class="btn btn-hapus">Ya, Hapus</button>
-        <button onclick="tutupKonfirmasi()" class="btn-cancel">Batal</button>
+        <p id="pesanKonfirmasi"></p>
+        <div class="konfirmasi-buttons">
+            <button id="btnKonfirmasiYa" class="btn btn-hapus">Ya, Hapus</button>
+            <button onclick="tutupKonfirmasi()" class="btn-cancel">Batal</button>
+        </div>
     </div>
-</div>
 
     <div class="card">
         <div class="card-header">
@@ -51,7 +52,7 @@
                     <th>Nama</th>
                     <th>Kelas</th>
                     <th>No HP</th>
-                    <th>Ekstrakulikuler</th>
+                    <th>Eskul</th>
                     <th>Tanggal</th>
                     <th>Aksi</th>
                 </tr>
@@ -103,34 +104,34 @@
 
     document.addEventListener('DOMContentLoaded', function() {
 
-       document.querySelectorAll('.btn-hapus').forEach(function(btn) {
-          btn.addEventListener('click', function() {
-        tampilKonfirmasi('Yakin ingin menghapus pendaftaran siswa ini?', this.getAttribute('data-id'));
-           });
-          });
+        document.querySelectorAll('.btn-hapus').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                tampilKonfirmasi('Yakin ingin menghapus semua pendaftaran siswa ini?', this.getAttribute('data-id'));
+            });
+        });
 
-         document.getElementById('btnKonfirmasiYa').addEventListener('click', function() {
-           var id = hapusIdSementara;
-             tutupKonfirmasi();
-             if (!id) return;
+        document.getElementById('btnKonfirmasiYa').addEventListener('click', function() {
+            var id = hapusIdSementara;
+            tutupKonfirmasi();
+            if (!id) return;
 
-              fetch('/admin/hapus-pendaftaran/' + id, {
+            fetch('/admin/hapus-pendaftaran/' + id, {
                 method: 'POST',
                 headers: {
-                 'Content-Type': 'application/json',
-                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                       }
-                     })
-                .then(res => res.json())
-                .then(data => {
-                  if (data.success) {
-            tampilNotif('Pendaftaran berhasil dihapus!', 'sukses');
-            setTimeout(function() { location.reload(); }, 1000);
-        } else {
-            tampilNotif(data.message, 'gagal');
-        }
-    });
-});
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    tampilNotif('Pendaftaran berhasil dihapus!', 'sukses');
+                    setTimeout(function() { location.reload(); }, 1000);
+                } else {
+                    tampilNotif(data.message, 'gagal');
+                }
+            });
+        });
 
     });
 </script>

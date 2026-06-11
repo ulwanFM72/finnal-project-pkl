@@ -8,14 +8,14 @@
 
 <div class="sidebar">
     <div class="sidebar-brand">
-        <h2>⚙️ Dashboard Admin</h2>
-        <p>Sistem Ekstrakulikuler</p>
+        <h2>⚙️ Admin Panel</h2>
+        <p>Sistem Eskul</p>
     </div>
     <div class="sidebar-menu">
         <p class="menu-label">MENU</p>
         <a href="/admin"><span class="icon">🏠</span> Ringkasan</a>
         <a href="/admin/siswa"><span class="icon">👤</span> Pengguna</a>
-        <a href="/admin/eskul" class="active"><span class="icon">🎯</span> Ekstrakulikuler</a>
+        <a href="/admin/eskul" class="active"><span class="icon">🎯</span> Eskul</a>
         <a href="/admin/pembina"><span class="icon">👨‍🏫</span> Pembina</a>
         <a href="/admin/pendaftaran"><span class="icon">📋</span> Pendaftaran</a>
         <a href="/admin/anggota"><span class="icon">👥</span> Anggota</a>
@@ -28,7 +28,8 @@
 <div class="main-content">
 
     <div class="topbar">
-        <h1>Manajemen Ekstrakulikuler</h1>
+        <h1>Manajemen Eskul</h1>
+        <div class="admin-badge">⚙️ Administrator</div>
     </div>
 
     <div id="notif"></div>
@@ -42,8 +43,8 @@
 
     <div class="card">
         <div class="card-header">
-            <h2>🎯 Daftar Ekstrakulikuler</h2>
-            <button class="btn btn-tambah" onclick="bukaFormTambah()">+ Tambah Ekstrakulikuler</button>
+            <h2>🎯 Daftar Eskul</h2>
+            <button class="btn btn-tambah" onclick="bukaFormTambah()">+ Tambah Eskul</button>
         </div>
         <div class="card-body">
             <table>
@@ -76,15 +77,16 @@
 
 <div class="overlay" id="overlay" onclick="tutupSemua()"></div>
 
+<!-- Modal Tambah -->
 <div class="modal" id="modalTambah">
     <div class="modal-header">
-        <h3>Tambah Ekstrakulikuler Baru</h3>
+        <h3>Tambah Eskul Baru</h3>
         <button class="close-btn" onclick="tutupSemua()">✕</button>
     </div>
     <div class="modal-body">
         <div class="form-group">
-            <label>Nama Ekstrakulikuler</label>
-            <input type="text" id="tambahNama" placeholder="Masukkan nama ekstrakulikuler">
+            <label>Nama Eskul</label>
+            <input type="text" id="tambahNama" placeholder="Masukkan nama eskul">
         </div>
         <div class="form-group">
             <label>Pembina</label>
@@ -103,9 +105,10 @@
     </div>
 </div>
 
+<!-- Modal Edit -->
 <div class="modal" id="modalEdit">
     <div class="modal-header">
-        <h3>Edit Data Ekstrakulikuler</h3>
+        <h3>Edit Data Eskul</h3>
         <button class="close-btn" onclick="tutupSemua()">✕</button>
     </div>
     <div class="modal-body">

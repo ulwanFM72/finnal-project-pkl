@@ -11,6 +11,7 @@ body {
     min-height: 100vh;
 }
 
+/* ===== SIDEBAR ===== */
 .sidebar {
     width: 220px;
     background: #1e2130;
@@ -105,6 +106,7 @@ body {
     padding: 30px;
 }
 
+/* ===== TOPBAR ===== */
 .topbar {
     display: flex;
     justify-content: space-between;
@@ -129,6 +131,7 @@ body {
     gap: 6px;
 }
 
+/* ===== CARD STATS ===== */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -181,6 +184,7 @@ body {
     font-weight: bold;
 }
 
+/* ===== TABLE CARD ===== */
 .card {
     background: white;
     border-radius: 8px;
@@ -209,6 +213,7 @@ body {
     padding: 0;
 }
 
+/* ===== TABLE ===== */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -241,6 +246,7 @@ tr:hover td {
     background: #fafafa;
 }
 
+/* ===== BUTTONS ===== */
 .btn {
     padding: 6px 14px;
     border: none;
@@ -293,6 +299,7 @@ tr:hover td {
     background: #2d3148;
 }
 
+/* ===== BADGE ===== */
 .badge {
     padding: 3px 10px;
     border-radius: 12px;
@@ -313,6 +320,7 @@ tr:hover td {
     color: #e65100;
 }
 
+/* ===== MODAL ===== */
 .overlay {
     display: none;
     position: fixed;
@@ -430,6 +438,7 @@ tr:hover td {
     text-align: center;
 }
 
+/* ===== NOTIFIKASI ===== */
 #notif {
     display: none;
     position: fixed;
@@ -443,6 +452,7 @@ tr:hover td {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* ===== KONFIRMASI ===== */
 #konfirmasi {
     display: none;
     position: fixed;

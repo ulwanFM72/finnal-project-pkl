@@ -27,13 +27,13 @@ class AdminController extends Controller
     $totalDaftar  = DB::table('pendaftaran')->count();
 
     $pendaftaranTerbaru = DB::select("
-            SELECT s.nama_lengkap, s.kelas_jurusan, e.nama_ekskul, pd.tanggal_daftar
-            FROM pendaftaran pd
-            INNER JOIN siswa s ON pd.id_siswa = s.id_siswa
-            INNER JOIN ekstrakurikuler e ON pd.id_ekskul = e.id_ekskul
-            ORDER BY pd.tanggal_daftar DESC
-            LIMIT 10
-        ");
+        SELECT s.nama_lengkap, s.kelas_jurusan, e.nama_ekskul, pd.tanggal_daftar
+        FROM pendaftaran pd
+        INNER JOIN siswa s ON pd.id_siswa = s.id_siswa
+        INNER JOIN ekstrakurikuler e ON pd.id_ekskul = e.id_ekskul
+        ORDER BY pd.tanggal_daftar DESC
+        LIMIT 10
+    ");
 
     return view('admin.index', compact(
       'totalSiswa',
@@ -332,19 +332,19 @@ class AdminController extends Controller
     }
 
     $pendaftaran = DB::select("
-            SELECT 
-                s.id_siswa,
-                s.nama_lengkap,
-                s.kelas_jurusan,
-                s.nomor_handphone,
-                GROUP_CONCAT(e.nama_ekskul ORDER BY e.nama_ekskul SEPARATOR ', ') as daftar_eskul,
-                MIN(pd.tanggal_daftar) as tanggal_daftar
-            FROM pendaftaran pd
-            INNER JOIN siswa s ON pd.id_siswa = s.id_siswa
-            INNER JOIN ekstrakurikuler e ON pd.id_ekskul = e.id_ekskul
-            GROUP BY s.id_siswa, s.nama_lengkap, s.kelas_jurusan, s.nomor_handphone
-            ORDER BY s.nama_lengkap
-        ");
+        SELECT 
+            s.id_siswa,
+            s.nama_lengkap,
+            s.kelas_jurusan,
+            s.nomor_handphone,
+            GROUP_CONCAT(e.nama_ekskul ORDER BY e.nama_ekskul SEPARATOR ', ') as daftar_eskul,
+            MIN(pd.tanggal_daftar) as tanggal_daftar
+        FROM pendaftaran pd
+        INNER JOIN siswa s ON pd.id_siswa = s.id_siswa
+        INNER JOIN ekstrakurikuler e ON pd.id_ekskul = e.id_ekskul
+        GROUP BY s.id_siswa, s.nama_lengkap, s.kelas_jurusan, s.nomor_handphone
+        ORDER BY s.nama_lengkap
+    ");
 
     return view('admin.pendaftaran', compact('pendaftaran'));
   }
@@ -366,37 +366,32 @@ class AdminController extends Controller
       return redirect('/');
     }
 
+    // Ambil semua eskul untuk tab
     $eskul = DB::table('ekstrakurikuler')
       ->join('pembina', 'ekstrakurikuler.id_pembina', '=', 'pembina.id_pembina')
       ->select('ekstrakurikuler.*', 'pembina.nama_pembina')
       ->orderBy('nama_ekskul')
       ->get();
 
-    $id_ekskul_aktif = $request->get('eskul', optional($eskul->first())->id_ekskul);
+    // Ambil eskul yang dipilih, default eskul pertama
+    $id_ekskul_aktif = $request->get('eskul', $eskul->first()->id_ekskul);
 
-    if (!$id_ekskul_aktif) {
-      return view('admin.anggota', [
-        'eskul'           => $eskul,
-        'eskul_aktif'     => null,
-        'anggota'         => [],
-        'id_ekskul_aktif' => null,
-      ]);
-    }
-
+    // Ambil eskul aktif
     $eskul_aktif = DB::table('ekstrakurikuler')
       ->join('pembina', 'ekstrakurikuler.id_pembina', '=', 'pembina.id_pembina')
       ->select('ekstrakurikuler.*', 'pembina.nama_pembina')
       ->where('ekstrakurikuler.id_ekskul', $id_ekskul_aktif)
       ->first();
 
+    // Ambil anggota eskul yang dipilih
     $anggota = DB::select("
-            SELECT s.id_siswa, s.nama_lengkap, s.kelas_jurusan,
-                   s.nomor_handphone, pd.tanggal_daftar
-            FROM pendaftaran pd
-            INNER JOIN siswa s ON pd.id_siswa = s.id_siswa
-            WHERE pd.id_ekskul = ?
-            ORDER BY s.nama_lengkap
-        ", [$id_ekskul_aktif]);
+        SELECT s.id_siswa, s.nama_lengkap, s.kelas_jurusan, 
+               s.nomor_handphone, pd.tanggal_daftar
+        FROM pendaftaran pd
+        INNER JOIN siswa s ON pd.id_siswa = s.id_siswa
+        WHERE pd.id_ekskul = ?
+        ORDER BY s.nama_lengkap
+    ", [$id_ekskul_aktif]);
 
     return view('admin.anggota', compact('eskul', 'eskul_aktif', 'anggota', 'id_ekskul_aktif'));
   }
