@@ -34,6 +34,14 @@ class EskulController extends Controller
             return response()->json(['success' => false, 'message' => 'Belum login, silakan login dulu']);
         }
 
+        $eskulAda = DB::table('ekstrakurikuler')
+            ->where('id_ekskul', $request->id_ekskul)
+            ->first();
+
+        if (!$eskulAda) {
+            return response()->json(['success' => false, 'message' => 'Eskul tidak ditemukan!']);
+        }
+
         $jumlahEskul = DB::table('pendaftaran')
             ->where('id_siswa', $id_siswa)
             ->count();

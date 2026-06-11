@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -16,63 +15,47 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $username = trim($request->username);
-        $password = trim($request->password);
+        $password = md5(trim($request->password));
+        // md5 bukan Hash::check
 
-        if (empty($username) || empty($password)) {
+        if (empty(trim($request->username)) || empty(trim($request->password))) {
             return response()->json(['success' => false, 'message' => 'Username dan password harus diisi!']);
         }
 
         $user = DB::table('user')
             ->where('username', $username)
+            ->where('password', $password)
             ->first();
+        // langsung cek username dan password sekaligus, tidak perlu Hash::check
 
-        if (!$user || !Hash::check($password, $user->password)) {
+        if (!$user) {
             return response()->json(['success' => false, 'message' => 'Username atau password salah!']);
         }
 
         if ($user->id_level == 3) {
             session(['id_user' => $user->id_user]);
             session(['role'    => 'admin']);
-
-            return response()->json([
-                'success'  => true,
-                'message'  => 'Login berhasil!',
-                'redirect' => '/admin'
-            ]);
+            return response()->json(['success' => true, 'message' => 'Login berhasil!', 'redirect' => '/admin']);
         } elseif ($user->id_level == 1) {
             $pembina = DB::table('pembina')->where('id_user', $user->id_user)->first();
-
             if (!$pembina) {
                 return response()->json(['success' => false, 'message' => 'Data pembina tidak ditemukan!']);
             }
-
             session(['id_user'      => $user->id_user]);
             session(['id_pembina'   => $pembina->id_pembina]);
             session(['nama_pembina' => $pembina->nama_pembina]);
             session(['role'         => 'pembina']);
-
-            return response()->json([
-                'success'  => true,
-                'message'  => 'Login berhasil!',
-                'redirect' => '/pendaftar'
-            ]);
+            return response()->json(['success' => true, 'message' => 'Login berhasil!', 'redirect' => '/pendaftar']);
         } elseif ($user->id_level == 2) {
             $siswa = DB::table('siswa')->where('id_user', $user->id_user)->first();
-
             if (!$siswa) {
                 return response()->json(['success' => false, 'message' => 'Data siswa tidak ditemukan!']);
             }
-
             session(['id_user'  => $user->id_user]);
             session(['id_siswa' => $siswa->id_siswa]);
             session(['username' => $user->username]);
             session(['role'     => 'siswa']);
-
-            return response()->json([
-                'success'  => true,
-                'message'  => 'Login berhasil!',
-                'redirect' => '/dashboard'
-            ]);
+            return response()->json(['success' => true, 'message' => 'Login berhasil!', 'redirect' => '/dashboard']);
         }
 
         return response()->json(['success' => false, 'message' => 'Role tidak dikenali!']);
@@ -156,7 +139,7 @@ class LoginController extends Controller
 
         $id_user = DB::table('user')->insertGetId([
             'username' => $username,
-            'password' => Hash::make($password),
+            'password' => md5($password),
             'id_level' => 2
         ]);
 
@@ -172,7 +155,7 @@ class LoginController extends Controller
 
     public function editSiswa(Request $request, $id)
     {
-        if (!session('id_user') || !in_array(session('role'), ['admin', 'pembina'])) {
+        if (!session('id_user') || session('role') != 'pembina') {
             return response()->json(['success' => false, 'message' => 'Akses ditolak!']);
         }
 
@@ -187,7 +170,7 @@ class LoginController extends Controller
 
     public function hapusSiswa($id)
     {
-        if (!session('id_user') || !in_array(session('role'), ['admin', 'pembina'])) {
+        if (!session('id_user') || session('role') != 'pembina') {
             return response()->json(['success' => false, 'message' => 'Akses ditolak!']);
         }
 

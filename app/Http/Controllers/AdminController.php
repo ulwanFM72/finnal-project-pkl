@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -102,7 +101,7 @@ class AdminController extends Controller
 
     $id_user = DB::table('user')->insertGetId([
       'username' => $username,
-      'password' => Hash::make($password),
+      'password' => md5($password),
       'id_level' => 1
     ]);
 
@@ -134,7 +133,7 @@ class AdminController extends Controller
   public function hapusPembina($id)
   {
     if (!$this->cekAdmin()) {
-      return response()->json(['success' => false, 'message' => 'Session habis, silakan login ulang!']);
+      return response()->json(['success' => false, 'message' => 'Session habis!']);
     }
 
     $pembina = DB::table('pembina')->where('id_pembina', $id)->first();
@@ -142,6 +141,10 @@ class AdminController extends Controller
     if (!$pembina) {
       return response()->json(['success' => false, 'message' => 'Data pembina tidak ditemukan!']);
     }
+
+    DB::table('ekstrakurikuler')
+      ->where('id_pembina', $id)
+      ->update(['id_pembina' => null]);
 
     DB::table('pembina')->where('id_pembina', $id)->delete();
     DB::table('user')->where('id_user', $pembina->id_user)->delete();
@@ -206,7 +209,7 @@ class AdminController extends Controller
 
     $id_user = DB::table('user')->insertGetId([
       'username' => $username,
-      'password' => Hash::make($password),
+      'password' => md5($password),
       'id_level' => 2
     ]);
 
