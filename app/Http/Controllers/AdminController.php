@@ -217,12 +217,19 @@ class AdminController extends Controller
   public function hapusSiswa($id)
   {
     if (!$this->cekAdmin()) {
-      return response()->json(['success' => false, 'message' => 'Session habis, silakan login ulang!']);
+      return response()->json(['success' => false, 'message' => 'Session habis!']);
     }
 
     $siswa = DB::table('siswa')->where('id_siswa', $id)->first();
+
+    if (!$siswa) {
+      return response()->json(['success' => false, 'message' => 'Data siswa tidak ditemukan!']);
+    }
+
     DB::table('pendaftaran')->where('id_siswa', $id)->delete();
+
     DB::table('siswa')->where('id_siswa', $id)->delete();
+
     DB::table('user')->where('id_user', $siswa->id_user)->delete();
 
     return response()->json(['success' => true, 'message' => 'Siswa berhasil dihapus!']);
@@ -294,5 +301,101 @@ class AdminController extends Controller
     DB::table('ekstrakurikuler')->where('id_ekskul', $id)->delete();
 
     return response()->json(['success' => true, 'message' => 'Eskul berhasil dihapus!']);
+  }
+
+  public function pendaftaran()
+  {
+    if (!$this->cekAdmin()) {
+      return redirect('/');
+    }
+
+    $pendaftaran = DB::select("
+        SELECT 
+            s.id_siswa,
+            s.nama_lengkap,
+            s.kelas_jurusan,
+            s.nomor_handphone,
+            GROUP_CONCAT(e.nama_ekskul ORDER BY e.nama_ekskul SEPARATOR ', ') as daftar_eskul,
+            MIN(pd.tanggal_daftar) as tanggal_daftar
+        FROM pendaftaran pd
+        INNER JOIN siswa s ON pd.id_siswa = s.id_siswa
+        INNER JOIN ekstrakurikuler e ON pd.id_ekskul = e.id_ekskul
+        GROUP BY s.id_siswa, s.nama_lengkap, s.kelas_jurusan, s.nomor_handphone
+        ORDER BY s.nama_lengkap
+    ");
+
+    return view('admin.pendaftaran', compact('pendaftaran'));
+  }
+
+  public function hapusPendaftaran($id)
+  {
+    if (!$this->cekAdmin()) {
+      return response()->json(['success' => false, 'message' => 'Session habis!']);
+    }
+
+    DB::table('pendaftaran')->where('id_siswa', $id)->delete();
+
+    return response()->json(['success' => true, 'message' => 'Pendaftaran berhasil dihapus!']);
+  }
+
+  public function anggota(Request $request)
+  {
+    if (!$this->cekAdmin()) {
+      return redirect('/');
+    }
+
+    $eskul = DB::table('ekstrakurikuler')
+      ->join('pembina', 'ekstrakurikuler.id_pembina', '=', 'pembina.id_pembina')
+      ->select('ekstrakurikuler.*', 'pembina.nama_pembina')
+      ->orderBy('nama_ekskul')
+      ->get();
+
+    $id_ekskul_aktif = $request->get('eskul', $eskul->first()->id_ekskul);
+
+    $eskul_aktif = DB::table('ekstrakurikuler')
+      ->join('pembina', 'ekstrakurikuler.id_pembina', '=', 'pembina.id_pembina')
+      ->select('ekstrakurikuler.*', 'pembina.nama_pembina')
+      ->where('ekstrakurikuler.id_ekskul', $id_ekskul_aktif)
+      ->first();
+
+    $anggota = DB::select("
+        SELECT s.id_siswa, s.nama_lengkap, s.kelas_jurusan, 
+               s.nomor_handphone, pd.tanggal_daftar
+        FROM pendaftaran pd
+        INNER JOIN siswa s ON pd.id_siswa = s.id_siswa
+        WHERE pd.id_ekskul = ?
+        ORDER BY s.nama_lengkap
+    ", [$id_ekskul_aktif]);
+
+    return view('admin.anggota', compact('eskul', 'eskul_aktif', 'anggota', 'id_ekskul_aktif'));
+  }
+
+  public function hapusAnggota($id_siswa, $id_ekskul)
+  {
+    if (!$this->cekAdmin()) {
+      return response()->json(['success' => false, 'message' => 'Session habis!']);
+    }
+
+    DB::table('pendaftaran')
+      ->where('id_siswa', $id_siswa)
+      ->where('id_ekskul', $id_ekskul)
+      ->delete();
+
+    return response()->json(['success' => true, 'message' => 'Anggota berhasil dihapus!']);
+  }
+
+  public function editAnggota(Request $request, $id)
+  {
+    if (!$this->cekAdmin()) {
+      return response()->json(['success' => false, 'message' => 'Session habis!']);
+    }
+
+    DB::table('siswa')->where('id_siswa', $id)->update([
+      'nama_lengkap'    => $request->nama_lengkap,
+      'kelas_jurusan'   => $request->kelas_jurusan,
+      'nomor_handphone' => $request->nomor_handphone,
+    ]);
+
+    return response()->json(['success' => true, 'message' => 'Data berhasil diperbarui!']);
   }
 }

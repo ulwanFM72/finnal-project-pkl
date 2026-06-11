@@ -1,8 +1,61 @@
 <html>
 <head>
-    <title>Kelola Siswa</title>
+    <title>Anggota Eskul</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    <style>
+        .tab-eskul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tab-eskul a {
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            text-decoration: none;
+            background: white;
+            color: #555;
+            border: 1px solid #ddd;
+            transition: all 0.2s;
+        }
+
+        .tab-eskul a:hover {
+            background: #f0f2f5;
+        }
+
+        .tab-eskul a.active {
+            background: #1e2130;
+            color: white;
+            border-color: #1e2130;
+        }
+
+        .eskul-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 4px;
+        }
+
+        .eskul-info .jumlah-badge {
+            background: #e3f2fd;
+            color: #1565c0;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .eskul-info .pembina-badge {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+    </style>
 </head>
 <body>
 
@@ -14,11 +67,11 @@
     <div class="sidebar-menu">
         <p class="menu-label">MENU</p>
         <a href="/admin"><span class="icon">🏠</span> Ringkasan</a>
-        <a href="/admin/siswa" class="active"><span class="icon">👤</span> Pengguna</a>
+        <a href="/admin/siswa"><span class="icon">👤</span> Pengguna</a>
         <a href="/admin/eskul"><span class="icon">🎯</span> Ekstrakulikuler</a>
         <a href="/admin/pembina"><span class="icon">👨‍🏫</span> Pembina</a>
         <a href="/admin/pendaftaran"><span class="icon">📋</span> Pendaftaran</a>
-        <a href="/admin/anggota"><span class="icon">👥</span> Anggota</a>
+        <a href="/admin/anggota" class="active"><span class="icon">👥</span> Anggota</a>
     </div>
     <div class="sidebar-logout">
         <a href="/logout"><span>🚪</span> Logout</a>
@@ -28,7 +81,7 @@
 <div class="main-content">
 
     <div class="topbar">
-        <h1>Manajemen Pengguna</h1>
+        <h1>Daftar Anggota Ekstrakulikuler</h1>
     </div>
 
     <div id="notif"></div>
@@ -40,41 +93,60 @@
         </div>
     </div>
 
+    <div class="tab-eskul">
+        @foreach($eskul as $e)
+        <a href="/admin/anggota?eskul={{ $e->id_ekskul }}"
+            class="{{ $e->id_ekskul == $id_ekskul_aktif ? 'active' : '' }}">
+            {{ $e->nama_ekskul }}
+        </a>
+        @endforeach
+    </div>
+
     <div class="card">
         <div class="card-header">
-            <h2>👤 Daftar Siswa</h2>
-            <button class="btn btn-tambah" onclick="bukaFormTambah()">+ Tambah Siswa</button>
+            <div>
+                <div class="eskul-info">
+                    <h2>👥 Daftar Anggota — {{ $eskul_aktif->nama_ekskul }}</h2>
+                    <span class="jumlah-badge">{{ count($anggota) }} siswa</span>
+                    <span class="pembina-badge">Pembina: {{ $eskul_aktif->nama_pembina }}</span>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <table>
                 <tr>
-                    <th>#</th>
+                    <th>No</th>
                     <th>Nama Lengkap</th>
-                    <th>Kelas & Jurusan</th>
+                    <th>Kelas / Jurusan</th>
                     <th>No HP</th>
-                    <th>Username</th>
-                    <th>Role</th>
+                    <th>Tgl Daftar</th>
                     <th>Aksi</th>
                 </tr>
-                @foreach($siswa as $index => $s)
+                @forelse($anggota as $index => $a)
                 <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ $s->nama_lengkap }}</td>
-                    <td>{{ $s->kelas_jurusan }}</td>
-                    <td>{{ $s->nomor_handphone }}</td>
-                    <td>{{ $s->username }}</td>
-                    <td><span class="badge badge-siswa">Siswa</span></td>
+                    <td>{{ $a->nama_lengkap }}</td>
+                    <td>{{ $a->kelas_jurusan }}</td>
+                    <td>{{ $a->nomor_handphone }}</td>
+                    <td>{{ $a->tanggal_daftar }}</td>
                     <td>
                         <button class="btn btn-edit"
-                            data-id="{{ $s->id_siswa }}"
-                            data-nama="{{ $s->nama_lengkap }}"
-                            data-kelas="{{ $s->kelas_jurusan }}"
-                            data-hp="{{ $s->nomor_handphone }}">Edit</button>
+                            data-id="{{ $a->id_siswa }}"
+                            data-nama="{{ $a->nama_lengkap }}"
+                            data-kelas="{{ $a->kelas_jurusan }}"
+                            data-hp="{{ $a->nomor_handphone }}">Edit</button>
                         <button class="btn btn-hapus"
-                            data-id="{{ $s->id_siswa }}">Hapus</button>
+                            data-id-siswa="{{ $a->id_siswa }}"
+                            data-id-ekskul="{{ $id_ekskul_aktif }}">Hapus</button>
                     </td>
                 </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="6" style="text-align:center; color:#aaa; padding:30px;">
+                        Belum ada anggota di Ekstrakulikuler ini
+                    </td>
+                </tr>
+                @endforelse
             </table>
         </div>
     </div>
@@ -83,43 +155,9 @@
 
 <div class="overlay" id="overlay" onclick="tutupSemua()"></div>
 
-<div class="modal" id="modalTambah">
-    <div class="modal-header">
-        <h3>Tambah Siswa Baru</h3>
-        <button class="close-btn" onclick="tutupSemua()">✕</button>
-    </div>
-    <div class="modal-body">
-        <div class="form-group">
-            <label>Nama Lengkap</label>
-            <input type="text" id="tambahNama" placeholder="Masukkan nama lengkap">
-        </div>
-        <div class="form-group">
-            <label>Kelas & Jurusan</label>
-            <input type="text" id="tambahKelas" placeholder="Contoh: XII RPL 1">
-        </div>
-        <div class="form-group">
-            <label>No HP</label>
-            <input type="text" id="tambahHp" placeholder="Minimal 10 digit">
-        </div>
-        <div class="form-group">
-            <label>Username</label>
-            <input type="text" id="tambahUsername" placeholder="Minimal 4 karakter">
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" id="tambahPassword" placeholder="Minimal 6 karakter">
-        </div>
-        <p class="pesan-error" id="pesanTambah"></p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn-cancel" onclick="tutupSemua()">Batal</button>
-        <button class="btn-save" onclick="simpanTambah()">Simpan</button>
-    </div>
-</div>
-
 <div class="modal" id="modalEdit">
     <div class="modal-header">
-        <h3>Edit Data Siswa</h3>
+        <h3>Edit Data Anggota</h3>
         <button class="close-btn" onclick="tutupSemua()">✕</button>
     </div>
     <div class="modal-body">
@@ -144,7 +182,8 @@
 </div>
 
 <script>
-    var hapusIdSementara = null;
+    var hapusIdSementara   = null;
+    var hapusEskulSementara = null;
 
     function tampilNotif(pesan, tipe) {
         var notif = document.getElementById('notif');
@@ -154,55 +193,22 @@
         setTimeout(function() { notif.style.display = 'none'; }, 2500);
     }
 
-    function tampilKonfirmasi(pesan, id) {
-        hapusIdSementara = id;
+    function tampilKonfirmasi(pesan, id_siswa, id_ekskul) {
+        hapusIdSementara    = id_siswa;
+        hapusEskulSementara = id_ekskul;
         document.getElementById('pesanKonfirmasi').innerText = pesan;
         document.getElementById('konfirmasi').style.display = 'block';
     }
 
     function tutupKonfirmasi() {
-        hapusIdSementara = null;
+        hapusIdSementara    = null;
+        hapusEskulSementara = null;
         document.getElementById('konfirmasi').style.display = 'none';
-    }
-
-    function bukaFormTambah() {
-        document.getElementById('overlay').style.display = 'block';
-        document.getElementById('modalTambah').style.display = 'block';
     }
 
     function tutupSemua() {
         document.getElementById('overlay').style.display = 'none';
-        document.getElementById('modalTambah').style.display = 'none';
         document.getElementById('modalEdit').style.display = 'none';
-    }
-
-    function simpanTambah() {
-        var data = {
-            nama_lengkap:    document.getElementById('tambahNama').value,
-            kelas_jurusan:   document.getElementById('tambahKelas').value,
-            nomor_handphone: document.getElementById('tambahHp').value,
-            username:        document.getElementById('tambahUsername').value,
-            password:        document.getElementById('tambahPassword').value
-        };
-
-        fetch('/admin/tambah-siswa', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-            },
-            body: JSON.stringify(data)
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                tutupSemua();
-                tampilNotif('Siswa berhasil ditambahkan!', 'sukses');
-                setTimeout(function() { location.reload(); }, 1000);
-            } else {
-                document.getElementById('pesanTambah').innerText = data.message;
-            }
-        });
     }
 
     function simpanEdit() {
@@ -211,13 +217,17 @@
         var kelas = document.getElementById('editKelas').value;
         var hp    = document.getElementById('editHp').value;
 
-        fetch('/admin/edit-siswa-admin/' + id, {
+        fetch('/admin/edit-anggota/' + id, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
             },
-            body: JSON.stringify({ nama_lengkap: nama, kelas_jurusan: kelas, nomor_handphone: hp })
+            body: JSON.stringify({
+                nama_lengkap: nama,
+                kelas_jurusan: kelas,
+                nomor_handphone: hp
+            })
         })
         .then(res => res.json())
         .then(data => {
@@ -246,16 +256,19 @@
 
         document.querySelectorAll('.btn-hapus').forEach(function(btn) {
             btn.addEventListener('click', function() {
-                tampilKonfirmasi('Yakin ingin menghapus siswa ini?', this.getAttribute('data-id'));
+                var id_siswa  = this.getAttribute('data-id-siswa');
+                var id_ekskul = this.getAttribute('data-id-ekskul');
+                tampilKonfirmasi('Yakin ingin menghapus anggota ini dari eskul?', id_siswa, id_ekskul);
             });
         });
 
         document.getElementById('btnKonfirmasiYa').addEventListener('click', function() {
-            var id = hapusIdSementara;
+            var id_siswa  = hapusIdSementara;
+            var id_ekskul = hapusEskulSementara;
             tutupKonfirmasi();
-            if (!id) return;
+            if (!id_siswa || !id_ekskul) return;
 
-            fetch('/admin/hapus-siswa-admin/' + id, {
+            fetch('/admin/hapus-anggota/' + id_siswa + '/' + id_ekskul, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -265,7 +278,7 @@
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    tampilNotif('Siswa berhasil dihapus!', 'sukses');
+                    tampilNotif('Anggota berhasil dihapus!', 'sukses');
                     setTimeout(function() { location.reload(); }, 1000);
                 } else {
                     tampilNotif(data.message, 'gagal');

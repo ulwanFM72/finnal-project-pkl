@@ -9,15 +9,16 @@
 <div class="sidebar">
     <div class="sidebar-brand">
         <h2>⚙️ Dashboard Admin</h2>
-        <p>Sistem Eskul</p>
+        <p>Sistem Ekstrakulikuler</p>
     </div>
     <div class="sidebar-menu">
         <p class="menu-label">MENU</p>
         <a href="/admin" class="active"><span class="icon">🏠</span> Ringkasan</a>
         <a href="/admin/siswa"><span class="icon">👤</span> Pengguna</a>
-        <a href="/admin/eskul"><span class="icon">🎯</span> Eskul</a>
+        <a href="/admin/eskul"><span class="icon">🎯</span> Ekstrakulikuler</a>
         <a href="/admin/pembina"><span class="icon">👨‍🏫</span> Pembina</a>
-        <a href="/pendaftar"><span class="icon">📋</span> Pendaftaran</a>
+        <a href="/admin/pendaftaran"><span class="icon">📋</span> Pendaftaran</a>
+        <a href="/admin/anggota"><span class="icon">👥</span> Anggota</a>
     </div>
     <div class="sidebar-logout">
         <a href="/logout"><span>🚪</span> Logout</a>
@@ -25,6 +26,10 @@
 </div>
 
 <div class="main-content">
+
+     <div class="topbar">
+        <h1>Ringkasan Informasi</h1>
+    </div>
 
     <div class="stats-grid">
         <div class="stat-card">
@@ -37,7 +42,7 @@
         <div class="stat-card">
             <div class="stat-icon green">🎯</div>
             <div class="stat-info">
-                <p>Total Eskul</p>
+                <p>Total Ekstrakulikuler</p>
                 <h3>{{ $totalEskul }}</h3>
             </div>
         </div>
@@ -59,14 +64,14 @@
 
     <div class="card">
         <div class="card-header">
-            <h2>✅ Pendaftaran Terbaru</h2>
+            <h2>Pendaftaran Terbaru</h2>
         </div>
         <div class="card-body">
             <table>
                 <tr>
                     <th>Nama</th>
                     <th>Kelas</th>
-                    <th>Eskul</th>
+                    <th>Ekstrakulikuler</th>
                     <th>Tanggal</th>
                 </tr>
                 @foreach($pendaftaranTerbaru as $p)

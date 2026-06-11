@@ -40,3 +40,10 @@ Route::get('/admin/eskul', [AdminController::class, 'eskul']);
 Route::post('/admin/tambah-eskul', [AdminController::class, 'tambahEskul']);
 Route::post('/admin/edit-eskul/{id}', [AdminController::class, 'editEskul']);
 Route::post('/admin/hapus-eskul/{id}', [AdminController::class, 'hapusEskul']);
+
+Route::get('/admin/pendaftaran', [AdminController::class, 'pendaftaran']);
+Route::post('/admin/hapus-pendaftaran/{id}', [AdminController::class, 'hapusPendaftaran']);
+
+Route::get('/admin/anggota', [AdminController::class, 'anggota']);
+Route::post('/admin/hapus-anggota/{id_siswa}/{id_ekskul}', [AdminController::class, 'hapusAnggota'])->where(['id_siswa' => '[0-9]+', 'id_ekskul' => '[0-9]+']);
+Route::post('/admin/edit-anggota/{id}', [AdminController::class, 'editAnggota']);
