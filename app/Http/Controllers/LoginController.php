@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -15,18 +16,17 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $username = trim($request->username);
-        $password = md5(trim($request->password));
+        $password = trim($request->password);
 
-        if (empty(trim($request->username)) || empty(trim($request->password))) {
+        if (empty($username) || empty($password)) {
             return response()->json(['success' => false, 'message' => 'Username dan password harus diisi!']);
         }
 
         $user = DB::table('user')
             ->where('username', $username)
-            ->where('password', $password)
             ->first();
 
-        if (!$user) {
+        if (!$user || !Hash::check($password, $user->password)) {
             return response()->json(['success' => false, 'message' => 'Username atau password salah!']);
         }
 
@@ -74,6 +74,8 @@ class LoginController extends Controller
                 'redirect' => '/dashboard'
             ]);
         }
+
+        return response()->json(['success' => false, 'message' => 'Role tidak dikenali!']);
     }
 
     public function logout()
@@ -91,20 +93,20 @@ class LoginController extends Controller
         }
 
         $pendaftar = DB::select("
-        SELECT 
-            s.id_siswa,
-            s.nama_lengkap, 
-            s.kelas_jurusan, 
-            s.nomor_handphone,
-            e.nama_ekskul,
-            pd.id_pendaftaran,
-            pd.tanggal_daftar,
-            COUNT(*) OVER (PARTITION BY s.id_siswa) as jumlah_eskul
-        FROM pendaftaran pd
-        INNER JOIN siswa s ON pd.id_siswa = s.id_siswa
-        INNER JOIN ekstrakurikuler e ON pd.id_ekskul = e.id_ekskul
-        ORDER BY s.nama_lengkap, e.nama_ekskul
-    ");
+            SELECT 
+                s.id_siswa,
+                s.nama_lengkap, 
+                s.kelas_jurusan, 
+                s.nomor_handphone,
+                e.nama_ekskul,
+                pd.id_pendaftaran,
+                pd.tanggal_daftar,
+                COUNT(*) OVER (PARTITION BY s.id_siswa) as jumlah_eskul
+            FROM pendaftaran pd
+            INNER JOIN siswa s ON pd.id_siswa = s.id_siswa
+            INNER JOIN ekstrakurikuler e ON pd.id_ekskul = e.id_ekskul
+            ORDER BY s.nama_lengkap, e.nama_ekskul
+        ");
 
         $grouped = [];
         foreach ($pendaftar as $p) {
@@ -135,8 +137,8 @@ class LoginController extends Controller
             return response()->json(['success' => false, 'message' => 'Nomor HP hanya boleh berisi angka!']);
         }
 
-        if (strlen($hp) < 10) {
-            return response()->json(['success' => false, 'message' => 'Nomor HP minimal 10 digit!']);
+        if (strlen($hp) < 10 || strlen($hp) > 13) {
+            return response()->json(['success' => false, 'message' => 'Nomor HP harus 10-13 digit!']);
         }
 
         if (strlen($username) < 4) {
@@ -154,7 +156,7 @@ class LoginController extends Controller
 
         $id_user = DB::table('user')->insertGetId([
             'username' => $username,
-            'password' => md5($password),
+            'password' => Hash::make($password),
             'id_level' => 2
         ]);
 
@@ -170,8 +172,8 @@ class LoginController extends Controller
 
     public function editSiswa(Request $request, $id)
     {
-        if (!session('id_user')) {
-            return redirect('/');
+        if (!session('id_user') || !in_array(session('role'), ['admin', 'pembina'])) {
+            return response()->json(['success' => false, 'message' => 'Akses ditolak!']);
         }
 
         DB::table('siswa')->where('id_siswa', $id)->update([
@@ -185,12 +187,19 @@ class LoginController extends Controller
 
     public function hapusSiswa($id)
     {
-        if (!session('id_user')) {
-            return redirect('/');
+        if (!session('id_user') || !in_array(session('role'), ['admin', 'pembina'])) {
+            return response()->json(['success' => false, 'message' => 'Akses ditolak!']);
+        }
+
+        $siswa = DB::table('siswa')->where('id_siswa', $id)->first();
+
+        if (!$siswa) {
+            return response()->json(['success' => false, 'message' => 'Data siswa tidak ditemukan!']);
         }
 
         DB::table('pendaftaran')->where('id_siswa', $id)->delete();
         DB::table('siswa')->where('id_siswa', $id)->delete();
+        DB::table('user')->where('id_user', $siswa->id_user)->delete();
 
         return response()->json(['success' => true, 'message' => 'Data berhasil dihapus']);
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -27,13 +28,13 @@ class AdminController extends Controller
     $totalDaftar  = DB::table('pendaftaran')->count();
 
     $pendaftaranTerbaru = DB::select("
-        SELECT s.nama_lengkap, s.kelas_jurusan, e.nama_ekskul, pd.tanggal_daftar
-        FROM pendaftaran pd
-        INNER JOIN siswa s ON pd.id_siswa = s.id_siswa
-        INNER JOIN ekstrakurikuler e ON pd.id_ekskul = e.id_ekskul
-        ORDER BY pd.tanggal_daftar DESC
-        LIMIT 10
-    ");
+            SELECT s.nama_lengkap, s.kelas_jurusan, e.nama_ekskul, pd.tanggal_daftar
+            FROM pendaftaran pd
+            INNER JOIN siswa s ON pd.id_siswa = s.id_siswa
+            INNER JOIN ekstrakurikuler e ON pd.id_ekskul = e.id_ekskul
+            ORDER BY pd.tanggal_daftar DESC
+            LIMIT 10
+        ");
 
     return view('admin.index', compact(
       'totalSiswa',
@@ -82,8 +83,8 @@ class AdminController extends Controller
       return response()->json(['success' => false, 'message' => 'Nomor HP hanya boleh berisi angka!']);
     }
 
-    if (strlen($hp) < 10) {
-      return response()->json(['success' => false, 'message' => 'Nomor HP minimal 10 digit!']);
+    if (strlen($hp) < 10 || strlen($hp) > 13) {
+      return response()->json(['success' => false, 'message' => 'Nomor HP harus 10-13 digit!']);
     }
 
     if (strlen($username) < 4) {
@@ -101,7 +102,7 @@ class AdminController extends Controller
 
     $id_user = DB::table('user')->insertGetId([
       'username' => $username,
-      'password' => md5($password),
+      'password' => Hash::make($password),
       'id_level' => 1
     ]);
 
@@ -115,6 +116,21 @@ class AdminController extends Controller
     return response()->json(['success' => true, 'message' => 'Pembina berhasil ditambahkan!']);
   }
 
+  public function editPembina(Request $request, $id)
+  {
+    if (!$this->cekAdmin()) {
+      return response()->json(['success' => false, 'message' => 'Session habis, silakan login ulang!']);
+    }
+
+    DB::table('pembina')->where('id_pembina', $id)->update([
+      'nama_pembina'    => $request->nama_pembina,
+      'nomor_handphone' => $request->nomor_handphone,
+      'email'           => $request->email,
+    ]);
+
+    return response()->json(['success' => true, 'message' => 'Data pembina berhasil diperbarui!']);
+  }
+
   public function hapusPembina($id)
   {
     if (!$this->cekAdmin()) {
@@ -122,6 +138,11 @@ class AdminController extends Controller
     }
 
     $pembina = DB::table('pembina')->where('id_pembina', $id)->first();
+
+    if (!$pembina) {
+      return response()->json(['success' => false, 'message' => 'Data pembina tidak ditemukan!']);
+    }
+
     DB::table('pembina')->where('id_pembina', $id)->delete();
     DB::table('user')->where('id_user', $pembina->id_user)->delete();
 
@@ -166,8 +187,8 @@ class AdminController extends Controller
       return response()->json(['success' => false, 'message' => 'Nomor HP hanya boleh berisi angka!']);
     }
 
-    if (strlen($hp) < 10) {
-      return response()->json(['success' => false, 'message' => 'Nomor HP minimal 10 digit!']);
+    if (strlen($hp) < 10 || strlen($hp) > 13) {
+      return response()->json(['success' => false, 'message' => 'Nomor HP harus 10-13 digit!']);
     }
 
     if (strlen($username) < 4) {
@@ -185,7 +206,7 @@ class AdminController extends Controller
 
     $id_user = DB::table('user')->insertGetId([
       'username' => $username,
-      'password' => md5($password),
+      'password' => Hash::make($password),
       'id_level' => 2
     ]);
 
@@ -227,9 +248,7 @@ class AdminController extends Controller
     }
 
     DB::table('pendaftaran')->where('id_siswa', $id)->delete();
-
     DB::table('siswa')->where('id_siswa', $id)->delete();
-
     DB::table('user')->where('id_user', $siswa->id_user)->delete();
 
     return response()->json(['success' => true, 'message' => 'Siswa berhasil dihapus!']);
@@ -310,19 +329,19 @@ class AdminController extends Controller
     }
 
     $pendaftaran = DB::select("
-        SELECT 
-            s.id_siswa,
-            s.nama_lengkap,
-            s.kelas_jurusan,
-            s.nomor_handphone,
-            GROUP_CONCAT(e.nama_ekskul ORDER BY e.nama_ekskul SEPARATOR ', ') as daftar_eskul,
-            MIN(pd.tanggal_daftar) as tanggal_daftar
-        FROM pendaftaran pd
-        INNER JOIN siswa s ON pd.id_siswa = s.id_siswa
-        INNER JOIN ekstrakurikuler e ON pd.id_ekskul = e.id_ekskul
-        GROUP BY s.id_siswa, s.nama_lengkap, s.kelas_jurusan, s.nomor_handphone
-        ORDER BY s.nama_lengkap
-    ");
+            SELECT 
+                s.id_siswa,
+                s.nama_lengkap,
+                s.kelas_jurusan,
+                s.nomor_handphone,
+                GROUP_CONCAT(e.nama_ekskul ORDER BY e.nama_ekskul SEPARATOR ', ') as daftar_eskul,
+                MIN(pd.tanggal_daftar) as tanggal_daftar
+            FROM pendaftaran pd
+            INNER JOIN siswa s ON pd.id_siswa = s.id_siswa
+            INNER JOIN ekstrakurikuler e ON pd.id_ekskul = e.id_ekskul
+            GROUP BY s.id_siswa, s.nama_lengkap, s.kelas_jurusan, s.nomor_handphone
+            ORDER BY s.nama_lengkap
+        ");
 
     return view('admin.pendaftaran', compact('pendaftaran'));
   }
@@ -350,7 +369,16 @@ class AdminController extends Controller
       ->orderBy('nama_ekskul')
       ->get();
 
-    $id_ekskul_aktif = $request->get('eskul', $eskul->first()->id_ekskul);
+    $id_ekskul_aktif = $request->get('eskul', optional($eskul->first())->id_ekskul);
+
+    if (!$id_ekskul_aktif) {
+      return view('admin.anggota', [
+        'eskul'           => $eskul,
+        'eskul_aktif'     => null,
+        'anggota'         => [],
+        'id_ekskul_aktif' => null,
+      ]);
+    }
 
     $eskul_aktif = DB::table('ekstrakurikuler')
       ->join('pembina', 'ekstrakurikuler.id_pembina', '=', 'pembina.id_pembina')
@@ -359,13 +387,13 @@ class AdminController extends Controller
       ->first();
 
     $anggota = DB::select("
-        SELECT s.id_siswa, s.nama_lengkap, s.kelas_jurusan, 
-               s.nomor_handphone, pd.tanggal_daftar
-        FROM pendaftaran pd
-        INNER JOIN siswa s ON pd.id_siswa = s.id_siswa
-        WHERE pd.id_ekskul = ?
-        ORDER BY s.nama_lengkap
-    ", [$id_ekskul_aktif]);
+            SELECT s.id_siswa, s.nama_lengkap, s.kelas_jurusan,
+                   s.nomor_handphone, pd.tanggal_daftar
+            FROM pendaftaran pd
+            INNER JOIN siswa s ON pd.id_siswa = s.id_siswa
+            WHERE pd.id_ekskul = ?
+            ORDER BY s.nama_lengkap
+        ", [$id_ekskul_aktif]);
 
     return view('admin.anggota', compact('eskul', 'eskul_aktif', 'anggota', 'id_ekskul_aktif'));
   }

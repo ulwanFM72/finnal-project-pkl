@@ -102,17 +102,22 @@
         @endforeach
     </div>
 
-    <div class="card">
-        <div class="card-header">
-            <div>
-                <div class="eskul-info">
-                    <h2>👥 Daftar Anggota — {{ $eskul_aktif->nama_ekskul }}</h2>
+   <div class="card">
+    <div class="card-header">
+        <div>
+            <div class="eskul-info">
+                @if($eskul_aktif)
+                    <h2> Daftar Anggota – {{ $eskul_aktif->nama_ekskul }}</h2>
                     <span class="jumlah-badge">{{ count($anggota) }} siswa</span>
                     <span class="pembina-badge">Pembina: {{ $eskul_aktif->nama_pembina }}</span>
-                </div>
+                @else
+                    <h2>Belum ada ekstrakurikuler</h2>
+                    <p>Silakan tambah eskul terlebih dahulu di menu Eskul.</p>
+                @endif
             </div>
         </div>
-        <div class="card-body">
+    </div>
+    <div class="card-body">
             <table>
                 <tr>
                     <th>No</th>
