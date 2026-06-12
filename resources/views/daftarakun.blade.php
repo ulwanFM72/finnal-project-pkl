@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>Daftar Akun</title>
+   <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <link rel="stylesheet" href="{{ asset('css/daftarakun.css') }}">
 </head>
 <body>

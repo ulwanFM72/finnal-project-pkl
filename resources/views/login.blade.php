@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>Login</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -15,7 +16,15 @@
 
         <div class="login-container">
             <div class="form-body">
-                <h2>Login</h2>
+
+                 <div class="brand-section">
+            <div class="logo-wrap">
+                <img src="{{ asset('images/logosmk.jpg') }}" alt="Logo SMK" class="logo-img">
+            </div>
+            <br>
+            <h1 class="brand-name">SMK NEGERI 1 CIJATI</h1>
+            <p class="brand-sub">Sistem Pendaftaran Ekstrakurikuler</p>
+        </div>
 
                 <div class="form-group">
                     <label>Username</label>

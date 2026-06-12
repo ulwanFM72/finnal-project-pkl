@@ -171,3 +171,58 @@ tr:hover td {
 .btn-batal:hover {
     background: #cccccc;
 }
+
+.form-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.form-header h3 {
+    margin: 0;
+    font-size: 15px;
+}
+
+#fotoEskul {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 16px;
+    }
+
+    .dashboard-text h2 {
+        font-size: 16px;
+        text-align: center;
+    }
+
+    table {
+        font-size: 11px;
+    }
+
+    th,
+    td {
+        padding: 6px 8px;
+    }
+
+    #formDaftar {
+        width: 90%;
+        padding: 16px;
+    }
+
+    .form-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #fotoEskul {
+        width: 50px;
+        height: 50px;
+    }
+}

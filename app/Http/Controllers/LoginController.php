@@ -16,7 +16,6 @@ class LoginController extends Controller
     {
         $username = trim($request->username);
         $password = md5(trim($request->password));
-        // md5 bukan Hash::check
 
         if (empty(trim($request->username)) || empty(trim($request->password))) {
             return response()->json(['success' => false, 'message' => 'Username dan password harus diisi!']);
@@ -26,7 +25,6 @@ class LoginController extends Controller
             ->where('username', $username)
             ->where('password', $password)
             ->first();
-        // langsung cek username dan password sekaligus, tidak perlu Hash::check
 
         if (!$user) {
             return response()->json(['success' => false, 'message' => 'Username atau password salah!']);
@@ -43,8 +41,9 @@ class LoginController extends Controller
 
             if (!$pembina) {
                 return response()->json([
-                    'success' => false,
-                    'message' => 'Data pembina tidak ditemukan!'
+                    'success' => true,
+                    'message' => 'Login berhasil!',
+                    'redirect' => '/pendaftar'
                 ]);
             }
 
@@ -55,6 +54,7 @@ class LoginController extends Controller
 
             return response()->json([
                 'success' => true,
+                'message' => 'Login berhasil!',
                 'redirect' => '/pendaftar'
             ]);
         } elseif ($user->id_level == 1) {
@@ -64,8 +64,9 @@ class LoginController extends Controller
 
             if (!$siswa) {
                 return response()->json([
-                    'success' => false,
-                    'message' => 'Data siswa tidak ditemukan!'
+                    'success' => true,
+                    'message' => 'Login berhasil!',
+                    'redirect' => '/dashboard'
                 ]);
             }
 
@@ -75,6 +76,7 @@ class LoginController extends Controller
 
             return response()->json([
                 'success' => true,
+                'message' => 'Login berhasil!',
                 'redirect' => '/dashboard'
             ]);
         }
@@ -90,27 +92,36 @@ class LoginController extends Controller
         return redirect('/');
     }
 
-    public function pendaftar()
+    public function pendaftar(Request $request)
     {
         if (!session('id_user') || !session('id_pembina')) {
             return redirect('/');
         }
 
+        $id_pembina = session('id_pembina');
+
+        $eskul_pembina = DB::table('ekstrakurikuler')
+            ->where('id_pembina', $id_pembina)
+            ->first();
+
+        if (!$eskul_pembina) {
+            return view('pendaftar', ['grouped' => [], 'nama_eskul' => 'Tidak Ada']);
+        }
+
         $pendaftar = DB::select("
-            SELECT 
-                s.id_siswa,
-                s.nama_lengkap, 
-                s.kelas_jurusan, 
-                s.nomor_handphone,
-                e.nama_ekskul,
-                pd.id_pendaftaran,
-                pd.tanggal_daftar,
-                COUNT(*) OVER (PARTITION BY s.id_siswa) as jumlah_eskul
-            FROM pendaftaran pd
-            INNER JOIN siswa s ON pd.id_siswa = s.id_siswa
-            INNER JOIN ekstrakurikuler e ON pd.id_ekskul = e.id_ekskul
-            ORDER BY s.nama_lengkap, e.nama_ekskul
-        ");
+        SELECT 
+            s.id_siswa,
+            s.nama_lengkap, 
+            s.kelas_jurusan, 
+            s.nomor_handphone,
+            e.nama_ekskul,
+            pd.tanggal_daftar
+        FROM pendaftaran pd
+        INNER JOIN siswa s ON pd.id_siswa = s.id_siswa
+        INNER JOIN ekstrakurikuler e ON pd.id_ekskul = e.id_ekskul
+        WHERE pd.id_ekskul = ?
+        ORDER BY s.nama_lengkap
+    ", [$eskul_pembina->id_ekskul]);
 
         $grouped = [];
         foreach ($pendaftar as $p) {
@@ -118,7 +129,9 @@ class LoginController extends Controller
             $grouped[$p->id_siswa]['eskul'][] = $p;
         }
 
-        return view('pendaftar', compact('grouped'));
+        $nama_eskul = $eskul_pembina->nama_ekskul;
+
+        return view('pendaftar', compact('grouped', 'nama_eskul'));
     }
 
     public function daftarAkun(Request $request)

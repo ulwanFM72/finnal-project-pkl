@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>Kelola Siswa</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 </head>
@@ -8,14 +9,14 @@
 
 <div class="sidebar">
     <div class="sidebar-brand">
-        <h2>⚙️ Admin Panel</h2>
-        <p>Sistem Eskul</p>
+        <h2>⚙️ Dashboard Admin</h2>
+        <p>Sistem Ekstrakurikuler</p>
     </div>
     <div class="sidebar-menu">
         <p class="menu-label">MENU</p>
         <a href="/admin"><span class="icon">🏠</span> Ringkasan</a>
         <a href="/admin/siswa" class="active"><span class="icon">👤</span> Pengguna</a>
-        <a href="/admin/eskul"><span class="icon">🎯</span> Eskul</a>
+        <a href="/admin/eskul"><span class="icon">🎯</span> Ekstrakurikuler</a>
         <a href="/admin/pembina"><span class="icon">👨‍🏫</span> Pembina</a>
         <a href="/admin/pendaftaran"><span class="icon">📋</span> Pendaftaran</a>
         <a href="/admin/anggota"><span class="icon">👥</span> Anggota</a>
@@ -29,7 +30,6 @@
 
     <div class="topbar">
         <h1>Manajemen Pengguna</h1>
-        <div class="admin-badge">⚙️ Administrator</div>
     </div>
 
     <div id="notif"></div>
@@ -54,7 +54,6 @@
                     <th>Kelas & Jurusan</th>
                     <th>No HP</th>
                     <th>Username</th>
-                    <th>Role</th>
                     <th>Aksi</th>
                 </tr>
                 @foreach($siswa as $index => $s)
@@ -64,7 +63,6 @@
                     <td>{{ $s->kelas_jurusan }}</td>
                     <td>{{ $s->nomor_handphone }}</td>
                     <td>{{ $s->username }}</td>
-                    <td><span class="badge badge-siswa">Siswa</span></td>
                     <td>
                         <button class="btn btn-edit"
                             data-id="{{ $s->id_siswa }}"
@@ -82,10 +80,8 @@
 
 </div>
 
-<!-- Overlay -->
 <div class="overlay" id="overlay" onclick="tutupSemua()"></div>
 
-<!-- Modal Tambah -->
 <div class="modal" id="modalTambah">
     <div class="modal-header">
         <h3>Tambah Siswa Baru</h3>
@@ -120,7 +116,6 @@
     </div>
 </div>
 
-<!-- Modal Edit -->
 <div class="modal" id="modalEdit">
     <div class="modal-header">
         <h3>Edit Data Siswa</h3>

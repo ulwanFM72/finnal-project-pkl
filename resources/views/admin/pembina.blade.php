@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>Kelola Pembina</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"> 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 </head>
@@ -8,14 +9,14 @@
 
 <div class="sidebar">
     <div class="sidebar-brand">
-        <h2>⚙️ Admin Panel</h2>
-        <p>Sistem Eskul</p>
+        <h2>⚙️ Dashboard Admin</h2>
+        <p>Sistem Ekstrakurikuler</p>
     </div>
     <div class="sidebar-menu">
         <p class="menu-label">MENU</p>
         <a href="/admin"><span class="icon">🏠</span> Ringkasan</a>
         <a href="/admin/siswa"><span class="icon">👤</span> Pengguna</a>
-        <a href="/admin/eskul"><span class="icon">🎯</span> Eskul</a>
+        <a href="/admin/eskul"><span class="icon">🎯</span> Ekstrakurikuler</a>
         <a href="/admin/pembina" class="active"><span class="icon">👨‍🏫</span> Pembina</a>
         <a href="/admin/pendaftaran"><span class="icon">📋</span> Pendaftaran</a>
         <a href="/admin/anggota"><span class="icon">👥</span> Anggota</a>
@@ -29,7 +30,6 @@
 
     <div class="topbar">
         <h1>Manajemen Pembina</h1>
-        <div class="admin-badge">⚙️ Administrator</div>
     </div>
 
     <div id="notif"></div>
@@ -80,7 +80,6 @@
 
 <div class="overlay" id="overlay" onclick="tutupSemua()"></div>
 
-<!-- Modal Tambah -->
 <div class="modal" id="modalTambah">
     <div class="modal-header">
         <h3>Tambah Pembina Baru</h3>
@@ -115,7 +114,6 @@
     </div>
 </div>
 
-<!-- Modal Edit -->
 <div class="modal" id="modalEdit">
     <div class="modal-header">
         <h3>Edit Data Pembina</h3>

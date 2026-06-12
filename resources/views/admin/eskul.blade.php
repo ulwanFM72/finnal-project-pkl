@@ -1,6 +1,7 @@
 <html>
 <head>
-    <title>Kelola Eskul</title>
+    <title>Kelola Ekstrakurikuler</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 </head>
@@ -8,14 +9,14 @@
 
 <div class="sidebar">
     <div class="sidebar-brand">
-        <h2>⚙️ Admin Panel</h2>
-        <p>Sistem Eskul</p>
+        <h2>⚙️ Dashboard Admin</h2>
+        <p>Sistem Ekstrakurikuler</p>
     </div>
     <div class="sidebar-menu">
         <p class="menu-label">MENU</p>
         <a href="/admin"><span class="icon">🏠</span> Ringkasan</a>
         <a href="/admin/siswa"><span class="icon">👤</span> Pengguna</a>
-        <a href="/admin/eskul" class="active"><span class="icon">🎯</span> Eskul</a>
+        <a href="/admin/eskul" class="active"><span class="icon">🎯</span> Ekstrakurikuler</a>
         <a href="/admin/pembina"><span class="icon">👨‍🏫</span> Pembina</a>
         <a href="/admin/pendaftaran"><span class="icon">📋</span> Pendaftaran</a>
         <a href="/admin/anggota"><span class="icon">👥</span> Anggota</a>
@@ -28,8 +29,7 @@
 <div class="main-content">
 
     <div class="topbar">
-        <h1>Manajemen Eskul</h1>
-        <div class="admin-badge">⚙️ Administrator</div>
+        <h1>Manajemen Ekstrakurikuler</h1>
     </div>
 
     <div id="notif"></div>
@@ -43,14 +43,14 @@
 
     <div class="card">
         <div class="card-header">
-            <h2>🎯 Daftar Eskul</h2>
-            <button class="btn btn-tambah" onclick="bukaFormTambah()">+ Tambah Eskul</button>
+            <h2>Daftar Ekstrakurikuler</h2>
+            <button class="btn btn-tambah" onclick="bukaFormTambah()">+ Tambah Ekstrakurikuler</button>
         </div>
         <div class="card-body">
             <table>
                 <tr>
                     <th>#</th>
-                    <th>Nama Eskul</th>
+                    <th>Nama Ekstrakurikuler</th>
                     <th>Pembina</th>
                     <th>Aksi</th>
                 </tr>
@@ -77,7 +77,6 @@
 
 <div class="overlay" id="overlay" onclick="tutupSemua()"></div>
 
-<!-- Modal Tambah -->
 <div class="modal" id="modalTambah">
     <div class="modal-header">
         <h3>Tambah Eskul Baru</h3>
@@ -105,7 +104,6 @@
     </div>
 </div>
 
-<!-- Modal Edit -->
 <div class="modal" id="modalEdit">
     <div class="modal-header">
         <h3>Edit Data Eskul</h3>

@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>Data Pendaftar Ekstrakurikuler</title>
+   <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('css/pendaftar.css') }}">
 </head>
@@ -55,7 +56,7 @@
 </div>
 
     <div class="header-bar">
-        <h1>Pendaftar Ekstrakurikuler :</h1>
+        <h1>Pendaftar Ekstrakurikuler : {{ $nama_eskul }}</h1>
         @if(session('nama_pembina'))
             <a href="/logout"><button class="btn-logout">Logout</button></a>
         @endif
@@ -68,11 +69,18 @@
                 <th>Nama Lengkap</th>
                 <th>Kelas & Jurusan</th>
                 <th>Nomor Handphone</th>
-                <th>Ekstrakurikuler</th>
                 <th>Tanggal Daftar</th>
                 <th>Aksi</th>
             </tr>
-            
+
+            @if(count($grouped) == 0)
+            <tr>
+                <td colspan="6" style="text-align:center; color:#999; padding:20px;">
+                    Belum ada pendaftar.
+                </td>
+            </tr>
+            @endif
+
             @php $no = 1; @endphp
 
             @foreach($grouped as $id_siswa => $data)
@@ -82,20 +90,13 @@
                     $jumlah     = count($eskul_list);
                 @endphp
 
-                @foreach($eskul_list as $index => $eskul)
                 <tr>
-                    @if($index === 0)
-                    <td rowspan="{{ $jumlah }}">{{ $no }}</td>
-                    <td rowspan="{{ $jumlah }}">{{ $info->nama_lengkap }}</td>
-                    <td rowspan="{{ $jumlah }}">{{ $info->kelas_jurusan }}</td>
-                    <td rowspan="{{ $jumlah }}">{{ $info->nomor_handphone }}</td>
-                    @endif
-
-                    <td>{{ $eskul->nama_ekskul }}</td>
-                    <td>{{ $eskul->tanggal_daftar }}</td>
-
-                    @if($index === 0)
-                    <td rowspan="{{ $jumlah }}">
+                    <td>{{ $no }}</td>
+                    <td>{{ $info->nama_lengkap }}</td>
+                    <td>{{ $info->kelas_jurusan }}</td>
+                    <td>{{ $info->nomor_handphone }}</td>
+                    <td>{{ $info->tanggal_daftar }}</td>
+                    <td>
                         <button class="btn-edit" onclick="editData(
                             {{ $info->id_siswa }},
                             '{{ $info->nama_lengkap }}',
@@ -104,9 +105,7 @@
                         )">Edit</button>
                         <button class="btn-hapus" onclick="hapusData({{ $info->id_siswa }})">Hapus</button>
                     </td>
-                    @endif
                 </tr>
-                @endforeach
 
             @php $no++; @endphp
             @endforeach
@@ -133,9 +132,7 @@
         notif.innerText = pesan;
         notif.style.display = 'block';
         notif.style.backgroundColor = tipe === 'sukses' ? '#28a745' : '#dc3545';
-        setTimeout(function() {
-            notif.style.display = 'none';
-        }, 2500);
+        setTimeout(function() { notif.style.display = 'none'; }, 2500);
     }
 
     function tampilKonfirmasi(pesan, id) {
@@ -188,14 +185,13 @@
     }
 
     function hapusData(id_siswa) {
-        tampilKonfirmasi('Yakin ingin menghapus semua pendaftaran siswa ini?', id_siswa);
+        tampilKonfirmasi('Yakin ingin menghapus pendaftaran siswa ini?', id_siswa);
     }
 
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('btnKonfirmasiYa').addEventListener('click', function() {
             var id = hapusIdSementara;
             tutupKonfirmasi();
-
             if (!id) return;
 
             fetch('/hapus-siswa/' + id, {
@@ -216,7 +212,7 @@
             });
         });
     });
-</script>
+    </script>
 
 </body>
 </html>

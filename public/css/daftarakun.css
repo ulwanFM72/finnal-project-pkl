@@ -111,3 +111,10 @@ body {
 .btn-kembali:hover {
     background: #565e64;
 }
+
+@media (max-width: 480px) {
+    .register-container {
+        width: 90%;
+        padding: 20px;
+    }
+}

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->date('tanggal_daftar');
             $table->timestamps();
 
-            $table->unique(['id_siswa', 'id_ekskul']); // cegah daftar duplikat
+            $table->unique(['id_siswa', 'id_ekskul']);
             $table->foreign('id_siswa')->references('id_siswa')->on('siswa')->onDelete('cascade');
             $table->foreign('id_ekskul')->references('id_ekskul')->on('ekstrakurikuler')->onDelete('cascade');
         });

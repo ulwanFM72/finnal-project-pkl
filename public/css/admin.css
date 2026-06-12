@@ -11,7 +11,6 @@ body {
     min-height: 100vh;
 }
 
-/* ===== SIDEBAR ===== */
 .sidebar {
     width: 220px;
     background: #1e2130;
@@ -99,14 +98,12 @@ body {
     color: white;
 }
 
-/* ===== MAIN CONTENT ===== */
 .main-content {
     margin-left: 220px;
     flex: 1;
     padding: 30px;
 }
 
-/* ===== TOPBAR ===== */
 .topbar {
     display: flex;
     justify-content: space-between;
@@ -131,7 +128,6 @@ body {
     gap: 6px;
 }
 
-/* ===== CARD STATS ===== */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -184,7 +180,6 @@ body {
     font-weight: bold;
 }
 
-/* ===== TABLE CARD ===== */
 .card {
     background: white;
     border-radius: 8px;
@@ -213,7 +208,6 @@ body {
     padding: 0;
 }
 
-/* ===== TABLE ===== */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -246,7 +240,6 @@ tr:hover td {
     background: #fafafa;
 }
 
-/* ===== BUTTONS ===== */
 .btn {
     padding: 6px 14px;
     border: none;
@@ -317,7 +310,6 @@ tr:hover td {
     background: #2d3148;
 }
 
-/* ===== BADGE ===== */
 .badge {
     padding: 3px 10px;
     border-radius: 12px;
@@ -326,9 +318,10 @@ tr:hover td {
 }
 
 .badge-siswa {
-    background: #e3f2fd;
-    color: #1565c0;
+    background: #e8f5e9;
+    color: #1874ff;
 }
+
 .badge-pembina {
     background: #e8f5e9;
     color: #2e7d32;
@@ -338,7 +331,6 @@ tr:hover td {
     color: #e65100;
 }
 
-/* ===== MODAL ===== */
 .overlay {
     display: none;
     position: fixed;
@@ -456,7 +448,6 @@ tr:hover td {
     text-align: center;
 }
 
-/* ===== NOTIFIKASI ===== */
 #notif {
     display: none;
     position: fixed;
@@ -470,7 +461,6 @@ tr:hover td {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* ===== KONFIRMASI ===== */
 #konfirmasi {
     display: none;
     position: fixed;
@@ -494,4 +484,62 @@ tr:hover td {
 #konfirmasi .konfirmasi-buttons {
     display: flex;
     gap: 8px;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 10px;
+    }
+
+    .sidebar-menu a {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 16px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .topbar h1 {
+        font-size: 16px;
+    }
+
+    table {
+        font-size: 11px;
+    }
+
+    th,
+    td {
+        padding: 6px 8px;
+    }
+
+    .modal {
+        width: 90%;
+    }
+
+    .btn-edit,
+    .btn-hapus {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .sidebar-menu a span.icon {
+        display: none;
+    }
 }

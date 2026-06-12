@@ -32,7 +32,7 @@ class AdminController extends Controller
         INNER JOIN siswa s ON pd.id_siswa = s.id_siswa
         INNER JOIN ekstrakurikuler e ON pd.id_ekskul = e.id_ekskul
         ORDER BY pd.tanggal_daftar DESC
-        LIMIT 10
+        LIMIT 200
     ");
 
     return view('admin.index', compact(
@@ -244,20 +244,16 @@ class AdminController extends Controller
       return response()->json(['success' => false, 'message' => 'Session habis!']);
     }
 
-    // Ambil data siswa dulu
     $siswa = DB::table('siswa')->where('id_siswa', $id)->first();
 
     if (!$siswa) {
       return response()->json(['success' => false, 'message' => 'Data siswa tidak ditemukan!']);
     }
 
-    // Hapus pendaftaran dulu
     DB::table('pendaftaran')->where('id_siswa', $id)->delete();
 
-    // Hapus dari tabel siswa
     DB::table('siswa')->where('id_siswa', $id)->delete();
 
-    // Hapus dari tabel user
     DB::table('user')->where('id_user', $siswa->id_user)->delete();
 
     return response()->json(['success' => true, 'message' => 'Siswa berhasil dihapus!']);
@@ -372,24 +368,20 @@ class AdminController extends Controller
       return redirect('/');
     }
 
-    // Ambil semua eskul untuk tab
     $eskul = DB::table('ekstrakurikuler')
       ->join('pembina', 'ekstrakurikuler.id_pembina', '=', 'pembina.id_pembina')
       ->select('ekstrakurikuler.*', 'pembina.nama_pembina')
       ->orderBy('nama_ekskul')
       ->get();
 
-    // Ambil eskul yang dipilih, default eskul pertama
     $id_ekskul_aktif = $request->get('eskul', $eskul->first()->id_ekskul);
 
-    // Ambil eskul aktif
     $eskul_aktif = DB::table('ekstrakurikuler')
       ->join('pembina', 'ekstrakurikuler.id_pembina', '=', 'pembina.id_pembina')
       ->select('ekstrakurikuler.*', 'pembina.nama_pembina')
       ->where('ekstrakurikuler.id_ekskul', $id_ekskul_aktif)
       ->first();
 
-    // Ambil anggota eskul yang dipilih
     $anggota = DB::select("
         SELECT s.id_siswa, s.nama_lengkap, s.kelas_jurusan, 
                s.nomor_handphone, pd.tanggal_daftar

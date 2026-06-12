@@ -2,6 +2,7 @@
 <html lang="id">
 <head>
     <title>Daftar Ekstrakurikuler</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
 </head>
@@ -9,7 +10,7 @@
 <body>
    <div class="login-wrapper">
     <div class="dashboard-text">
-      <h2>Pilih Maksimal 5 Ekskul, Kembangkan Potensimu!</h2>
+      <h2>Pilih Maksimal 5 Ekskul Dan Kembangkan Potensimu!</h2>
     </div>
 
     <div class="container">
@@ -21,11 +22,25 @@
         </tr>
 
         @foreach($ekstrakurikuler as $eskul)
+        @php
+            $fotoMap = [
+                'Futsal'       => 'Logo_futsal.jpeg',
+                'PMR'          => 'Logo_pmr.jpeg',
+                'Pramuka'      => 'Logo_pramuka.jpeg',
+                'Paskibra'     => 'Logo_paskibra.jpeg',
+                'Volly'        => 'Logo_volly.jpeg',
+                'Rohis'        => 'Logo_rohis.jpeg',
+                'Karawitan'    => 'Logo_karawitan.png',
+                'Marching Band'=> 'Logo_marching band.jpeg',
+                'Cinemak'      => 'Logo_cinemak.jpeg',
+            ];
+            $foto = $fotoMap[$eskul->nama_ekskul] ?? 'logosmk.jpg';
+        @endphp
         <tr>
           <td>{{ $eskul->nama_ekskul }}</td>
           <td>{{ $eskul->nama_pembina }}</td>
           <td>
-            <button class="btn-daftar" onclick="bukaForm({{ $eskul->id_ekskul }}, `{{ $eskul->nama_ekskul }}`)">
+            <button class="btn-daftar" onclick="bukaForm({{ $eskul->id_ekskul }}, `{{ $eskul->nama_ekskul }}`, `{{ asset('images/' . $foto) }}`)">
               Daftar
             </button>
           </td>
@@ -37,7 +52,10 @@
     <div class="overlay" id="overlay" onclick="tutupForm()"></div>
 
     <div id="formDaftar">
-      <h3>Tentukan Eskulmu dan Jangan Salah Pilih</h3>
+      <div class="form-header">
+        <img id="fotoEskul" src="" alt="Logo Eskul">
+        <h3>Tentukan Eskulmu dan Jangan Salah Pilih</h3>
+      </div>
       <p>Ekstrakurikuler: <span id="namaEskulText"></span></p>
       <input type="hidden" id="idEskul">
       <input type="hidden" id="namaEskul">
@@ -51,12 +69,13 @@
    </div>
 
     <script>
-        function bukaForm(idEskul, namaEskul) {
+        function bukaForm(idEskul, namaEskul, fotoEskul) {
             document.getElementById('formDaftar').style.display = 'block';
             document.getElementById('overlay').style.display   = 'block';
             document.getElementById('idEskul').value           = idEskul;
             document.getElementById('namaEskul').value         = namaEskul;
             document.getElementById('namaEskulText').innerText = namaEskul;
+            document.getElementById('fotoEskul').src           = fotoEskul;
         }
 
         function tutupForm() {

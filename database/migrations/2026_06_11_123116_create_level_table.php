@@ -14,7 +14,6 @@ return new class extends Migration
             $table->string('nama_level', 100)->nullable();
         });
 
-        // Seeder data
         DB::table('level')->insert([
             ['id_level' => 1, 'nama_level' => 'siswa'],
             ['id_level' => 2, 'nama_level' => 'pembina'],

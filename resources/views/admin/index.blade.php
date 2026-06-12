@@ -1,22 +1,22 @@
 <html>
 <head>
     <title>Dashboard Admin</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 </head>
 <body>
 
-<!-- Sidebar -->
 <div class="sidebar">
     <div class="sidebar-brand">
-        <h2>⚙️ Admin Panel</h2>
-        <p>Sistem Eskul</p>
+        <h2>⚙️ Dashboard Admin</h2>
+        <p>Sistem Ekstrakurikuler</p>
     </div>
     <div class="sidebar-menu">
         <p class="menu-label">MENU</p>
         <a href="/admin" class="active"><span class="icon">🏠</span> Ringkasan</a>
         <a href="/admin/siswa"><span class="icon">👤</span> Pengguna</a>
-        <a href="/admin/eskul"><span class="icon">🎯</span> Eskul</a>
+        <a href="/admin/eskul"><span class="icon">🎯</span> Ekstrakurikuler</a>
         <a href="/admin/pembina"><span class="icon">👨‍🏫</span> Pembina</a>
         <a href="/admin/pendaftaran"><span class="icon">📋</span> Pendaftaran</a>
         <a href="/admin/anggota"><span class="icon">👥</span> Anggota</a>
@@ -26,15 +26,12 @@
     </div>
 </div>
 
-<!-- Main Content -->
 <div class="main-content">
 
     <div class="topbar">
         <h1>Ringkasan</h1>
-        <div class="admin-badge">⚙️ Administrator</div>
     </div>
 
-    <!-- Stats -->
     <div class="stats-grid">
         <div class="stat-card">
             <div class="stat-icon blue">👤</div>
@@ -46,7 +43,7 @@
         <div class="stat-card">
             <div class="stat-icon green">🎯</div>
             <div class="stat-info">
-                <p>Total Eskul</p>
+                <p>Total Ekstrakurikuler</p>
                 <h3>{{ $totalEskul }}</h3>
             </div>
         </div>
@@ -66,17 +63,16 @@
         </div>
     </div>
 
-    <!-- Tabel Pendaftaran Terbaru -->
     <div class="card">
         <div class="card-header">
-            <h2>✅ Pendaftaran Terbaru</h2>
+            <h2>Pendaftaran Terbaru</h2>
         </div>
         <div class="card-body">
             <table>
                 <tr>
                     <th>Nama</th>
                     <th>Kelas</th>
-                    <th>Eskul</th>
+                    <th>Ekstrakurikuler</th>
                     <th>Tanggal</th>
                 </tr>
                 @foreach($pendaftaranTerbaru as $p)

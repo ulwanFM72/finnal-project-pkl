@@ -194,3 +194,77 @@ tr:hover td {
 .btn-batal:hover {
     background: #cccccc;
 }
+
+.tab-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 16px 24px 0;
+}
+
+.tab-btn {
+    padding: 7px 16px;
+    border: 1.5px solid #ccc;
+    border-radius: 20px;
+    background: white;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tab-btn:hover {
+    border-color: #4a90d9;
+    color: #4a90d9;
+}
+
+.tab-btn.aktif {
+    background: #222;
+    color: white;
+    border-color: #222;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 16px;
+    }
+
+    .header-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .header-bar h1 {
+        font-size: 16px;
+    }
+
+    table {
+        font-size: 11px;
+    }
+
+    th,
+    td {
+        padding: 6px 8px;
+    }
+
+    .btn-edit,
+    .btn-hapus {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+
+    #formEdit {
+        width: 90%;
+        padding: 16px;
+    }
+
+    .tab-container {
+        padding: 12px 12px 0;
+        gap: 6px;
+    }
+
+    .tab-btn {
+        padding: 5px 12px;
+        font-size: 12px;
+    }
+}
