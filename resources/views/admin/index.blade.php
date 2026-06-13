@@ -15,7 +15,7 @@
     <div class="sidebar-menu">
         <p class="menu-label">MENU</p>
         <a href="/admin" class="active"><span class="icon">🏠</span> Ringkasan</a>
-        <a href="/admin/siswa"><span class="icon">👤</span> Pengguna</a>
+        <a href="/admin/siswa"><span class="icon">👤</span> Siswa</a>
         <a href="/admin/eskul"><span class="icon">🎯</span> Ekstrakurikuler</a>
         <a href="/admin/pembina"><span class="icon">👨‍🏫</span> Pembina</a>
         <a href="/admin/pendaftaran"><span class="icon">📋</span> Pendaftaran</a>

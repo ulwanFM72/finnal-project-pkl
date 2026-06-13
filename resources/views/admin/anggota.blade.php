@@ -68,7 +68,7 @@
     <div class="sidebar-menu">
         <p class="menu-label">MENU</p>
         <a href="/admin"><span class="icon">🏠</span> Ringkasan</a>
-        <a href="/admin/siswa"><span class="icon">👤</span> Pengguna</a>
+        <a href="/admin/siswa"><span class="icon">👤</span> Siswa</a>
         <a href="/admin/eskul"><span class="icon">🎯</span> Ekstrakurikuler</a>
         <a href="/admin/pembina"><span class="icon">👨‍🏫</span> Pembina</a>
         <a href="/admin/pendaftaran"><span class="icon">📋</span> Pendaftaran</a>
@@ -182,114 +182,7 @@
     </div>
 </div>
 
-<script>
-    var hapusIdSementara   = null;
-    var hapusEskulSementara = null;
-
-    function tampilNotif(pesan, tipe) {
-        var notif = document.getElementById('notif');
-        notif.innerText = pesan;
-        notif.style.display = 'block';
-        notif.style.backgroundColor = tipe === 'sukses' ? '#28a745' : '#dc3545';
-        setTimeout(function() { notif.style.display = 'none'; }, 2500);
-    }
-
-    function tampilKonfirmasi(pesan, id_siswa, id_ekskul) {
-        hapusIdSementara    = id_siswa;
-        hapusEskulSementara = id_ekskul;
-        document.getElementById('pesanKonfirmasi').innerText = pesan;
-        document.getElementById('konfirmasi').style.display = 'block';
-    }
-
-    function tutupKonfirmasi() {
-        hapusIdSementara    = null;
-        hapusEskulSementara = null;
-        document.getElementById('konfirmasi').style.display = 'none';
-    }
-
-    function tutupSemua() {
-        document.getElementById('overlay').style.display = 'none';
-        document.getElementById('modalEdit').style.display = 'none';
-    }
-
-    function simpanEdit() {
-        var id    = document.getElementById('editId').value;
-        var nama  = document.getElementById('editNama').value;
-        var kelas = document.getElementById('editKelas').value;
-        var hp    = document.getElementById('editHp').value;
-
-        fetch('/admin/edit-anggota/' + id, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-            },
-            body: JSON.stringify({
-                nama_lengkap: nama,
-                kelas_jurusan: kelas,
-                nomor_handphone: hp
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                tutupSemua();
-                tampilNotif('Data berhasil diperbarui!', 'sukses');
-                setTimeout(function() { location.reload(); }, 1000);
-            } else {
-                tampilNotif(data.message, 'gagal');
-            }
-        });
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-
-        // Tombol edit
-        document.querySelectorAll('.btn-edit').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                document.getElementById('overlay').style.display = 'block';
-                document.getElementById('modalEdit').style.display = 'block';
-                document.getElementById('editId').value    = this.getAttribute('data-id');
-                document.getElementById('editNama').value  = this.getAttribute('data-nama');
-                document.getElementById('editKelas').value = this.getAttribute('data-kelas');
-                document.getElementById('editHp').value    = this.getAttribute('data-hp');
-            });
-        });
-
-        document.querySelectorAll('.btn-hapus').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                var id_siswa  = this.getAttribute('data-id-siswa');
-                var id_ekskul = this.getAttribute('data-id-ekskul');
-                tampilKonfirmasi('Yakin ingin menghapus anggota ini dari eskul?', id_siswa, id_ekskul);
-            });
-        });
-
-        document.getElementById('btnKonfirmasiYa').addEventListener('click', function() {
-            var id_siswa  = hapusIdSementara;
-            var id_ekskul = hapusEskulSementara;
-            tutupKonfirmasi();
-            if (!id_siswa || !id_ekskul) return;
-
-            fetch('/admin/hapus-anggota/' + id_siswa + '/' + id_ekskul, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                }
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    tampilNotif('Anggota berhasil dihapus!', 'sukses');
-                    setTimeout(function() { location.reload(); }, 1000);
-                } else {
-                    tampilNotif(data.message, 'gagal');
-                }
-            });
-        });
-
-    });
-</script>
+<script src="{{ asset('js/admin/anggota.js') }}"></script>
 
 </body>
 </html>

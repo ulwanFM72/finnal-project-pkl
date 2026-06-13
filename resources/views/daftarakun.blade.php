@@ -1,7 +1,8 @@
 <html>
 <head>
     <title>Daftar Akun</title>
-   <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <link rel="stylesheet" href="{{ asset('css/daftarakun.css') }}">
 </head>
 <body>
@@ -17,10 +18,19 @@
                 oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
         </div>
 
-        <div class="form-group">
-            <label>Kelas & Jurusan</label>
-            <input type="text" id="kelas_jurusan" 
-             placeholder="Masukkan kelas dan jurusan">
+       <div class="form-group">
+          <label>Kelas & Jurusan</label>
+          <select id="kelas_jurusan">
+        <option value="">Pilih Kelas & Jurusan</option>
+        <option value="X RPL-A">X RPL - A</option>
+        <option value="X RPL-B">X RPL - B</option>
+        <option value="X BD-A">X BD - A</option>
+        <option value="X BD-B">X BD - B</option>
+        <option value="X TKR-A">X TKR - A</option>
+        <option value="X TKR-B">X TKR - B</option>
+        <option value="X APHP-A">X APHP - A</option>
+        <option value="X APHP-B">X APHP - B</option>
+             </select>
         </div>
 
         <div class="form-group">
@@ -47,68 +57,7 @@
         <a href="/"><button type="button" class="btn-kembali">Kembali</button></a>
     </div>
 
-    <script>
-        function daftar() {
-            var nama     = document.getElementById('nama_lengkap').value.trim();
-            var kelas    = document.getElementById('kelas_jurusan').value.trim();
-            var hp       = document.getElementById('nomor_handphone').value.trim();
-            var username = document.getElementById('username').value.trim();
-            var password = document.getElementById('password').value.trim();
-
-            if (!nama || !kelas || !hp || !username || !password) {
-                document.getElementById('pesan').style.color = 'red';
-                document.getElementById('pesan').innerText = 'Semua field harus diisi!';
-                return;
-            }
-
-            if (!/^[a-zA-Z\s]+$/.test(nama)) {
-                document.getElementById('pesan').style.color = 'red';
-                document.getElementById('pesan').innerText = 'Nama hanya boleh berisi huruf!';
-                return;
-            }
-
-            if (hp.length < 10) {
-                document.getElementById('pesan').style.color = 'red';
-                document.getElementById('pesan').innerText = 'Nomor HP minimal 10 digit!';
-                return;
-            }
-
-            if (username.length < 4) {
-                document.getElementById('pesan').style.color = 'red';
-                document.getElementById('pesan').innerText = 'Username minimal 4 karakter!';
-                return;
-            }
-
-            if (password.length < 6) {
-                document.getElementById('pesan').style.color = 'red';
-                document.getElementById('pesan').innerText = 'Password minimal 6 karakter!';
-                return;
-            }
-
-            fetch('/daftar-akun', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({
-                    nama_lengkap:    nama,
-                    kelas_jurusan:   kelas,
-                    nomor_handphone: hp,
-                    username:        username,
-                    password:        password
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById('pesan').style.color = data.success ? 'green' : 'red';
-                document.getElementById('pesan').innerText = data.message;
-                if (data.success) {
-                    setTimeout(() => window.location.href = '/', 1500);
-                }
-            });
-        }
-    </script>
+  <script src="{{ asset('js/daftarakun.js') }}"></script>
 
 </body>
 </html>

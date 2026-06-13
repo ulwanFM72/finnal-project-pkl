@@ -15,7 +15,7 @@
     <div class="sidebar-menu">
         <p class="menu-label">MENU</p>
         <a href="/admin"><span class="icon">🏠</span> Ringkasan</a>
-        <a href="/admin/siswa" class="active"><span class="icon">👤</span> Pengguna</a>
+        <a href="/admin/siswa" class="active"><span class="icon">👤</span> Siswa</a>
         <a href="/admin/eskul"><span class="icon">🎯</span> Ekstrakurikuler</a>
         <a href="/admin/pembina"><span class="icon">👨‍🏫</span> Pembina</a>
         <a href="/admin/pendaftaran"><span class="icon">📋</span> Pendaftaran</a>
@@ -29,7 +29,7 @@
 <div class="main-content">
 
     <div class="topbar">
-        <h1>Manajemen Pengguna</h1>
+        <h1>Manajemen Siswa</h1>
     </div>
 
     <div id="notif"></div>
@@ -92,9 +92,19 @@
             <label>Nama Lengkap</label>
             <input type="text" id="tambahNama" placeholder="Masukkan nama lengkap">
         </div>
-        <div class="form-group">
-            <label>Kelas & Jurusan</label>
-            <input type="text" id="tambahKelas" placeholder="Contoh: XII RPL 1">
+       <div class="form-group">
+    <label>Kelas & Jurusan</label>
+         <select id="tambahKelas">
+        <option value="">Pilih Kelas & Jurusan</option>
+        <option value="X RPL-A">X RPL - A</option>
+        <option value="X RPL-B">X RPL - B</option>
+        <option value="X BD-A">X BD - A</option>
+        <option value="X BD-B">X BD - B</option>
+        <option value="X TKR-A">X TKR - A</option>
+        <option value="X TKR-B">X TKR - B</option>
+        <option value="X APHP-A">X APHP - A</option>
+        <option value="X APHP-B">X APHP - B</option>
+          </select>
         </div>
         <div class="form-group">
             <label>No HP</label>
@@ -142,168 +152,7 @@
     </div>
 </div>
 
-<script>
-    var hapusIdSementara = null;
-
-    function tampilNotif(pesan, tipe) {
-        var notif = document.getElementById('notif');
-        notif.innerText = pesan;
-        notif.style.display = 'block';
-        notif.style.backgroundColor = tipe === 'sukses' ? '#28a745' : '#dc3545';
-        setTimeout(function() { notif.style.display = 'none'; }, 2500);
-    }
-
-    function tampilKonfirmasi(pesan, id) {
-        hapusIdSementara = id;
-        document.getElementById('pesanKonfirmasi').innerText = pesan;
-        document.getElementById('konfirmasi').style.display = 'block';
-    }
-
-    function tutupKonfirmasi() {
-        hapusIdSementara = null;
-        document.getElementById('konfirmasi').style.display = 'none';
-    }
-
-    function bukaFormTambah() {
-        document.getElementById('overlay').style.display = 'block';
-        document.getElementById('modalTambah').style.display = 'block';
-    }
-
-    function tutupSemua() {
-        document.getElementById('overlay').style.display = 'none';
-        document.getElementById('modalTambah').style.display = 'none';
-        document.getElementById('modalEdit').style.display = 'none';
-    }
-
-    function simpanTambah() {
-        var data = {
-            nama_lengkap:    document.getElementById('tambahNama').value,
-            kelas_jurusan:   document.getElementById('tambahKelas').value,
-            nomor_handphone: document.getElementById('tambahHp').value,
-            username:        document.getElementById('tambahUsername').value,
-            password:        document.getElementById('tambahPassword').value
-        };
-
-        fetch('/admin/tambah-siswa', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-            },
-            body: JSON.stringify(data)
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                tutupSemua();
-                tampilNotif('Siswa berhasil ditambahkan!', 'sukses');
-                setTimeout(function() { location.reload(); }, 1000);
-            } else {
-                document.getElementById('pesanTambah').innerText = data.message;
-            }
-        });
-    }
-
-    function simpanEdit() {
-        var id    = document.getElementById('editId').value;
-        var nama  = document.getElementById('editNama').value;
-        var kelas = document.getElementById('editKelas').value;
-        var hp    = document.getElementById('editHp').value;
-
-        fetch('/admin/edit-siswa-admin/' + id, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-            },
-            body: JSON.stringify({ nama_lengkap: nama, kelas_jurusan: kelas, nomor_handphone: hp })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                tutupSemua();
-                tampilNotif('Data berhasil diperbarui!', 'sukses');
-                setTimeout(function() { location.reload(); }, 1000);
-            } else {
-                tampilNotif(data.message, 'gagal');
-            }
-        });
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-
-        document.querySelectorAll('.btn-edit').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                document.getElementById('overlay').style.display = 'block';
-                document.getElementById('modalEdit').style.display = 'block';
-                document.getElementById('editId').value    = this.getAttribute('data-id');
-                document.getElementById('editNama').value  = this.getAttribute('data-nama');
-                document.getElementById('editKelas').value = this.getAttribute('data-kelas');
-                document.getElementById('editHp').value    = this.getAttribute('data-hp');
-            });
-        });
-
-        document.querySelectorAll('.btn-hapus').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                tampilKonfirmasi('Yakin ingin menghapus siswa ini?', this.getAttribute('data-id'));
-            });
-        });
-
-      document.getElementById('btnKonfirmasiYa').addEventListener('click', function() {
-
-    var id = hapusIdSementara;
-
-    console.log("ID yang akan dihapus :", id);
-
-    tutupKonfirmasi();
-
-    if (!id) {
-        console.log("ID kosong");
-        return;
-    }
-
-    fetch('/admin/hapus-siswa-admin/' + id, {
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-            'Accept': 'application/json'
-        }
-    })
-    .then(function(response) {
-
-        console.log("Status HTTP:", response.status);
-
-        return response.json();
-
-    })
-    .then(function(data) {
-
-        console.log("Response Laravel:", data);
-
-        if (data.success) {
-
-            tampilNotif(data.message, 'sukses');
-
-            setTimeout(function() {
-                location.reload();
-            }, 1000);
-
-        } else {
-
-            tampilNotif(data.message, 'gagal');
-
-        }
-
-    })
-    .catch(function(error) {
-
-        console.error("ERROR FETCH:", error);
-
-    });
-
-}); 
-    });
-</script>
+<script src="{{ asset('js/admin/siswa.js') }}"></script>
 
 </body>
 </html>

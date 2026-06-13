@@ -41,9 +41,8 @@ class LoginController extends Controller
 
             if (!$pembina) {
                 return response()->json([
-                    'success' => true,
-                    'message' => 'Login berhasil!',
-                    'redirect' => '/pendaftar'
+                    'success' => false,
+                    'message' => 'Data pembina tidak ditemukan!',
                 ]);
             }
 
@@ -64,8 +63,8 @@ class LoginController extends Controller
 
             if (!$siswa) {
                 return response()->json([
-                    'success' => true,
-                    'message' => 'Login berhasil!',
+                    'success' => false,
+                    'message' => 'Data siswa tidak ditemukan!',
                     'redirect' => '/dashboard'
                 ]);
             }

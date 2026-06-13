@@ -4,10 +4,25 @@
     <title>Daftar Ekstrakurikuler</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="id-siswa" content="{{ session('id_siswa') ?? '' }}">
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
 </head>
 
 <body>
+
+  <div id="notif" style="
+    display:none;
+    position:fixed;
+    top:20px;
+    right:20px;
+    padding:12px 20px;
+    border-radius:6px;
+    color:white;
+    font-size:14px;
+    z-index:9999;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+"></div>
+
    <div class="login-wrapper">
     <div class="dashboard-text">
       <h2>Pilih Maksimal 5 Ekskul Dan Kembangkan Potensimu!</h2>
@@ -31,7 +46,7 @@
                 'Volly'        => 'Logo_volly.jpeg',
                 'Rohis'        => 'Logo_rohis.jpeg',
                 'Karawitan'    => 'Logo_karawitan.png',
-                'Marching Band'=> 'Logo_marching band.jpeg',
+                'Marching Band'=> 'Logo_marching_band.jpeg',
                 'Cinemak'      => 'Logo_cinemak.jpeg',
             ];
             $foto = $fotoMap[$eskul->nama_ekskul] ?? 'logosmk.jpg';
@@ -68,47 +83,7 @@
     </a>
    </div>
 
-    <script>
-        function bukaForm(idEskul, namaEskul, fotoEskul) {
-            document.getElementById('formDaftar').style.display = 'block';
-            document.getElementById('overlay').style.display   = 'block';
-            document.getElementById('idEskul').value           = idEskul;
-            document.getElementById('namaEskul').value         = namaEskul;
-            document.getElementById('namaEskulText').innerText = namaEskul;
-            document.getElementById('fotoEskul').src           = fotoEskul;
-        }
-
-        function tutupForm() {
-            document.getElementById('formDaftar').style.display = 'none';
-            document.getElementById('overlay').style.display   = 'none';
-        }
-
-        function selesai() {
-            var id_ekskul = document.getElementById('idEskul').value;
-
-            @if(session('id_siswa'))
-                fetch('/daftar-eskul', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                    },
-                    body: JSON.stringify({ id_ekskul: id_ekskul })
-                })
-                .then(res => res.json())
-                .then(data => {
-                    alert(data.message);
-                    if (data.success) tutupForm();
-                })
-                .catch(err => {
-                    alert('Terjadi kesalahan: ' + err);
-                });
-            @else
-                alert('Silakan login dulu sebelum mendaftar!');
-                window.location.href = '/';
-            @endif
-        }
-    </script>
+    <script src="{{ asset('js/dashboard.js') }}"></script>
 
 </body>
 </html>

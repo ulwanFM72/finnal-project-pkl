@@ -118,3 +118,19 @@ body {
         padding: 20px;
     }
 }
+
+.form-group select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 13px;
+    outline: none;
+    background: #fff;
+    cursor: pointer;
+    transition: border 0.2s;
+}
+
+.form-group select:focus {
+    border-color: #4a90d9;
+}
