@@ -188,31 +188,37 @@ tr:hover td {
     width: 60px;
     height: 60px;
     object-fit: cover;
+    object-position: center;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 480px) {
     body {
-        padding: 16px;
+        padding: 12px;
     }
 
     .dashboard-text h2 {
-        font-size: 16px;
+        font-size: 14px;
         text-align: center;
     }
 
     table {
-        font-size: 11px;
+        font-size: 10px;
     }
 
     th,
     td {
-        padding: 6px 8px;
+        padding: 5px 6px;
+    }
+
+    .btn-daftar {
+        padding: 3px 8px;
+        font-size: 10px;
     }
 
     #formDaftar {
-        width: 90%;
+        width: 92%;
         padding: 16px;
     }
 
@@ -222,7 +228,13 @@ tr:hover td {
     }
 
     #fotoEskul {
-        width: 50px;
-        height: 50px;
+        width: 45px;
+        height: 45px;
     }
+}
+
+#formDaftar p {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
 }

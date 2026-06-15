@@ -7,7 +7,6 @@
 body {
     font-family: Arial, sans-serif;
     background: #f0f2f5;
-    display: flex;
     min-height: 100vh;
 }
 
@@ -487,49 +486,133 @@ tr:hover td {
 }
 
 @media (max-width: 768px) {
+    .card-body {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+        min-width: 500px;
+        font-size: 11px;
+    }
+
+    th,
+    td {
+        padding: 8px 10px;
+        white-space: nowrap;
+    }
+
+    body {
+        display: block;
+    }
+
     .sidebar {
         width: 100%;
         height: auto;
         position: relative;
         flex-direction: row;
         flex-wrap: wrap;
-        padding: 10px;
+        padding: 8px;
+        gap: 4px;
+    }
+
+    .sidebar-brand {
+        width: 100%;
+        padding: 8px 12px;
+        border-bottom: 1px solid #2d3148;
+    }
+
+    .sidebar-brand h2 {
+        font-size: 13px;
+    }
+
+    .sidebar-brand p {
+        display: none;
+    }
+
+    .sidebar-menu {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 4px 0;
+        width: 100%;
+    }
+
+    .sidebar-menu p.menu-label {
+        display: none;
     }
 
     .sidebar-menu a {
-        padding: 8px 12px;
-        font-size: 12px;
+        padding: 6px 10px;
+        font-size: 11px;
+        gap: 4px;
+    }
+
+    .sidebar-menu a span.icon {
+        font-size: 13px;
+    }
+
+    .sidebar-logout {
+        padding: 6px 10px;
+        border-top: none;
+    }
+
+    .sidebar-logout a {
+        font-size: 11px;
     }
 
     .main-content {
         margin-left: 0;
-        padding: 16px;
+        padding: 12px;
+    }
+
+    .topbar h1 {
+        font-size: 15px;
     }
 
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
     }
 
-    .topbar h1 {
-        font-size: 16px;
+    .stat-card {
+        padding: 12px;
+    }
+
+    .stat-card .stat-info h3 {
+        font-size: 18px;
     }
 
     table {
-        font-size: 11px;
+        font-size: 10px;
     }
 
     th,
     td {
-        padding: 6px 8px;
-    }
-
-    .modal {
-        width: 90%;
+        padding: 5px 6px;
     }
 
     .btn-edit,
     .btn-hapus {
-        padding: 4px 8px;
+        padding: 3px 8px;
+        font-size: 10px;
+    }
+
+    .btn-tambah {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+
+    .modal {
+        width: 92%;
+    }
+
+    .tab-eskul {
+        gap: 5px;
+    }
+
+    .tab-eskul a {
+        padding: 5px 10px;
         font-size: 11px;
     }
 }
@@ -538,8 +621,19 @@ tr:hover td {
     .stats-grid {
         grid-template-columns: repeat(1, 1fr);
     }
+}
 
-    .sidebar-menu a span.icon {
-        display: none;
-    }
+.btn-cetak {
+    padding: 6px 14px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-cetak:hover {
+    background: #218838;
 }

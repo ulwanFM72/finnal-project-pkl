@@ -3,7 +3,12 @@
     <title>Anggota Eskul</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         .tab-eskul {
             display: flex;
@@ -112,6 +117,10 @@
                     <span class="pembina-badge">Pembina: {{ $eskul_aktif->nama_pembina }}</span>
                 </div>
             </div>
+             <div style="display:flex; gap:8px;">
+               <button class="btn btn-cetak" onclick="cetakPDF()">🖨️ Cetak PDF</button>
+               <button class="btn btn-cetak" onclick="cetakPNG()">🖼️ Cetak PNG</button>
+              </div>
         </div>
         <div class="card-body">
             <table>
@@ -183,6 +192,8 @@
 </div>
 
 <script src="{{ asset('js/admin/anggota.js') }}"></script>
+
+<script src="{{ asset('js/cetak.js') }}"></script>
 
 </body>
 </html>

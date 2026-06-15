@@ -8,13 +8,14 @@ function tampilNotif(pesan, tipe) {
     }, 2500);
 }
 
-function bukaForm(idEskul, namaEskul, fotoEskul) {
+function bukaForm(idEskul, namaEskul, fotoEskul, jadwal) {
     document.getElementById("formDaftar").style.display = "block";
     document.getElementById("overlay").style.display = "block";
     document.getElementById("idEskul").value = idEskul;
     document.getElementById("namaEskul").value = namaEskul;
     document.getElementById("namaEskulText").innerText = namaEskul;
     document.getElementById("fotoEskul").src = fotoEskul;
+    document.getElementById("jadwalEskulText").innerText = jadwal;
 }
 
 function tutupForm() {

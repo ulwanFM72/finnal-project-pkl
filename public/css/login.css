@@ -239,7 +239,7 @@ body {
 
 @media (max-width: 480px) {
     .login-text h2 {
-        font-size: 26px;
+        font-size: 22px;
     }
 
     .login-text p {
@@ -247,15 +247,24 @@ body {
     }
 
     .login-container {
-        width: 90%;
+        width: 85%;
     }
 
     .form-body {
-        padding: 20px;
+        padding: 16px 14px;
+        min-height: unset;
     }
 
     .logo-wrap {
         width: 70px;
         height: 70px;
+    }
+
+    .brand-name {
+        font-size: 13px;
+    }
+
+    .brand-sub {
+        font-size: 11px;
     }
 }
