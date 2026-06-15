@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+
 
 class LoginController extends Controller
 {
@@ -15,7 +17,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $username = trim($request->username);
-        $password = md5(trim($request->password));
+        $password = trim($request->password);
 
         if (empty(trim($request->username)) || empty(trim($request->password))) {
             return response()->json(['success' => false, 'message' => 'Username dan password harus diisi!']);
@@ -23,10 +25,9 @@ class LoginController extends Controller
 
         $user = DB::table('user')
             ->where('username', $username)
-            ->where('password', $password)
             ->first();
 
-        if (!$user) {
+        if (!$user || !Hash::check($password, $user->password)) {
             return response()->json(['success' => false, 'message' => 'Username atau password salah!']);
         }
 
@@ -172,7 +173,7 @@ class LoginController extends Controller
 
         $id_user = DB::table('user')->insertGetId([
             'username' => $username,
-            'password' => md5($password),
+            'password' => Hash::make($password),
             'id_level' => 1
         ]);
 

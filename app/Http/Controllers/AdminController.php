@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -101,7 +102,7 @@ class AdminController extends Controller
 
     $id_user = DB::table('user')->insertGetId([
       'username' => $username,
-      'password' => md5($password),
+      'password' => Hash::make($password),
       'id_level' => 2
     ]);
 
@@ -209,7 +210,7 @@ class AdminController extends Controller
 
     $id_user = DB::table('user')->insertGetId([
       'username' => $username,
-      'password' => md5($password),
+      'password' => Hash::make($password),
       'id_level' => 1
     ]);
 

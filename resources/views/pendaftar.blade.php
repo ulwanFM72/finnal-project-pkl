@@ -1,7 +1,7 @@
 <html>
 <head>
     <title>Data Pendaftar Ekstrakurikuler</title>
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+     <link rel="icon" type="image/png" href="{{ asset('images/logo-smkn1cijati.png') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/pendaftar.css') }}">
@@ -58,17 +58,16 @@
     ">Batal</button>
 </div>
 
-   <div class="header-bar">
+ <div class="header-bar">
     <h1>Pendaftar Ekstrakurikuler : {{ $nama_eskul }}</h1>
-    <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-        <div style="display:flex; gap:8px;">
-            <button class="btn-cetak" onclick="cetakPDF()">🖨️ Cetak PDF</button>
-            <button class="btn-cetak" onclick="cetakPNG()">🖼️ Cetak PNG</button>
-        </div>
+    <div class="header-actions">
+        <button class="btn-cetak" onclick="cetakPDF()">🖨️ Cetak PDF</button>
+        <button class="btn-cetak" onclick="cetakPNG()">🖼️ Cetak PNG</button>
         @if(session('nama_pembina'))
             <a href="/logout"><button class="btn-logout">Logout</button></a>
         @endif
     </div>
+</div>
 </div>
 
     <div class="container">

@@ -304,4 +304,18 @@ tr:hover td {
     margin-bottom: 20px;
     width: 100%;
     max-width: 900px;
+    gap: 12px;
+}
+
+.header-bar h1 {
+    font-size: 18px;
+    color: #333;
+    white-space: nowrap;
+}
+
+.header-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-shrink: 0;
 }

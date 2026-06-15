@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <title>Daftar Ekstrakurikuler</title>
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo-smkn1cijati.png') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="id-siswa" content="{{ session('id_siswa') ?? '' }}">

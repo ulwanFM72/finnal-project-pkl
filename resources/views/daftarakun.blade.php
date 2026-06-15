@@ -3,7 +3,7 @@
     <title>Daftar Akun</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+     <link rel="icon" type="image/png" href="{{ asset('images/logo-smkn1cijati.png') }}">
     <link rel="stylesheet" href="{{ asset('css/daftarakun.css') }}">
 </head>
 <body>
@@ -25,6 +25,7 @@
         <option value="">Pilih Kelas & Jurusan</option>
         <option value="X RPL-A">X RPL - A</option>
         <option value="X RPL-B">X RPL - B</option>
+         <option value="X RPL-C">X RPL - C</option>
         <option value="X BD-A">X BD - A</option>
         <option value="X BD-B">X BD - B</option>
         <option value="X TKR-A">X TKR - A</option>
