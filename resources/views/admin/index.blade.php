@@ -69,7 +69,7 @@
             <h2>Pendaftaran Terbaru</h2>
         </div>
         <div class="card-body">
-            <table>
+            <table class="table-ringkasan">
                 <tr>
                     <th>Nama Lengkap</th>
                     <th>Kelas & Jurusan</th>

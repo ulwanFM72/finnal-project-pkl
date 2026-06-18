@@ -207,54 +207,37 @@ body {
     padding: 0;
 }
 
-.card-body table th:nth-child(1),
-.card-body table td:nth-child(1) {
-    width: 18%;
-    white-space: nowrap;
-}
-
-.card-body table th:nth-child(2),
-.card-body table td:nth-child(2) {
-    width: 15%;
-    white-space: nowrap;
-}
-
-.card-body table th:nth-child(3),
-.card-body table td:nth-child(3) {
-    width: 35%;
-}
-
-.card-body table th:nth-child(4),
-.card-body table td:nth-child(4) {
-    width: 20%;
-    white-space: nowrap;
-}
-
-.card-body table th:nth-child(1),
-.card-body table td:nth-child(1) {
+.table-ringkasan th:nth-child(1),
+.table-ringkasan td:nth-child(1) {
     width: 18%;
     white-space: nowrap;
     text-align: left;
 }
 
-.card-body table th:nth-child(2),
-.card-body table td:nth-child(2) {
+.table-ringkasan th:nth-child(2),
+.table-ringkasan td:nth-child(2) {
     width: 15%;
     white-space: nowrap;
     text-align: left;
 }
 
-.card-body table th:nth-child(3),
-.card-body table td:nth-child(3) {
+.table-ringkasan th:nth-child(3),
+.table-ringkasan td:nth-child(3) {
     width: 35%;
     text-align: left;
 }
 
-.card-body table th:nth-child(4),
-.card-body table td:nth-child(4) {
+.table-ringkasan th:nth-child(4),
+.table-ringkasan td:nth-child(4) {
     width: 20%;
     white-space: nowrap;
     text-align: left;
+}
+
+th:last-child,
+td:last-child {
+    text-align: center;
+    white-space: nowrap;
 }
 
 table {
