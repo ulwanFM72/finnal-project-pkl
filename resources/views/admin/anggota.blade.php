@@ -94,7 +94,7 @@
     <div id="konfirmasi">
         <p id="pesanKonfirmasi"></p>
         <div class="konfirmasi-buttons">
-           <button id="btnKonfirmasiYa" class="btn btn-konfirmasi-hapus">Ya, Hapus</button>
+           <button id="btnKonfirmasiYa" class="btn btn-konfirmasi-hapus">Hapus</button>
             <button onclick="tutupKonfirmasi()" class="btn-cancel">Batal</button>
         </div>
     </div>
@@ -127,9 +127,9 @@
                 <tr>
                     <th>No</th>
                     <th>Nama Lengkap</th>
-                    <th>Kelas / Jurusan</th>
-                    <th>No HP</th>
-                    <th>Tgl Daftar</th>
+                    <th>Kelas & Jurusan</th>
+                    <th>Nomor Handphone</th>
+                    <th>Tanggal Daftar</th>
                     <th>Aksi</th>
                 </tr>
                 @forelse($anggota as $index => $a)

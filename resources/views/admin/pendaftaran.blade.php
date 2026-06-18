@@ -39,7 +39,7 @@
     <div id="konfirmasi">
         <p id="pesanKonfirmasi"></p>
         <div class="konfirmasi-buttons">
-           <button id="btnKonfirmasiYa" class="btn btn-konfirmasi-hapus">Ya, Hapus</button>
+           <button id="btnKonfirmasiYa" class="btn btn-konfirmasi-hapus">Hapus</button>
             <button onclick="tutupKonfirmasi()" class="btn-cancel">Batal</button>
         </div>
     </div>
@@ -56,11 +56,11 @@
             <table>
                 <tr>
                     <th>#</th>
-                    <th>Nama</th>
-                    <th>Kelas</th>
-                    <th>No HP</th>
+                    <th>Nama Lengkap</th>
+                    <th>Kelas & Jurusan</th>
+                    <th>Nomor Handphone</th>
                     <th>Ekstrakurikuler</th>
-                    <th>Tanggal</th>
+                    <th>Tanggal Daftar</th>
                     <th>Aksi</th>
                 </tr>
                 @foreach($pendaftaran as $index => $p)

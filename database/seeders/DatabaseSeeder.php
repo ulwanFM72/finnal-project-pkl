@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
         if (!$adminExists) {
             DB::table('user')->insert([
                 'username'   => 'admin',
-                'password'   => Hash::make('admin123'),
+                'password'   => Hash::make('@dm!neskul2026'),
                 'id_level'   => 3,
                 'created_at' => now(),
                 'updated_at' => now(),

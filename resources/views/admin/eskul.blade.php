@@ -37,7 +37,7 @@
     <div id="konfirmasi">
         <p id="pesanKonfirmasi"></p>
         <div class="konfirmasi-buttons">
-            <button id="btnKonfirmasiYa" class="btn btn-konfirmasi-hapus">Ya, Hapus</button>
+            <button id="btnKonfirmasiYa" class="btn btn-konfirmasi-hapus">Hapus</button>
             <button onclick="tutupKonfirmasi()" class="btn-cancel">Batal</button>
         </div>
     </div>
@@ -80,18 +80,18 @@
 
 <div class="modal" id="modalTambah">
     <div class="modal-header">
-        <h3>Tambah Eskul Baru</h3>
+        <h3>Tambah Ekstrakurikuler Baru</h3>
         <button class="close-btn" onclick="tutupSemua()">✕</button>
     </div>
     <div class="modal-body">
         <div class="form-group">
-            <label>Nama Eskul</label>
-            <input type="text" id="tambahNama" placeholder="Masukkan nama eskul">
+            <label>Nama Ekstrakurikuler</label>
+            <input type="text" id="tambahNama" placeholder="Masukkan nama ekstrakurikuler">
         </div>
         <div class="form-group">
             <label>Pembina</label>
             <select id="tambahPembina">
-                <option value="">-- Pilih Pembina --</option>
+                <option value="">Pilih Pembina</option>
                 @foreach($pembina as $p)
                 <option value="{{ $p->id_pembina }}">{{ $p->nama_pembina }}</option>
                 @endforeach
@@ -107,18 +107,18 @@
 
 <div class="modal" id="modalEdit">
     <div class="modal-header">
-        <h3>Edit Data Eskul</h3>
+        <h3>Edit Data Ekstrakurikuler</h3>
         <button class="close-btn" onclick="tutupSemua()">✕</button>
     </div>
     <div class="modal-body">
         <div class="form-group">
-            <label>Nama Eskul</label>
+            <label>Nama Ekstrakurikuler</label>
             <input type="text" id="editNama">
         </div>
         <div class="form-group">
             <label>Pembina</label>
             <select id="editPembina">
-                <option value="">-- Pilih Pembina --</option>
+                <option value="">Pilih Pembina</option>
                 @foreach($pembina as $p)
                 <option value="{{ $p->id_pembina }}">{{ $p->nama_pembina }}</option>
                 @endforeach

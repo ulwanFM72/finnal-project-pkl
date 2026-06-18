@@ -25,14 +25,14 @@
         <option value="">Pilih Kelas & Jurusan</option>
         <option value="X RPL-A">X RPL - A</option>
         <option value="X RPL-B">X RPL - B</option>
-         <option value="X RPL-C">X RPL - C</option>
+        <option value="X RPL-C">X RPL - C</option>
         <option value="X BD-A">X BD - A</option>
         <option value="X BD-B">X BD - B</option>
         <option value="X TKR-A">X TKR - A</option>
         <option value="X TKR-B">X TKR - B</option>
         <option value="X APHP-A">X APHP - A</option>
         <option value="X APHP-B">X APHP - B</option>
-             </select>
+            </select>
         </div>
 
         <div class="form-group">

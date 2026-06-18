@@ -71,10 +71,10 @@
         <div class="card-body">
             <table>
                 <tr>
-                    <th>Nama</th>
-                    <th>Kelas</th>
+                    <th>Nama Lengkap</th>
+                    <th>Kelas & Jurusan</th>
                     <th>Ekstrakurikuler</th>
-                    <th>Tanggal</th>
+                    <th>Tanggal Daftar</th>
                 </tr>
                 @foreach($pendaftaranTerbaru as $p)
                 <tr>

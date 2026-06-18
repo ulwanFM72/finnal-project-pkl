@@ -46,7 +46,7 @@
         cursor:pointer;
         margin-right:6px;
         font-size:13px;
-    ">Ya, Hapus</button>
+    ">Hapus</button>
     <button onclick="tutupKonfirmasi()" style="
         padding:5px 14px;
         background:#e0e0e0;

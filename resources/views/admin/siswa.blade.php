@@ -39,7 +39,7 @@
     <div id="konfirmasi">
         <p id="pesanKonfirmasi"></p>
         <div class="konfirmasi-buttons">
-            <button id="btnKonfirmasiYa" class="btn-konfirmasi-hapus">Ya, Hapus</button>
+            <button id="btnKonfirmasiYa" class="btn-konfirmasi-hapus">Hapus</button>
             <button onclick="tutupKonfirmasi()" class="btn-cancel">Batal</button>
         </div>
     </div>
@@ -59,7 +59,7 @@
                     <th>#</th>
                     <th>Nama Lengkap</th>
                     <th>Kelas & Jurusan</th>
-                    <th>No HP</th>
+                    <th>Nomor Handphone</th>
                     <th>Username</th>
                     <th>Aksi</th>
                 </tr>
@@ -115,7 +115,7 @@
           </select>
         </div>
         <div class="form-group">
-            <label>No HP</label>
+            <label>Nomor Handphone</label>
             <input type="text" id="tambahHp" placeholder="Minimal 10 digit">
         </div>
         <div class="form-group">
@@ -149,7 +149,7 @@
             <input type="text" id="editKelas">
         </div>
         <div class="form-group">
-            <label>No HP</label>
+            <label>Nomor Handphone</label>
             <input type="text" id="editHp">
         </div>
         <input type="hidden" id="editId">

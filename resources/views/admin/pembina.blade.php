@@ -37,7 +37,7 @@
     <div id="konfirmasi">
         <p id="pesanKonfirmasi"></p>
         <div class="konfirmasi-buttons">
-           <button id="btnKonfirmasiYa" class="btn btn-konfirmasi-hapus">Ya, Hapus</button>
+           <button id="btnKonfirmasiYa" class="btn btn-konfirmasi-hapus">Hapus</button>
             <button onclick="tutupKonfirmasi()" class="btn-cancel">Batal</button>
         </div>
     </div>
@@ -51,8 +51,8 @@
             <table>
                 <tr>
                     <th>#</th>
-                    <th>Nama</th>
-                    <th>No HP</th>
+                    <th>Nama Lengkap</th>
+                    <th>Nomor Handphone</th>
                     <th>Email</th>
                     <th>Aksi</th>
                 </tr>
@@ -92,7 +92,7 @@
             <input type="text" id="tambahNama" placeholder="Masukkan nama pembina">
         </div>
         <div class="form-group">
-            <label>No HP</label>
+            <label>Nomor Handphone</label>
             <input type="text" id="tambahHp" placeholder="Minimal 10 digit">
         </div>
         <div class="form-group">
@@ -126,7 +126,7 @@
             <input type="text" id="editNama">
         </div>
         <div class="form-group">
-            <label>No HP</label>
+            <label>Nomor Handphone</label>
             <input type="text" id="editHp">
         </div>
         <div class="form-group">

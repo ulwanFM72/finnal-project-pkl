@@ -46,10 +46,10 @@ table {
 }
 
 th {
-    background-color: #4a90d9;
-    color: white;
+    background-color: #f8f9fa;
+    color: #2c2c2c;
     padding: 10px 14px;
-    text-align: center;
+    text-align: left;
     font-size: 13px;
 }
 
@@ -59,12 +59,23 @@ td {
     color: #444;
     border-bottom: 1px solid #f0f0f0;
     border-right: 1px solid #f0f0f0;
-    text-align: center;
+    text-align: left;
     vertical-align: middle;
 }
 
 tr:last-child td {
     border-bottom: none;
+}
+
+th:first-child,
+td:first-child {
+    text-align: center;
+    width: 50px;
+}
+
+th:last-child,
+td:last-child {
+    text-align: center;
 }
 
 tr:hover td {

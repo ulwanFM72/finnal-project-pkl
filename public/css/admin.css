@@ -207,6 +207,56 @@ body {
     padding: 0;
 }
 
+.card-body table th:nth-child(1),
+.card-body table td:nth-child(1) {
+    width: 18%;
+    white-space: nowrap;
+}
+
+.card-body table th:nth-child(2),
+.card-body table td:nth-child(2) {
+    width: 15%;
+    white-space: nowrap;
+}
+
+.card-body table th:nth-child(3),
+.card-body table td:nth-child(3) {
+    width: 35%;
+}
+
+.card-body table th:nth-child(4),
+.card-body table td:nth-child(4) {
+    width: 20%;
+    white-space: nowrap;
+}
+
+.card-body table th:nth-child(1),
+.card-body table td:nth-child(1) {
+    width: 18%;
+    white-space: nowrap;
+    text-align: left;
+}
+
+.card-body table th:nth-child(2),
+.card-body table td:nth-child(2) {
+    width: 15%;
+    white-space: nowrap;
+    text-align: left;
+}
+
+.card-body table th:nth-child(3),
+.card-body table td:nth-child(3) {
+    width: 35%;
+    text-align: left;
+}
+
+.card-body table th:nth-child(4),
+.card-body table td:nth-child(4) {
+    width: 20%;
+    white-space: nowrap;
+    text-align: left;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -229,10 +279,22 @@ td {
     color: #444;
     border-bottom: 1px solid #f8f8f8;
     vertical-align: middle;
+    text-align: left;
 }
 
 tr:last-child td {
     border-bottom: none;
+}
+
+th:first-child,
+td:first-child {
+    text-align: center;
+    width: 50px;
+}
+
+th:last-child,
+td:last-child {
+    text-align: center;
 }
 
 tr:hover td {
