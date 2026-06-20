@@ -660,6 +660,31 @@ tr:hover td {
         padding: 5px 10px;
         font-size: 11px;
     }
+
+    .card-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .card-header h2 {
+        font-size: 14px;
+    }
+
+    .card-header > div {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .eskul-info {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .eskul-info h2 {
+        width: 100%;
+    }
 }
 
 @media (max-width: 480px) {
@@ -681,4 +706,88 @@ tr:hover td {
 
 .btn-cetak:hover {
     background: #218838;
+}
+
+.btn-glass {
+    background: rgba(255, 255, 255, 0.35);
+
+    backdrop-filter: blur(8px);
+
+    border: 1px solid rgba(255, 255, 255, 0.6);
+
+    border-radius: 999px;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        backdrop-filter 0.25s ease;
+}
+
+.btn-glass:hover {
+    transform: translateY(-6px);
+
+    backdrop-filter: blur(14px);
+
+    box-shadow: 0 20px 40px rgba(9, 43, 235, 0.425);
+}
+
+.btn-glass:active {
+    transform: translateY(-1px) scale(0.96);
+}
+
+.btn-icon .icon {
+    position: absolute;
+
+    left: -24px;
+
+    transition: left 0.3s ease;
+}
+
+.btn-icon .text {
+    transition: transform 0.3s ease;
+}
+
+.btn-icon:hover .icon {
+    left: 12px;
+}
+
+.btn-icon:hover .text {
+    transform: translateX(10px);
+}
+
+.btn-icon:active {
+    transform: scale(0.95);
+}
+
+.sidebar-logout a.btn-icon-link {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar-logout a.btn-icon-link {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar-logout a.btn-icon-link .icon {
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-logout a.btn-icon-link .text {
+    transition: transform 0.3s ease;
+}
+
+.sidebar-logout a.btn-icon-link:hover .icon {
+    transform: translateX(4px);
+}
+
+.sidebar-logout a.btn-icon-link:hover .text {
+    transform: translateX(4px);
 }

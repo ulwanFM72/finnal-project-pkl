@@ -122,6 +122,11 @@ tr:hover td {
     font-size: 13px;
     cursor: pointer;
     transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .btn-logout:hover {
@@ -329,4 +334,28 @@ tr:hover td {
     gap: 8px;
     align-items: center;
     flex-shrink: 0;
+}
+
+.btn-icon .icon {
+    position: absolute;
+
+    left: -24px;
+
+    transition: left 0.3s ease;
+}
+
+.btn-icon .text {
+    transition: transform 0.3s ease;
+}
+
+.btn-icon:hover .icon {
+    left: 12px;
+}
+
+.btn-icon:hover .text {
+    transform: translateX(10px);
+}
+
+.btn-icon:active {
+    transform: scale(0.95);
 }

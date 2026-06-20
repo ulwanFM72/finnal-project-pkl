@@ -16,8 +16,8 @@ body {
 .register-container {
     background: white;
     width: 360px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(83, 146, 228, 0.25);
     padding: 28px;
 }
 
@@ -117,7 +117,7 @@ body {
 
 @media (max-width: 480px) {
     .register-container {
-        width: 92%;
+        width: 85%;
         padding: 20px 16px;
     }
 }

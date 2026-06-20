@@ -25,7 +25,10 @@
         <a href="/admin/anggota"><span class="icon">👥</span> Anggota</a>
     </div>
     <div class="sidebar-logout">
-        <a href="/logout"><span>🚪</span> Logout</a>
+        <a href="/logout" class="btn-icon-link">
+        <span class="icon">🚪</span>
+        <span class="text">Logout</span>
+        </a>
     </div>
 </div>
 

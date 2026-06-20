@@ -79,9 +79,13 @@
         <a href="/admin/pendaftaran"><span class="icon">📋</span> Pendaftaran</a>
         <a href="/admin/anggota"><span class="icon">👥</span> Anggota</a>
     </div>
-    <div class="sidebar-logout">
-        <a href="/logout"><span>🚪</span> Logout</a>
-    </div>
+   <div class="sidebar-logout">
+    <a href="/logout" class="btn-icon-link">
+        <span class="icon">🚪</span>
+        <span class="text">Logout</span>
+    </a>
+</div>
+</div>
 </div>
 
 <div class="main-content">
@@ -102,7 +106,7 @@
     <div class="tab-eskul">
         @foreach($eskul as $e)
         <a href="/admin/anggota?eskul={{ $e->id_ekskul }}"
-            class="{{ $e->id_ekskul == $id_ekskul_aktif ? 'active' : '' }}">
+            class="btn-glass {{ $e->id_ekskul == $id_ekskul_aktif ? 'active' : '' }}">
             {{ $e->nama_ekskul }}
         </a>
         @endforeach

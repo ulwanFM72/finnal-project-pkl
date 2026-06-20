@@ -64,7 +64,12 @@
         <button class="btn-cetak" onclick="cetakPDF()">🖨️ Cetak PDF</button>
         <button class="btn-cetak" onclick="cetakPNG()">🖼️ Cetak PNG</button>
         @if(session('nama_pembina'))
-            <a href="/logout"><button class="btn-logout">Logout</button></a>
+            <a href="/logout">
+              <button class="btn-logout btn-icon">
+              <span class="icon">➜</span>
+              <span class="text">Logout</span>
+              </button>
+            </a>
         @endif
     </div>
 </div>
