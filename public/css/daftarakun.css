@@ -13,12 +13,34 @@ body {
     min-height: 100vh;
 }
 
+.register-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.character-img {
+    position: absolute;
+    top: -133px;
+    right: 100;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.character-img img {
+    width: 210px; /* ← besar kecil karakter */
+    height: auto;
+}
+
 .register-container {
     background: white;
-    width: 360px;
+    width: 400px;
     border-radius: 15px;
     box-shadow: 0 8px 30px rgba(83, 146, 228, 0.25);
     padding: 28px;
+    position: relative;
+    margin-top: 60px;
 }
 
 .register-container h1 {
@@ -53,6 +75,22 @@ body {
     border-color: #4a90d9;
 }
 
+.form-group select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 13px;
+    outline: none;
+    background: #fff;
+    cursor: pointer;
+    transition: border 0.2s;
+}
+
+.form-group select:focus {
+    border-color: #4a90d9;
+}
+
 .btn-daftar {
     width: 100%;
     padding: 9px;
@@ -70,30 +108,6 @@ body {
 
 .btn-daftar:hover {
     background: #357abd;
-}
-
-.login-link {
-    text-align: center;
-    margin-top: 14px;
-    font-size: 12px;
-    color: #888;
-}
-
-.login-link a {
-    color: #4a90d9;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.login-link a:hover {
-    text-decoration: underline;
-}
-
-.pesan {
-    text-align: center;
-    margin-top: 10px;
-    font-size: 13px;
-    min-height: 18px;
 }
 
 .btn-kembali {
@@ -115,25 +129,25 @@ body {
     background: #565e64;
 }
 
+.pesan {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 13px;
+    min-height: 18px;
+}
+
 @media (max-width: 480px) {
     .register-container {
-        width: 85%;
+        width: 350px;
         padding: 20px 16px;
     }
-}
 
-.form-group select {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 13px;
-    outline: none;
-    background: #fff;
-    cursor: pointer;
-    transition: border 0.2s;
-}
+    .character-img {
+        top: -106px;
+        right: 85px;
+    }
 
-.form-group select:focus {
-    border-color: #4a90d9;
+    .character-img img {
+        width: 180px;
+    }
 }

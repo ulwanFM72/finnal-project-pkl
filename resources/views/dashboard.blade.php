@@ -15,8 +15,24 @@
 <div class="login-wrapper">
 
     <div class="dashboard-text">
-        <h2>Pilih Maksimal 5 Ekstrakurikuler <br> Dan Kembangkan Potensimu!</h2>
+    <div class="navbar-spacer"></div>
+
+    <div class="judul-navbar">
+        <h2>
+            Pilih Maksimal 5 Ekstrakurikuler
+            <br>
+            Dan Kembangkan Potensimu!
+        </h2>
+        <p>Tahun Ajaran 2026 / 2029</p>
     </div>
+
+    <a href="/logout" class="logout-link">
+        <button class="btn-kembali btn-icon">
+            <span class="icon">➜</span>
+            <span class="text">Logout</span>
+        </button>
+    </a>
+</div>
 
     <div class="container">
         <table>
@@ -73,7 +89,7 @@
     </div>
     <div class="galeri-section">
     <div class="section-divider-b">
-        <i class="ti ti-photo"></i> Galeri Kegiatan Ekstrakurikuler
+        <i class="ti ti-photo"></i> Galeri Ekstrakurikuler
     </div>
 
     <div class="slider-outer">
@@ -114,16 +130,17 @@
                     </div>
                     <div class="eskul-slide-info">
                         <h3>{{ $eskul->nama_ekskul }}</h3>
-                        <p><span class="info-label">Pembina</span>{{ $eskul->nama_pembina }}</p>
-                        <p><span class="info-label">Jadwal</span>{{ $jadwal }}</p>
+                        <p><span class="info-label">Pembina </span>{{ $eskul->nama_pembina }}</p>
+                        <p>
+                             <span class="info-label">Jadwal </span>
+                             <span style="white-space: pre-line;">{{ $jadwal }}</span>
+                        </p>
                         <p class="info-desc">{{ $desc }}</p>
                     </div>
                 </div>
                 @endforeach
 
             </div>
-            <button class="slider-nav prev" onclick="eskulMove(-1)" aria-label="Sebelumnya">&#8249;</button>
-            <button class="slider-nav next" onclick="eskulMove(1)" aria-label="Berikutnya">&#8250;</button>
         </div>
         <div class="slider-dots" id="eskulDots"></div>
     </div>
@@ -144,13 +161,6 @@
         <button class="btn-selesai btn-island" onclick="selesai()">Selesai</button>
         <button class="btn-selesai btn-island" onclick="tutupForm()">Batal</button>
     </div>
-
-    <a href="/logout" class="logout-link">
-        <button class="btn-kembali btn-icon">
-            <span class="icon">➜</span>
-            <span class="text">Logout</span>
-        </button>
-    </a>
 
 </div>
 

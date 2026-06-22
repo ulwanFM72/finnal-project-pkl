@@ -6,13 +6,13 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: #f0f2f5;
+    background: #eef2f7;
     min-height: 100vh;
 }
 
 .sidebar {
     width: 220px;
-    background: #1e2130;
+    background: #1e3a5f;
     color: white;
     display: flex;
     flex-direction: column;
@@ -38,7 +38,7 @@ body {
 
 .sidebar-brand p {
     font-size: 11px;
-    color: #888;
+    color: #ffffff;
     margin-top: 4px;
 }
 
@@ -49,7 +49,7 @@ body {
 
 .sidebar-menu p.menu-label {
     font-size: 11px;
-    color: #666;
+    color: #ffffff;
     padding: 0 20px;
     margin-bottom: 8px;
     letter-spacing: 1px;
@@ -60,7 +60,7 @@ body {
     align-items: center;
     gap: 10px;
     padding: 10px 20px;
-    color: #aaa;
+    color: #ffffff;
     text-decoration: none;
     font-size: 14px;
     transition: all 0.2s;

@@ -131,12 +131,37 @@ function selesai() {
         animateTo(total + idx);
     };
 
-    let sx = 0;
-    track.addEventListener("touchstart", (e) => {
-        sx = e.touches[0].clientX;
+    const viewport = track.parentElement;
+
+    viewport.addEventListener("click", (e) => {
+        const rect = viewport.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const half = rect.width / 2;
+
+        if (clickX < half) {
+            eskulMove(-1);
+        } else {
+            eskulMove(1);
+        }
     });
-    track.addEventListener("touchend", (e) => {
-        const dx = sx - e.changedTouches[0].clientX;
-        if (Math.abs(dx) > 40) eskulMove(dx > 0 ? 1 : -1);
-    });
+
+    let startX = 0;
+    viewport.addEventListener(
+        "touchstart",
+        (e) => {
+            startX = e.touches[0].clientX;
+        },
+        { passive: true },
+    );
+
+    viewport.addEventListener(
+        "touchend",
+        (e) => {
+            const diff = startX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 40) {
+                eskulMove(diff > 0 ? 1 : -1);
+            }
+        },
+        { passive: true },
+    );
 })();
