@@ -33,9 +33,9 @@
         }
 
         .tab-eskul a.active {
-            background: #1e2130;
+            background: #4a90d9;
             color: white;
-            border-color: #1e2130;
+            border-color: #4a90d9;
         }
 
         .eskul-info {

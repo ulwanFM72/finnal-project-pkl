@@ -11,7 +11,7 @@
     <div class="register-wrapper">
 
         <div class="character-img">
-            <img src="{{ asset('images/karakter2.png') }}" alt="Karakter">
+            <img src="{{ asset('images/karakter.png') }}" alt="Karakter">
         </div>
 
         <div class="register-container">

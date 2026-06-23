@@ -70,6 +70,37 @@ function hapusData(id_siswa) {
     tampilKonfirmasi("Yakin ingin menghapus pendaftaran siswa ini?", id_siswa);
 }
 
+function toggleDropdown() {
+    const menu = document.getElementById("dropdownMenu");
+    menu.classList.toggle("open");
+}
+
+function tutupDropdown() {
+    const menu = document.getElementById("dropdownMenu");
+    if (menu) menu.classList.remove("open");
+}
+
+function filterTabel() {
+    const keyword = document.getElementById("searchInput").value.toLowerCase();
+    const rows = document.querySelectorAll("table tr:not(:first-child)");
+
+    rows.forEach(function (row) {
+        const nama = row.cells[1] ? row.cells[1].innerText.toLowerCase() : "";
+        const kelas = row.cells[2] ? row.cells[2].innerText.toLowerCase() : "";
+        const hp = row.cells[3] ? row.cells[3].innerText.toLowerCase() : "";
+
+        if (
+            nama.includes(keyword) ||
+            kelas.includes(keyword) ||
+            hp.includes(keyword)
+        ) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     document
         .getElementById("btnKonfirmasiYa")
@@ -100,4 +131,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 });
         });
+
+    document.addEventListener("click", function (e) {
+        const wrapper = document.querySelector(".dropdown-wrapper");
+        if (wrapper && !wrapper.contains(e.target)) {
+            tutupDropdown();
+        }
+    });
 });

@@ -95,6 +95,7 @@ body {
 
 .sidebar-logout a:hover {
     color: white;
+    background: rgba(235, 31, 31, 0.74);
 }
 
 .main-content {
@@ -111,7 +112,7 @@ body {
 }
 
 .topbar h1 {
-    font-size: 22px;
+    font-size: 25px;
     color: #333;
 }
 
@@ -341,7 +342,7 @@ tr:hover td {
 }
 
 .btn-tambah {
-    background: #1e2130;
+    background: #4a90d9;
     color: white;
     padding: 8px 16px;
     font-size: 13px;
@@ -612,7 +613,7 @@ tr:hover td {
     }
 
     .topbar h1 {
-        font-size: 15px;
+        font-size: 16px;
     }
 
     .stats-grid {
@@ -728,7 +729,7 @@ tr:hover td {
 
     backdrop-filter: blur(14px);
 
-    box-shadow: 0 20px 40px rgba(9, 43, 235, 0.425);
+    box-shadow: 0 5px 35px #4a90d9;
 }
 
 .btn-glass:active {

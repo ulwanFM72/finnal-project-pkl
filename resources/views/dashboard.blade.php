@@ -113,10 +113,10 @@
                         'Futsal'        => 'Olahraga permainan tim dengan 5 pemain di lapangan tertutup. Melatih kerjasama, kecepatan, dan strategi.',
                         'PMR'           => 'Palang Merah Remaja — melatih keterampilan pertolongan pertama, donor darah, dan kepedulian sosial.',
                         'Pramuka'       => 'Gerakan pramuka membangun karakter, kepemimpinan, kemandirian, dan kecintaan terhadap alam.',
-                        'Paskibra'      => 'Pasukan pengibar bendera — melatih kedisiplinan, ketangkasan baris berbaris, dan nasionalisme.',
+                        'Paskibra'      => 'Pasukan pengibar bendera — melatih kedisiplinan, ketangkasan baris berbaris, dan jiwa nasionalisme.',
                         'Volly'         => 'Olahraga permainan tim 6 vs 6. Melatih koordinasi gerak, reflek, stamina, dan komunikasi tim.',
                         'Rohis'         => 'Rohani Islam — wadah pengembangan spiritual, kajian agama, dan pembinaan akhlak siswa muslim.',
-                        'Karawitan'     => 'Seni musik tradisional Jawa menggunakan gamelan. Melestarikan budaya lokal dan melatih kepekaan seni.',
+                        'Karawitan'     => 'Seni musik tradisional Jawa Barat menggunakan gamelan. Melestarikan budaya lokal dan melatih kepekaan seni.',
                         'Marching Band' => 'Paduan musik dan baris berbaris. Melatih kekompakan, koordinasi, dan penampilan di berbagai acara.',
                         'Cinemak'       => 'Sinema & fotografi — melatih kreativitas dalam dunia film pendek, editing video, dan dokumentasi.',
                     ];
