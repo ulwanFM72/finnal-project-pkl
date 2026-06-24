@@ -193,6 +193,24 @@ class LoginController extends Controller
             return response()->json(['success' => false, 'message' => 'Akses ditolak!']);
         }
 
+        $id_pembina = session('id_pembina');
+        $eskul_pembina = DB::table('ekstrakurikuler')
+            ->where('id_pembina', $id_pembina)
+            ->first();
+
+        if (!$eskul_pembina) {
+            return response()->json(['success' => false, 'message' => 'Kamu tidak memiliki eskul!']);
+        }
+
+        $siswaAdaDiEskul = DB::table('pendaftaran')
+            ->where('id_siswa', $id)
+            ->where('id_ekskul', $eskul_pembina->id_ekskul)
+            ->first();
+
+        if (!$siswaAdaDiEskul) {
+            return response()->json(['success' => false, 'message' => 'Siswa ini bukan anggota eskulmu!']);
+        }
+
         DB::table('siswa')->where('id_siswa', $id)->update([
             'nama_lengkap'    => $request->nama_lengkap,
             'kelas_jurusan'   => $request->kelas_jurusan,
@@ -208,16 +226,35 @@ class LoginController extends Controller
             return response()->json(['success' => false, 'message' => 'Akses ditolak!']);
         }
 
+        $id_pembina = session('id_pembina');
+        $eskul_pembina = DB::table('ekstrakurikuler')
+            ->where('id_pembina', $id_pembina)
+            ->first();
+
+        if (!$eskul_pembina) {
+            return response()->json(['success' => false, 'message' => 'Kamu tidak memiliki eskul!']);
+        }
+
+        $siswaAdaDiEskul = DB::table('pendaftaran')
+            ->where('id_siswa', $id)
+            ->where('id_ekskul', $eskul_pembina->id_ekskul)
+            ->first();
+
+        if (!$siswaAdaDiEskul) {
+            return response()->json(['success' => false, 'message' => 'Siswa ini bukan anggota eskulmu!']);
+        }
+
         $siswa = DB::table('siswa')->where('id_siswa', $id)->first();
 
         if (!$siswa) {
             return response()->json(['success' => false, 'message' => 'Data siswa tidak ditemukan!']);
         }
 
-        DB::table('pendaftaran')->where('id_siswa', $id)->delete();
-        DB::table('siswa')->where('id_siswa', $id)->delete();
-        DB::table('user')->where('id_user', $siswa->id_user)->delete();
+        DB::table('pendaftaran')
+            ->where('id_siswa', $id)
+            ->where('id_ekskul', $eskul_pembina->id_ekskul)
+            ->delete();
 
-        return response()->json(['success' => true, 'message' => 'Data berhasil dihapus']);
+        return response()->json(['success' => true, 'message' => 'Siswa berhasil dikeluarkan dari eskulmu']);
     }
 }

@@ -72,6 +72,12 @@ function hapusData(id_siswa) {
 
 function toggleDropdown() {
     const menu = document.getElementById("dropdownMenu");
+    const btn = document.querySelector(".btn-dropdown");
+    const rect = btn.getBoundingClientRect();
+
+    menu.style.top = rect.bottom + 6 + "px"; /* ← tepat di bawah tombol */
+    menu.style.left = rect.left + "px"; /* ← rata kiri dengan tombol */
+
     menu.classList.toggle("open");
 }
 

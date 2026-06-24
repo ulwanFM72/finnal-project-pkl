@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Anggota Eskul</title>
@@ -10,58 +11,72 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
+    .tab-eskul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+
+    .tab-eskul a {
+        padding: 8px 18px;
+        border-radius: 20px;
+        font-size: 13px;
+        text-decoration: none;
+        background: white;
+        color: #555;
+        border: 1px solid #ddd;
+        transition: all 0.2s;
+    }
+
+    .tab-eskul a:hover { background: #f0f2f5; }
+
+    .tab-eskul a.active {
+        background: #4a90d9;
+        color: white;
+        border-color: #4a90d9;
+    }
+
+    .eskul-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 4px;
+    }
+
+    .eskul-info .jumlah-badge {
+        background: #e3f2fd;
+        color: #1565c0;
+        padding: 3px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .eskul-info .pembina-badge {
+        background: #e8f5e9;
+        color: #2e7d32;
+        padding: 3px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+    }
+
+    @media (max-width: 768px) {
         .tab-eskul {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 20px;
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 6px !important;
+            margin-bottom: 16px;
         }
 
         .tab-eskul a {
-            padding: 8px 18px;
-            border-radius: 20px;
-            font-size: 13px;
-            text-decoration: none;
-            background: white;
-            color: #555;
-            border: 1px solid #ddd;
-            transition: all 0.2s;
+            text-align: center !important;
+            padding: 7px 4px !important;
+            font-size: 11px !important;
+            border-radius: 12px !important;
         }
-
-        .tab-eskul a:hover {
-            background: #f0f2f5;
-        }
-
-        .tab-eskul a.active {
-            background: #4a90d9;
-            color: white;
-            border-color: #4a90d9;
-        }
-
-        .eskul-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 4px;
-        }
-
-        .eskul-info .jumlah-badge {
-            background: #e3f2fd;
-            color: #1565c0;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .eskul-info .pembina-badge {
-            background: #e8f5e9;
-            color: #2e7d32;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
 
@@ -180,9 +195,20 @@
             <input type="text" id="editNama">
         </div>
         <div class="form-group">
-            <label>Kelas & Jurusan</label>
-            <input type="text" id="editKelas">
-        </div>
+    <label>Kelas & Jurusan</label>
+    <select id="editKelas">
+        <option value="">Pilih Kelas & Jurusan</option>
+        <option value="X RPL-A">X RPL - A</option>
+        <option value="X RPL-B">X RPL - B</option>
+        <option value="X RPL-C">X RPL - C</option>
+        <option value="X BD-A">X BD - A</option>
+        <option value="X BD-B">X BD - B</option>
+        <option value="X TKR-A">X TKR - A</option>
+        <option value="X TKR-B">X TKR - B</option>
+        <option value="X APHP-A">X APHP - A</option>
+        <option value="X APHP-B">X APHP - B</option>
+    </select>
+</div>
         <div class="form-group">
             <label>No HP</label>
             <input type="text" id="editHp">

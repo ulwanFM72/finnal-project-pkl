@@ -18,10 +18,11 @@ class EskulController extends Controller
         }
 
         $ekstrakurikuler = DB::select('
-        SELECT ek.id_ekskul, ek.nama_ekskul, p.nama_pembina
-        FROM ekstrakurikuler ek
-        INNER JOIN pembina p ON ek.id_pembina = p.id_pembina
-    ');
+           SELECT ek.id_ekskul, ek.nama_ekskul, ek.foto, ek.foto_kegiatan, ek.jadwal, ek.deskripsi,
+           p.nama_pembina
+           FROM ekstrakurikuler ek
+           INNER JOIN pembina p ON ek.id_pembina = p.id_pembina
+           ');
 
         return view('dashboard', compact('ekstrakurikuler'));
     }

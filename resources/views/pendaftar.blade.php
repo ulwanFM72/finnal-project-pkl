@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Data Pendaftar Ekstrakurikuler</title>

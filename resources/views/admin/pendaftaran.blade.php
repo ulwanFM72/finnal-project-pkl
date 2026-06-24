@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Data Pendaftaran</title>
@@ -58,7 +59,7 @@
         <div class="card-body">
             <table>
                 <tr>
-                    <th>#</th>
+                    <th>No</th>
                     <th>Nama Lengkap</th>
                     <th>Kelas & Jurusan</th>
                     <th>Nomor Handphone</th>

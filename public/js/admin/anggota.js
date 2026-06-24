@@ -70,10 +70,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 this.getAttribute("data-id");
             document.getElementById("editNama").value =
                 this.getAttribute("data-nama");
-            document.getElementById("editKelas").value =
-                this.getAttribute("data-kelas");
             document.getElementById("editHp").value =
                 this.getAttribute("data-hp");
+
+            var kelas = this.getAttribute("data-kelas");
+            var select = document.getElementById("editKelas");
+            select.value = kelas;
+
+            if (select.value !== kelas) {
+                select.value = "";
+            }
         });
     });
 

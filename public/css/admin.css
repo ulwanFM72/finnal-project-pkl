@@ -792,3 +792,25 @@ tr:hover td {
 .sidebar-logout a.btn-icon-link:hover .text {
     transform: translateX(4px);
 }
+
+.modal {
+    max-width: 500px; /* ← pastikan modal cukup lebar */
+    width: 90%;
+}
+
+.upload-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+@media (max-width: 600px) {
+    .upload-group {
+        grid-template-columns: 1fr;
+    }
+
+    .modal {
+        width: 95%;
+        max-width: 95%;
+    }
+}

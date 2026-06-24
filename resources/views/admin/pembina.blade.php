@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Kelola Pembina</title>
@@ -53,7 +54,7 @@
         <div class="card-body">
             <table>
                 <tr>
-                    <th>#</th>
+                    <th>No</th>
                     <th>Nama Lengkap</th>
                     <th>Nomor Handphone</th>
                     <th>Email</th>

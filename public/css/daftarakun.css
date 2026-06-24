@@ -29,7 +29,7 @@ body {
 }
 
 .character-img img {
-    width: 210px; /* ← besar kecil karakter */
+    width: 210px;
     height: auto;
 }
 

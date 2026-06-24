@@ -15,24 +15,22 @@
 <div class="login-wrapper">
 
     <div class="dashboard-text">
-    <div class="navbar-spacer"></div>
-
-    <div class="judul-navbar">
-        <h2>
-            Pilih Maksimal 5 Ekstrakurikuler
-            <br>
-            Dan Kembangkan Potensimu!
-        </h2>
-        <p>Tahun Ajaran 2026 / 2029</p>
+        <div class="navbar-spacer"></div>
+        <div class="judul-navbar">
+            <h2>
+                Pilih Maksimal 5 Ekstrakurikuler
+                <br>
+                Dan Kembangkan Potensimu!
+            </h2>
+            <p>Tahun Ajaran 2026 / 2027</p>
+        </div>
+        <a href="/logout" class="logout-link">
+            <button class="btn-kembali btn-icon">
+                <span class="icon">➜</span>
+                <span class="text">Logout</span>
+            </button>
+        </a>
     </div>
-
-    <a href="/logout" class="logout-link">
-        <button class="btn-kembali btn-icon">
-            <span class="icon">➜</span>
-            <span class="text">Logout</span>
-        </button>
-    </a>
-</div>
 
     <div class="container">
         <table>
@@ -44,32 +42,6 @@
             </tr>
 
             @foreach($ekstrakurikuler as $eskul)
-            @php
-                $fotoMap = [
-                    'Futsal'        => 'Logo_futsal.jpeg',
-                    'PMR'           => 'Logo_pmr.jpeg',
-                    'Pramuka'       => 'Logo_pramuka.jpeg',
-                    'Paskibra'      => 'Logo_paskibra.jpeg',
-                    'Volly'         => 'Logo_volly.jpeg',
-                    'Rohis'         => 'Logo_rohis.jpeg',
-                    'Karawitan'     => 'Logo_karawitan.png',
-                    'Marching Band' => 'Logo_marching_band.jpeg',
-                    'Cinemak'       => 'Logo_cinemak.jpeg',
-                ];
-                $jadwalMap = [
-                    'Pramuka'       => 'Jumat',
-                    'Marching Band' => 'Sabtu',
-                    'Paskibra'      => 'Sabtu',
-                    'Futsal'        => "Rabu Perempuan\nKamis Laki-Laki",
-                    'Volly'         => "Senin Perempuan\nSelasa Laki-Laki",
-                    'Karawitan'     => 'Rabu',
-                    'PMR'           => 'Selasa',
-                    'Rohis'         => 'Senin',
-                    'Cinemak'       => 'Senin',
-                ];
-                $foto   = $fotoMap[$eskul->nama_ekskul] ?? 'logosmk.jpg';
-                $jadwal = $jadwalMap[$eskul->nama_ekskul] ?? '-';
-            @endphp
             <tr>
                 <td>{{ $loop->index + 1 }}</td>
                 <td>{{ $eskul->nama_ekskul }}</td>
@@ -78,8 +50,8 @@
                     <button class="btn-daftar" onclick="bukaForm(
                         {{ $eskul->id_ekskul }},
                         `{{ $eskul->nama_ekskul }}`,
-                        `{{ asset('images/' . $foto) }}`,
-                        `{{ $jadwal }}`
+                        `{{ $eskul->foto ? asset('images/' . $eskul->foto) : asset('images/logosmk.jpg') }}`,
+                        `{{ $eskul->jadwal ?? '-' }}`
                     )">Daftar</button>
                 </td>
             </tr>
@@ -87,67 +59,40 @@
 
         </table>
     </div>
+
     <div class="galeri-section">
-    <div class="section-divider-b">
-        <i class="ti ti-photo"></i> Galeri Ekstrakurikuler
-    </div>
-
-    <div class="slider-outer">
-        <div class="slider-viewport">
-            <div class="slider-track" id="eskulSliderTrack">
-
-                @foreach($ekstrakurikuler as $eskul)
-                @php
-                    $fotoMap = [
-                        'Futsal'        => 'kegiatan_futsal.jpeg',
-                        'PMR'           => 'kegiatan_pmr.jpeg',
-                        'Pramuka'       => 'kegiatan_pramuka.jpeg',
-                        'Paskibra'      => 'kegiatan_paskibra.jpeg',
-                        'Volly'         => 'kegiatan_volly.jpeg',
-                        'Rohis'         => 'kegiatan_rohis.jpeg',
-                        'Karawitan'     => 'kegiatan_karawitan.jpeg',
-                        'Marching Band' => 'kegiatan_marching_band.jpeg',
-                        'Cinemak'       => 'kegiatan_cinemak.jpeg',
-                    ];
-                    $descMap = [
-                        'Futsal'        => 'Olahraga permainan tim dengan 5 pemain di lapangan tertutup. Melatih kerjasama, kecepatan, dan strategi.',
-                        'PMR'           => 'Palang Merah Remaja — melatih keterampilan pertolongan pertama, donor darah, dan kepedulian sosial.',
-                        'Pramuka'       => 'Gerakan pramuka membangun karakter, kepemimpinan, kemandirian, dan kecintaan terhadap alam.',
-                        'Paskibra'      => 'Pasukan pengibar bendera — melatih kedisiplinan, ketangkasan baris berbaris, dan jiwa nasionalisme.',
-                        'Volly'         => 'Olahraga permainan tim 6 vs 6. Melatih koordinasi gerak, reflek, stamina, dan komunikasi tim.',
-                        'Rohis'         => 'Rohani Islam — wadah pengembangan spiritual, kajian agama, dan pembinaan akhlak siswa muslim.',
-                        'Karawitan'     => 'Seni musik tradisional Jawa Barat menggunakan gamelan. Melestarikan budaya lokal dan melatih kepekaan seni.',
-                        'Marching Band' => 'Paduan musik dan baris berbaris. Melatih kekompakan, koordinasi, dan penampilan di berbagai acara.',
-                        'Cinemak'       => 'Sinema & fotografi — melatih kreativitas dalam dunia film pendek, editing video, dan dokumentasi.',
-                    ];
-                    $foto   = $fotoMap[$eskul->nama_ekskul] ?? 'logosmk.jpg';
-                    $jadwal = $jadwalMap[$eskul->nama_ekskul] ?? '-';
-                    $desc   = $descMap[$eskul->nama_ekskul] ?? '';
-                @endphp
-                <div class="eskul-slide">
-                    <div class="eskul-slide-photo">
-                        <img src="{{ asset('images/' . $foto) }}" alt="Foto {{ $eskul->nama_ekskul }}">
-                    </div>
-                    <div class="eskul-slide-info">
-                        <h3>{{ $eskul->nama_ekskul }}</h3>
-                        <p><span class="info-label">Pembina </span>{{ $eskul->nama_pembina }}</p>
-                        <p>
-                             <span class="info-label">Jadwal </span>
-                             <span style="white-space: pre-line;">{{ $jadwal }}</span>
-                        </p>
-                        <p class="info-desc">{{ $desc }}</p>
-                    </div>
-                </div>
-                @endforeach
-
-            </div>
+        <div class="section-divider-b">
+            <i class="ti ti-photo"></i> Galeri Ekstrakurikuler
         </div>
-        <div class="slider-dots" id="eskulDots"></div>
+
+        <div class="slider-outer">
+            <div class="slider-viewport">
+                <div class="slider-track" id="eskulSliderTrack">
+
+                    @foreach($ekstrakurikuler as $eskul)
+                    <div class="eskul-slide">
+                        <div class="eskul-slide-photo">
+                            <img src="{{ isset($eskul->foto_kegiatan) && $eskul->foto_kegiatan ? asset('images/' . $eskul->foto_kegiatan) : asset('images/logosmk.jpg') }}">
+                        </div>
+                        <div class="eskul-slide-info">
+                            <h3>{{ $eskul->nama_ekskul }}</h3>
+                            <p><span class="info-label">Pembina </span>{{ $eskul->nama_pembina }}</p>
+                            <p>
+                                <span class="info-label">Jadwal </span>
+                                <span style="white-space: pre-line;">{{ $eskul->jadwal ?? '-' }}</span>
+                            </p>
+                            <p class="info-desc">{{ $eskul->deskripsi ?? '' }}</p>
+                        </div>
+                    </div>
+                    @endforeach
+
+                </div>
+            </div>
+            <div class="slider-dots" id="eskulDots"></div>
+        </div>
     </div>
 
-</div>
-
-       <div class="overlay" id="overlay" onclick="tutupForm()"></div>
+    <div class="overlay" id="overlay" onclick="tutupForm()"></div>
 
     <div id="formDaftar">
         <div class="form-header">

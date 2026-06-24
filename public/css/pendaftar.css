@@ -420,10 +420,10 @@ tr:hover td {
 
 .dropdown-menu {
     display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    margin-top: 6px;
+    position: fixed;
+    top: auto;
+    left: 20px;
+    margin-top: 0;
     background: white;
     border-radius: 6px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);

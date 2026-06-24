@@ -294,9 +294,28 @@ class AdminController extends Controller
       return response()->json(['success' => false, 'message' => 'Nama eskul sudah ada!']);
     }
 
+    $fotoNama = null;
+    $fotoKegiatanNama = null;
+
+    if ($request->hasFile('foto')) {
+      $file = $request->file('foto');
+      $fotoNama = 'logo_' . time() . '_' . $file->getClientOriginalName();
+      $file->move(public_path('images'), $fotoNama);
+    }
+
+    if ($request->hasFile('foto_kegiatan')) {
+      $file = $request->file('foto_kegiatan');
+      $fotoKegiatanNama = 'kegiatan_' . time() . '_' . $file->getClientOriginalName();
+      $file->move(public_path('images'), $fotoKegiatanNama);
+    }
+
     DB::table('ekstrakurikuler')->insert([
-      'nama_ekskul' => $nama,
-      'id_pembina'  => $id_pembina
+      'nama_ekskul'    => $nama,
+      'id_pembina'     => $id_pembina,
+      'jadwal'         => trim($request->jadwal) ?: null,
+      'foto'           => $fotoNama,
+      'foto_kegiatan'  => $fotoKegiatanNama,
+      'deskripsi'      => trim($request->deskripsi) ?: null,
     ]);
 
     return response()->json(['success' => true, 'message' => 'Eskul berhasil ditambahkan!']);
@@ -308,10 +327,28 @@ class AdminController extends Controller
       return response()->json(['success' => false, 'message' => 'Session habis, silakan login ulang!']);
     }
 
-    DB::table('ekstrakurikuler')->where('id_ekskul', $id)->update([
+    $updateData = [
       'nama_ekskul' => $request->nama_ekskul,
-      'id_pembina'  => $request->id_pembina
-    ]);
+      'id_pembina'  => $request->id_pembina,
+      'jadwal'      => trim($request->jadwal) ?: null,
+      'deskripsi'   => trim($request->deskripsi) ?: null,
+    ];
+
+    if ($request->hasFile('foto')) {
+      $file = $request->file('foto');
+      $fotoNama = 'logo_' . time() . '_' . $file->getClientOriginalName();
+      $file->move(public_path('images'), $fotoNama);
+      $updateData['foto'] = $fotoNama;
+    }
+
+    if ($request->hasFile('foto_kegiatan')) {
+      $file = $request->file('foto_kegiatan');
+      $fotoKegiatanNama = 'kegiatan_' . time() . '_' . $file->getClientOriginalName();
+      $file->move(public_path('images'), $fotoKegiatanNama);
+      $updateData['foto_kegiatan'] = $fotoKegiatanNama;
+    }
+
+    DB::table('ekstrakurikuler')->where('id_ekskul', $id)->update($updateData);
 
     return response()->json(['success' => true, 'message' => 'Eskul berhasil diperbarui!']);
   }
