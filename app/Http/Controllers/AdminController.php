@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -122,9 +123,27 @@ class AdminController extends Controller
       return response()->json(['success' => false, 'message' => 'Session habis, silakan login ulang!']);
     }
 
+    $nama = trim($request->nama);
+
+    if (!preg_match('/^[a-zA-Z\s]+$/', $nama)) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Nama hanya boleh berisi huruf!'
+      ]);
+    }
+
+    $hp = preg_replace('/[-\s]/', '', trim($request->nomor_handphone));
+    if (!preg_match('/^[0-9]+$/', $hp)) {
+      return response()->json(['success' => false, 'message' => 'Nomor HP hanya boleh berisi angka!']);
+    }
+
+    if (strlen($hp) < 10 || strlen($hp) > 13) {
+      return response()->json(['success' => false, 'message' => 'Nomor HP harus 10-13 digit!']);
+    }
+
     DB::table('pembina')->where('id_pembina', $id)->update([
       'nama_pembina'    => $request->nama_pembina,
-      'nomor_handphone' => $request->nomor_handphone,
+      'nomor_handphone' => $hp,
       'email'           => $request->email,
     ]);
 
@@ -230,10 +249,29 @@ class AdminController extends Controller
       return response()->json(['success' => false, 'message' => 'Session habis, silakan login ulang!']);
     }
 
+    $nama = trim($request->nama);
+
+    if (!preg_match('/^[a-zA-Z\s]+$/', $nama)) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Nama hanya boleh berisi huruf!'
+      ]);
+    }
+
+    $hp = preg_replace('/[-\s]/', '', trim($request->nomor_handphone));
+
+    if (!preg_match('/^[0-9]+$/', $hp)) {
+      return response()->json(['success' => false, 'message' => 'Nomor HP hanya boleh berisi angka!']);
+    }
+
+    if (strlen($hp) < 10 || strlen($hp) > 13) {
+      return response()->json(['success' => false, 'message' => 'Nomor HP harus 10-13 digit!']);
+    }
+
     DB::table('siswa')->where('id_siswa', $id)->update([
       'nama_lengkap'    => $request->nama_lengkap,
       'kelas_jurusan'   => $request->kelas_jurusan,
-      'nomor_handphone' => $request->nomor_handphone,
+      'nomor_handphone' => $hp,
     ]);
 
     return response()->json(['success' => true, 'message' => 'Data siswa berhasil diperbarui!']);
@@ -282,6 +320,30 @@ class AdminController extends Controller
       return response()->json(['success' => false, 'message' => 'Session habis, silakan login ulang!']);
     }
 
+    if ($request->hasFile('foto')) {
+      $validator = Validator::make($request->all(), [
+        'foto' => 'file|mimes:jpg,jpeg,png|max:2048'
+      ]);
+      if ($validator->fails()) {
+        return response()->json([
+          'success' => false,
+          'message' => 'Logo hanya boleh JPG, JPEG, atau PNG'
+        ]);
+      }
+    }
+
+    if ($request->hasFile('foto_kegiatan')) {
+      $validator = Validator::make($request->all(), [
+        'foto_kegiatan' => 'file|mimes:jpg,jpeg,png|max:2048'
+      ]);
+      if ($validator->fails()) {
+        return response()->json([
+          'success' => false,
+          'message' => 'Foto kegiatan hanya boleh JPG, JPEG, atau PNG'
+        ]);
+      }
+    }
+
     $nama       = trim($request->nama_ekskul);
     $id_pembina = $request->id_pembina;
 
@@ -299,13 +361,13 @@ class AdminController extends Controller
 
     if ($request->hasFile('foto')) {
       $file = $request->file('foto');
-      $fotoNama = 'logo_' . time() . '_' . $file->getClientOriginalName();
+      $fotoNama = $file->getClientOriginalName();
       $file->move(public_path('images'), $fotoNama);
     }
 
     if ($request->hasFile('foto_kegiatan')) {
       $file = $request->file('foto_kegiatan');
-      $fotoKegiatanNama = 'kegiatan_' . time() . '_' . $file->getClientOriginalName();
+      $fotoKegiatanNama = $file->getClientOriginalName();
       $file->move(public_path('images'), $fotoKegiatanNama);
     }
 
@@ -327,6 +389,15 @@ class AdminController extends Controller
       return response()->json(['success' => false, 'message' => 'Session habis, silakan login ulang!']);
     }
 
+    $nama = trim($request->nama);
+
+    if (!preg_match('/^[a-zA-Z\s]+$/', $nama)) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Nama hanya boleh berisi huruf!'
+      ]);
+    }
+
     $updateData = [
       'nama_ekskul' => $request->nama_ekskul,
       'id_pembina'  => $request->id_pembina,
@@ -336,13 +407,21 @@ class AdminController extends Controller
 
     if ($request->hasFile('foto')) {
       $file = $request->file('foto');
-      $fotoNama = 'logo_' . time() . '_' . $file->getClientOriginalName();
+      $ext = strtolower(pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION));
+      if (!in_array($ext, ['jpg', 'jpeg', 'png'])) {
+        return response()->json(['success' => false, 'message' => 'Logo hanya boleh JPG, JPEG, atau PNG!']);
+      }
+      $fotoNama = $file->getClientOriginalName();
       $file->move(public_path('images'), $fotoNama);
       $updateData['foto'] = $fotoNama;
     }
 
     if ($request->hasFile('foto_kegiatan')) {
       $file = $request->file('foto_kegiatan');
+      $ext = strtolower(pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION));
+      if (!in_array($ext, ['jpg', 'jpeg', 'png'])) {
+        return response()->json(['success' => false, 'message' => 'Foto kegiatan hanya boleh JPG, JPEG, atau PNG!']);
+      }
       $fotoKegiatanNama = 'kegiatan_' . time() . '_' . $file->getClientOriginalName();
       $file->move(public_path('images'), $fotoKegiatanNama);
       $updateData['foto_kegiatan'] = $fotoKegiatanNama;
@@ -450,6 +529,26 @@ class AdminController extends Controller
   {
     if (!$this->cekAdmin()) {
       return response()->json(['success' => false, 'message' => 'Session habis!']);
+    }
+
+    $nama = trim($request->nama);
+
+    // Hanya huruf (A-Z, a-z) dan spasi
+    if (!preg_match('/^[a-zA-Z\s]+$/', $nama)) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Nama hanya boleh berisi huruf!'
+      ]);
+    }
+
+    $hp = preg_replace('/[-\s]/', '', trim($request->nomor_handphone));
+
+    if (!preg_match('/^[0-9]+$/', $hp)) {
+      return response()->json(['success' => false, 'message' => 'Nomor HP hanya boleh berisi angka!']);
+    }
+
+    if (strlen($hp) < 10 || strlen($hp) > 13) {
+      return response()->json(['success' => false, 'message' => 'Nomor HP harus 10-13 digit!']);
     }
 
     DB::table('siswa')->where('id_siswa', $id)->update([

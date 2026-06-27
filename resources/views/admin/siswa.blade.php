@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
@@ -26,11 +27,10 @@
         <a href="/admin/anggota"><span class="icon">👥</span> Anggota</a>
     </div>
     <div class="sidebar-logout">
-        <a href="/logout" class="btn-icon-link">
-        <span class="icon">🚪</span>
-        <span class="text">Logout</span>
-         </a>
-    </div>
+    <button class="logout-link-fixed-admin" onclick="window.location.href='/logout'" title="Logout">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </button>
+</div>
 </div>
 
 <div class="main-content">
@@ -150,7 +150,7 @@
         </div>
         <div class="form-group">
             <label>Kelas & Jurusan</label>
-            <select id="editKelas">          {{-- ← ganti dari kelas_jurusan ke editKelas --}}
+            <select id="editKelas">
                 <option value="">Pilih Kelas & Jurusan</option>
                 <option value="X RPL-A">X RPL - A</option>
                 <option value="X RPL-B">X RPL - B</option>

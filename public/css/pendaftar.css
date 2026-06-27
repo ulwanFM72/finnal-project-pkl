@@ -313,6 +313,28 @@ tr:hover td {
         margin-left: 325px;
         margin-top: -43px;
     }
+
+    .logout-link-fixed-pembina {
+        position: fixed;
+        top: 5px;
+        right: 16px;
+        z-index: 200;
+        color: white;
+        font-size: 14px;
+        background: #1e3a5f;
+        border: 1px solid #1e3a5f;
+        border-radius: 8px;
+        width: 32px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        margin-right: -10px;
+        transition:
+            background 0.2s,
+            transform 0.2s;
+    }
 }
 
 .btn-cetak {
@@ -475,4 +497,31 @@ tr:hover td {
 .dropdown-item:hover {
     background: #f5f9ff;
     color: #4a90d9;
+}
+
+.logout-link-fixed-pembina {
+    position: fixed;
+    top: 5px;
+    right: 16px;
+    z-index: 200;
+    color: white;
+    font-size: 20px;
+    background: #1e3a5f;
+    border: 1px solid #1e3a5f;
+    border-radius: 8px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition:
+        background 0.2s,
+        transform 0.2s;
+}
+
+.logout-link-fixed-pembina:hover {
+    background: rgba(201, 48, 44, 0.8);
+    border-color: transparent;
+    transform: translateX(3px);
 }

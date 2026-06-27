@@ -27,6 +27,13 @@ function editData(id, nama, kelas, hp) {
     document.getElementById("editNama").value = nama;
     document.getElementById("editKelas").value = kelas;
     document.getElementById("editHp").value = hp;
+
+    var select = document.getElementById("editKelas");
+    select.value = kelas;
+
+    if (select.value !== kelas) {
+        select.value = "";
+    }
 }
 
 function tutupEdit() {
@@ -35,10 +42,37 @@ function tutupEdit() {
 
 function simpanEdit() {
     var id = document.getElementById("editId").value;
-    var nama = document.getElementById("editNama").value;
+    var nama = document.getElementById("editNama").value.trim();
     var kelas = document.getElementById("editKelas").value;
-    var hp = document.getElementById("editHp").value;
+    var hp = document.getElementById("editHp").value.trim();
     var csrf = document.querySelector('meta[name="csrf-token"]').content;
+
+    if (!/^[a-zA-Z\s]+$/.test(nama)) {
+        tampilNotif("Nama hanya boleh berisi huruf!", "gagal");
+        return;
+    }
+
+    if (nama.length < 3 || nama.length > 100) {
+        tampilNotif("Nama harus 3-100 karakter!", "gagal");
+        return;
+    }
+
+    if (kelas === "") {
+        tampilNotif("Silakan pilih kelas!", "gagal");
+        return;
+    }
+
+    hp = hp.replace(/[-\s]/g, "");
+
+    if (!/^[0-9]+$/.test(hp)) {
+        tampilNotif("Nomor HP hanya boleh berisi angka!", "gagal");
+        return;
+    }
+
+    if (hp.length < 10 || hp.length > 13) {
+        tampilNotif("Nomor HP harus 10-13 digit!", "gagal");
+        return;
+    }
 
     fetch("/edit-siswa/" + id, {
         method: "POST",
@@ -57,9 +91,7 @@ function simpanEdit() {
             if (data.success) {
                 tutupEdit();
                 tampilNotif("Data berhasil diperbarui!", "sukses");
-                setTimeout(function () {
-                    location.reload();
-                }, 1000);
+                setTimeout(() => location.reload(), 1000);
             } else {
                 tampilNotif(data.message, "gagal");
             }
@@ -75,8 +107,8 @@ function toggleDropdown() {
     const btn = document.querySelector(".btn-dropdown");
     const rect = btn.getBoundingClientRect();
 
-    menu.style.top = rect.bottom + 6 + "px"; /* ← tepat di bawah tombol */
-    menu.style.left = rect.left + "px"; /* ← rata kiri dengan tombol */
+    menu.style.top = rect.bottom + 6 + "px";
+    menu.style.left = rect.left + "px";
 
     menu.classList.toggle("open");
 }

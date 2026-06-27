@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
@@ -24,11 +25,10 @@
         <a href="/admin/anggota"><span class="icon">👥</span> Anggota</a>
     </div>
     <div class="sidebar-logout">
-        <a href="/logout" class="btn-icon-link">
-        <span class="icon">🚪</span>
-        <span class="text">Logout</span>
-        </a>
-    </div>
+    <button class="logout-link-fixed-admin" onclick="window.location.href='/logout'" title="Logout">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </button>
+</div>
 </div>
 
 <div class="main-content">

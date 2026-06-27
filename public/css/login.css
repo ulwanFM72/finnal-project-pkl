@@ -259,6 +259,7 @@ body {
     .logo-wrap {
         width: 70px;
         height: 70px;
+        border-radius: 18px;
     }
 
     .brand-name {
@@ -268,4 +269,12 @@ body {
     .brand-sub {
         font-size: 11px;
     }
+}
+
+.credit-wm {
+    text-align: center;
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 16px;
+    letter-spacing: 1px;
 }

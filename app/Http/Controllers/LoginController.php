@@ -193,6 +193,38 @@ class LoginController extends Controller
             return response()->json(['success' => false, 'message' => 'Akses ditolak!']);
         }
 
+        $nama = trim($request->nama_lengkap);
+
+        if (!preg_match('/^[a-zA-Z\s]+$/', $nama)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nama hanya boleh berisi huruf!'
+            ]);
+        }
+
+        if (strlen($nama) < 3 || strlen($nama) > 100) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nama harus 3-100 karakter!'
+            ]);
+        }
+
+        $hp = preg_replace('/[-\s]/', '', trim($request->nomor_handphone));
+
+        if (!preg_match('/^[0-9]+$/', $hp)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nomor HP hanya boleh berisi angka!'
+            ]);
+        }
+
+        if (strlen($hp) < 10 || strlen($hp) > 13) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nomor HP harus 10-13 digit!'
+            ]);
+        }
+
         $id_pembina = session('id_pembina');
         $eskul_pembina = DB::table('ekstrakurikuler')
             ->where('id_pembina', $id_pembina)
@@ -212,12 +244,15 @@ class LoginController extends Controller
         }
 
         DB::table('siswa')->where('id_siswa', $id)->update([
-            'nama_lengkap'    => $request->nama_lengkap,
+            'nama_lengkap'    => $nama,
             'kelas_jurusan'   => $request->kelas_jurusan,
-            'nomor_handphone' => $request->nomor_handphone,
+            'nomor_handphone' => $hp,
         ]);
 
-        return response()->json(['success' => true, 'message' => 'Data berhasil diperbarui']);
+        return response()->json([
+            'success' => true,
+            'message' => 'Data berhasil diperbarui'
+        ]);
     }
 
     public function hapusSiswa($id)

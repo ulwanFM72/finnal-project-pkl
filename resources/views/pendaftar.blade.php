@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/pendaftar.css') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
@@ -36,12 +37,9 @@
 </div>
 
 @if(session('nama_pembina'))
-    <a href="/logout" class="logout-link-fixed">
-        <button class="btn-logout btn-icon">
-            <span class="icon">➜</span>
-            <span class="text">Logout</span>
-        </button>
-    </a>
+    <button class="logout-link-fixed-pembina" onclick="window.location.href='/logout'" title="Logout">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </button>
 @endif
 
 <div class="container">
@@ -97,7 +95,20 @@
 <div id="formEdit">
     <h3>Edit Data Siswa</h3>
     <p>Nama Lengkap:<br><input type="text" id="editNama"></p>
-    <p>Kelas & Jurusan:<br><input type="text" id="editKelas"></p>
+    <p>Kelas & Jurusan:<br>
+        <select id="editKelas" style="width:100%;padding:7px 10px;margin-top:4px;border:1px solid #ddd;border-radius:4px;font-size:13px;outline:none;">
+            <option value="">Pilih Kelas & Jurusan</option>
+            <option value="X RPL-A">X RPL - A</option>
+            <option value="X RPL-B">X RPL - B</option>
+            <option value="X RPL-C">X RPL - C</option>
+            <option value="X BD-A">X BD - A</option>
+            <option value="X BD-B">X BD - B</option>
+            <option value="X TKR-A">X TKR - A</option>
+            <option value="X TKR-B">X TKR - B</option>
+            <option value="X APHP-A">X APHP - A</option>
+            <option value="X APHP-B">X APHP - B</option>
+        </select>
+    </p>
     <p>Nomor Handphone:<br><input type="text" id="editHp"></p>
     <input type="hidden" id="editId">
     <button class="btn-simpan" onclick="simpanEdit()">Simpan</button>

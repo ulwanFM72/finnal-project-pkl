@@ -128,22 +128,31 @@ tr:last-child td {
     margin: 0;
 }
 
-.btn-kembali {
-    display: inline-block;
-    width: fit-content;
-    padding: 6px 14px;
-    background: rgba(255, 255, 255, 0.2);
+.logout-link-fixed {
+    position: fixed;
+    top: 15px;
+    right: 50px;
+    z-index: 200;
     color: white;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    font-size: 25px;
+    text-decoration: none;
+    background: #1e3a5f;
+    border: 1px solid #1e3a5f;
     border-radius: 8px;
-    font-size: 13px;
-    cursor: pointer;
-    transition: background 0.2s;
-    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+        background 0.2s,
+        transform 0.2s;
 }
 
-.btn-kembali:hover {
-    background: rgba(255, 0, 0, 0.822);
+.logout-link-fixed:hover {
+    background: rgba(201, 48, 44, 0.8);
+    border-color: transparent;
+    transform: translateX(3px);
 }
 
 .overlay {
@@ -501,10 +510,18 @@ tr:last-child td {
         font-size: 10px;
     }
 
-    .btn-kembali {
-        font-size: 10px;
-        padding: 4px 10px;
-        margin-right: 2px;
+    .logout-link-fixed {
+        position: static;
+        display: inline-flex;
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+        margin-left: 8px;
+        vertical-align: middle;
+        color: #ffffff;
+        background: #1e3a5f;
+        border: 1px solid #1e3a5f;
+        border-radius: 6px;
     }
 
     #formDaftar {

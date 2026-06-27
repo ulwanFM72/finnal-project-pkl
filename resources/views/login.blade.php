@@ -49,6 +49,9 @@
                 <div class="daftar-link">
                     Belum punya akun? <a href="/daftar-akun">Daftar di sini</a>
                 </div>
+                <div class="credit-wm">
+                     &copy; 2M-4W | 2026
+                </div>
             </div>
         </div>
 

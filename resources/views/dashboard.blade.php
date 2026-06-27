@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="id-siswa" content="{{ session('id_siswa') ?? '' }}">
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
@@ -24,12 +25,9 @@
             </h2>
             <p>Tahun Ajaran 2026 / 2027</p>
         </div>
-        <a href="/logout" class="logout-link">
-            <button class="btn-kembali btn-icon">
-                <span class="icon">➜</span>
-                <span class="text">Logout</span>
-            </button>
-        </a>
+    <button class="logout-link-fixed" onclick="window.location.href='/logout'" title="Logout">
+         <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </button>
     </div>
 
     <div class="container">
@@ -78,8 +76,8 @@
                             <h3>{{ $eskul->nama_ekskul }}</h3>
                             <p><span class="info-label">Pembina </span>{{ $eskul->nama_pembina }}</p>
                             <p>
-                                <span class="info-label">Jadwal </span>
-                                <span style="white-space: pre-line;">{{ $eskul->jadwal ?? '-' }}</span>
+                         <span class="info-label">Jadwal</span>
+                         <span>{!! nl2br(e(str_replace('\n', "\n", $eskul->jadwal ?? '-'))) !!}</span>
                             </p>
                             <p class="info-desc">{{ $eskul->deskripsi ?? '' }}</p>
                         </div>
@@ -104,7 +102,7 @@
         <input type="hidden" id="idEskul">
         <input type="hidden" id="namaEskul">
         <button class="btn-selesai btn-island" onclick="selesai()">Selesai</button>
-        <button class="btn-selesai btn-island" onclick="tutupForm()">Batal</button>
+        <button class="btn-batal btn-island" onclick="tutupForm()">Batal</button>
     </div>
 
 </div>

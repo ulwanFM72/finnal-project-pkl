@@ -6,7 +6,6 @@ use App\Http\Controllers\EskulController;
 use App\Http\Controllers\AdminController;
 
 Route::get('/', [LoginController::class, 'index']);
-
 Route::get('/login', [LoginController::class, 'index']);
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout']);

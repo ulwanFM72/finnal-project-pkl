@@ -6,7 +6,41 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
+
+        .upload-area .preview-img {
+           width: 100%;
+           height: 80px;
+           object-fit: contain;
+           border-radius: 6px;
+           margin-bottom: 6px;
+           display: none;
+        }
+
+        .upload-area {
+           border: 2px dashed #c0d8f0;
+           border-radius: 8px;
+           padding: 14px;
+           text-align: center;
+           cursor: pointer;
+           transition: border-color 0.2s, background 0.2s;
+           background: #f8fbff;
+           position: relative;
+           min-height: 120px;
+           display: flex;
+           flex-direction: column;
+           align-items: center;  
+           justify-content: center;
+        }
+        .upload-area .preview-img {
+           width: 100%;
+           height: 80px;
+           object-fit: contain;
+           border-radius: 6px;
+           margin-bottom: 6px;
+           display: none;
+        }
         .upload-area {
             border: 2px dashed #c0d8f0;
             border-radius: 8px;
@@ -48,11 +82,10 @@
         <a href="/admin/anggota"><span class="icon">👥</span> Anggota</a>
     </div>
     <div class="sidebar-logout">
-        <a href="/logout" class="btn-icon-link">
-            <span class="icon">🚪</span>
-            <span class="text">Logout</span>
-        </a>
-    </div>
+    <button class="logout-link-fixed-admin" onclick="window.location.href='/logout'" title="Logout">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </button>
+</div>
 </div>
 
 <div class="main-content">
@@ -158,7 +191,7 @@
                 <div>
                     <p style="font-size:12px;color:#555;margin-bottom:6px;">Logo Eskul</p>
                     <div class="upload-area" id="tambahAreaLogo">
-                        <input type="file" id="tambahFoto" accept="image/*" onchange="previewFoto(this, 'tambahPreviewLogo', 'tambahLabelLogo')">
+                        <input type="file" id="tambahFoto" accept=".jpg,.jpeg,.png" onchange="previewFoto(this, 'tambahPreviewLogo', 'tambahLabelLogo')">
                         <img id="tambahPreviewLogo" class="preview-img">
                         <span class="upload-label" id="tambahLabelLogo">🖼️ Pilih Logo</span>
                         <p>PNG, JPG, JPEG</p>
@@ -167,7 +200,7 @@
                 <div>
                     <p style="font-size:12px;color:#555;margin-bottom:6px;">Foto Kegiatan</p>
                     <div class="upload-area" id="tambahAreaKegiatan">
-                        <input type="file" id="tambahFotoKegiatan" accept="image/*" onchange="previewFoto(this, 'tambahPreviewKegiatan', 'tambahLabelKegiatan')">
+                        <input type="file" id="tambahFotoKegiatan" accept=".jpg,.jpeg,.png" onchange="previewFoto(this, 'tambahPreviewKegiatan', 'tambahLabelKegiatan')">
                         <img id="tambahPreviewKegiatan" class="preview-img">
                         <span class="upload-label" id="tambahLabelKegiatan">📷 Pilih Foto</span>
                         <p>PNG, JPG, JPEG</p>
@@ -216,7 +249,7 @@
                 <div>
                     <p style="font-size:12px;color:#555;margin-bottom:6px;">Logo Eskul</p>
                     <div class="upload-area">
-                        <input type="file" id="editFoto" accept="image/*" onchange="previewFoto(this, 'editPreviewLogo', 'editLabelLogo')">
+                        <input type="file" id="editFoto" accept=".jpg,.jpeg,.png" onchange="previewFoto(this, 'editPreviewLogo', 'editLabelLogo')">
                         <img id="editPreviewLogo" class="preview-img">
                         <span class="upload-label" id="editLabelLogo">🖼️ Ganti Logo</span>
                         <p>PNG, JPG, JPEG</p>
@@ -225,7 +258,7 @@
                 <div>
                     <p style="font-size:12px;color:#555;margin-bottom:6px;">Foto Kegiatan</p>
                     <div class="upload-area">
-                        <input type="file" id="editFotoKegiatan" accept="image/*" onchange="previewFoto(this, 'editPreviewKegiatan', 'editLabelKegiatan')">
+                        <input type="file" id="editFotoKegiatan" accept=".jpg,.jpeg,.png" onchange="previewFoto(this, 'editPreviewKegiatan', 'editLabelKegiatan')">
                         <img id="editPreviewKegiatan" class="preview-img">
                         <span class="upload-label" id="editLabelKegiatan">📷 Ganti Foto</span>
                         <p>PNG, JPG, JPEG</p>
