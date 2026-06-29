@@ -124,7 +124,9 @@
                     <td data-label="#">{{ $index + 1 }}</td>
                     <td data-label="Eskul">{{ $e->nama_ekskul }}</td>
                     <td data-label="Pembina">{{ $e->nama_pembina }}</td>
-                    <td data-label="Jadwal">{{ $e->jadwal ?? '-' }}</td>
+                    <td data-label="Jadwal">
+                      {{ str_replace('\n', ' & ', $e->jadwal ?? '-') }}
+                    </td>
                     <td data-label="Logo">
                         @if($e->foto)
                             <img src="{{ asset('images/' . $e->foto) }}" alt="logo"

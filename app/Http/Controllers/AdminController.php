@@ -389,7 +389,14 @@ class AdminController extends Controller
       return response()->json(['success' => false, 'message' => 'Session habis, silakan login ulang!']);
     }
 
-    $nama = trim($request->nama);
+    $nama = trim($request->nama_ekskul);
+
+    if (empty($nama)) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Nama ekstrakurikuler tidak boleh kosong!'
+      ]);
+    }
 
     if (!preg_match('/^[a-zA-Z\s]+$/', $nama)) {
       return response()->json([
@@ -533,7 +540,6 @@ class AdminController extends Controller
 
     $nama = trim($request->nama);
 
-    // Hanya huruf (A-Z, a-z) dan spasi
     if (!preg_match('/^[a-zA-Z\s]+$/', $nama)) {
       return response()->json([
         'success' => false,
