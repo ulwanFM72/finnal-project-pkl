@@ -23,12 +23,19 @@ function daftar() {
     })
         .then((res) => res.json())
         .then((data) => {
-            pesan.style.color = data.success ? "green" : "red";
+            var pesan = document.getElementById("pesan");
             pesan.innerText = data.message;
+            pesan.style.display = "block";
+            pesan.style.backgroundColor = data.success ? "#28a745" : "#dc3545";
+
             if (data.success) {
                 setTimeout(function () {
                     window.location.href = "/";
                 }, 1500);
+            } else {
+                setTimeout(function () {
+                    pesan.style.display = "none";
+                }, 3000);
             }
         });
 }

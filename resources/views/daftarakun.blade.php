@@ -61,7 +61,21 @@
             </div>
 
             <button class="btn-daftar" onclick="daftar()">Daftar</button>
-            <p class="pesan" id="pesan"></p>
+            <div id="pesan" style="
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 24px;
+    border-radius: 6px;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 9999;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    white-space: nowrap;
+"></div>
             <a href="/"><button type="button" class="btn-kembali">Kembali</button></a>
         </div>
 
