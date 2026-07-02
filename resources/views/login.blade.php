@@ -3,18 +3,23 @@
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login - Pendaftaran Ekskul SMKN 1 Cijati</title>
+
+    <meta property="og:title" content="Login - SMK Negeri 1 Cijati">
+    <meta property="og:description" content="Sistem pendaftaran ekstrakurikuler online SMK Negeri 1 Cijati">
+    <meta property="og:image" content="{{ asset('images/banner-share.png') }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+
     <link rel="icon" type="image/png" href="{{ asset('images/logo-smkn1cijati.png') }}">
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body> 
 
     <div class="login-wrapper">
 
         <div class="login-text">
-            <h2></h2>
-            <p></p>
         </div>
 
         <div class="login-container">
